@@ -87,7 +87,7 @@ public class PlayerMovment : MonoBehaviour
                 targetVelocity = new Vector2(moveInput.x, 0f) * moveStats.maxDashSpeed; 
             }
         
-            else { targetVelocity = new Vector2(moveInput.x, 0f) * moveStats.maxWalkSpeed; }
+            else { targetVelocity = new Vector2(moveInput.x, 0f) * moveStats.maxRunSpeed; }
         }
         // lerp from current movementVel to target
         _moveVelocity = Vector2.Lerp(_moveVelocity, targetVelocity, accelaration * Time.fixedDeltaTime);
@@ -146,9 +146,9 @@ public class PlayerMovment : MonoBehaviour
 
         }
             
-        #endregion
-    }
 
+    }
+    #endregion
     private void CollisionChecks(){
 
         IsGrounded();

@@ -29,11 +29,10 @@ public class InputManager : MonoBehaviour
 
     }
 
-    // Update is called once per frame
     private void Update()
     {
         movement = _moveAction.ReadValue<Vector2>();
-
+    
         jumpWasPressed = _jumpAction.WasPressedThisFrame();
         jumpIsHeld = _jumpAction.IsPressed();
         jumpWasReleased = _jumpAction.WasReleasedThisFrame();

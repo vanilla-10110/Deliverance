@@ -3,135 +3,127 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Xml.Serialization;
-using Unity.VisualScripting;
-using UnityEditor.Animations;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
+   [Header("References")]
+   public PlayerMovementStats moveStats;
+   [SerializeField] private Collider2D _feetColl;
+   [SerializeField] private Collider2D _bodyColl;
 
-    [SerializeField] LayerMask groundLayerMask;
-    SpriteRenderer playerSprite;
-    Animator animController;
-    Rigidbody2D playerBody;
-    CapsuleCollider2D bodyCollider;
-    public int maxSpeed;
-    public float horizontalAccel;
-    public int jumpVelocity;
-    public float gravityAccel;
+   public Rigidbody2D _rb;
 
-    public bool isJumping = false;
+   //movement vars
+    public Vector2 _moveVelocity;
+    public bool isFacingRight;
 
-    public float jumpDuration = 0.5f;
-    public float jumpTime = 0.0f;
-    public bool isRunning = false;
-    public bool isOnGround = true;
+    //collision check vars
+    private RaycastHit2D _groundHit;
+    private RaycastHit2D _headHit;
+    public bool isGrounded;
+    private bool bumpedHead;
 
-    void Start()
-    {
-        playerSprite = GetComponent<SpriteRenderer>();
-        animController = GetComponent<Animator>();
-        playerBody = GetComponent<Rigidbody2D>();
-        bodyCollider = GetComponent<CapsuleCollider2D>();
-    }
-    void Update()
-    {
-        isOnGround = IsPlayerOnGround();
-        isRunning = IsPlayerRunning();
+    // jump vars
+    public float verticalVelocity;
+    private bool _isJumping;
+    private bool _isFastFalling;
+    private bool _isFalling;
+    private float _fastFallTime;
+    private float _fastFallReleaseSpeed;
+    private int _numberOfJumpsUsed;
 
-        ControlPlayerJumpTimer();
-        ChangeAnimations();
+    // apex vars
+    private float _apexPoint;
+    private float _timePastApexThreshold;
+    private bool _isPastApexThreshold;
 
-    }
+    // buffer vars
+    private float _jumpBufferTimer;
+    private bool _jumpReleasedDuringBuffer;
 
-    void FixedUpdate ()
-    {
-        // playerBody.velocity = GetPlayerVerticalVelocity(playerBody.velocity);
-        playerBody.velocity = GetPlayerHorizontalVelocity(playerBody.velocity);
-        
-        ApplyPlayerJump();
-        
-        if (!isJumping){
-            playerBody.velocity = ApplyGravity(playerBody.velocity);
-        }
-    }
+    // cayote time vars
+    private float _cayoteTimer;
 
-    void ControlPlayerJumpTimer(){
-        if (Input.GetKeyDown(KeyCode.Space) && isOnGround){
-            jumpTime = jumpDuration;
-            isJumping = true;
-        }
-        if (jumpTime <= 0.0f || Input.GetKeyUp(KeyCode.Space)){
-            isJumping = false;
-            jumpTime = 0.0f;
-        }
+    public PSM psm;
+
+
+    private void Awake(){
+        isFacingRight = true;
+        _rb = GetComponent<Rigidbody2D>();
+
 
     }
 
-    void ApplyPlayerJump(){
-        if (isJumping){
-            jumpTime -= Time.fixedDeltaTime;
-            playerBody.velocity = GetPlayerJumpVelocity(playerBody.velocity);
-        }
+    private void Start(){
+        psm.OnAwake(this);
     }
 
-    Vector2 GetPlayerHorizontalVelocity(Vector2 velocity)
-    {
-        float HAxis = Input.GetAxis("Horizontal");
+    private void Update(){
+        psm.OnUpdate();
 
-        Vector2 newVelocity = Vector2.zero;
+        IsGrounded();
 
-        if (isRunning){
-            newVelocity.x = HAxis * horizontalAccel;
-        }        
-
-        velocity = Vector2.Lerp(velocity, newVelocity * Time.fixedDeltaTime, 1);// * Time.fixedDeltaTime);      
-
-        velocity.x = Mathf.Clamp(velocity.x, -maxSpeed, maxSpeed);
-
-        return velocity;
+        TurnCheck(InputManager.movement);
     }
-
-    Vector2 GetPlayerJumpVelocity(Vector2 velocity){
-        float newVelocity = 0.0f;
-
-        newVelocity = velocity.y > 0.0f ? velocity.y + jumpVelocity : jumpVelocity;
-        // newVelocity += jumpVelocity * Time.fixedDeltaTime;
-
-        velocity.y += ( velocity.y + jumpVelocity) * Time.fixedDeltaTime;
-
-        return velocity;
-    }
-
-    Vector2 ApplyGravity(Vector2 velocity){
-        // float newVelocity = velocity.y - gravityAccel;
-
-        velocity.y = Mathf.Lerp(velocity.y, velocity.y - gravityAccel  * Time.fixedDeltaTime, 1);
     
-        return velocity;
+    private void FixedUpdate(){
+
+        psm.OnFixedUpdate();
     }
 
-    bool IsPlayerOnGround(){
-        return Physics2D.BoxCast(bodyCollider.bounds.center,  bodyCollider.size, 0f, Vector2.down, 0.5f, groundLayerMask);
-    }
-
-    bool IsPlayerRunning(){
-        return Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D);
-    }
-
-    void ChangeAnimations(){
-        animController.SetBool("isRunning", IsPlayerRunning());
-        animController.SetBool("isOnGround", IsPlayerOnGround());
-        animController.SetBool("isJumping", isJumping);
-
-        if (Input.GetKeyDown(KeyCode.A)){
-            playerSprite.flipX = true;
+    #region horizontal movement
+    private void TurnCheck(Vector2 moveInput){
+        if (isFacingRight && moveInput.x < 0){
+            Turn(false);
         }
-        if (Input.GetKeyDown(KeyCode.D)){
-            playerSprite.flipX = false;
+        else if (!isFacingRight && moveInput.x > 0) {
+            Turn(true);
+        }
+
+    }
+
+    private void Turn (bool turnRight){
+        if (turnRight){
+            isFacingRight = true;
+            transform.Rotate(0f, 180f, 0f);
+        }
+        else {
+            isFacingRight = false;
+            transform.Rotate(0f, -180f, 0f);
         }
     }
 
+    #endregion
+
+    #region CollisonChecks
+    private void IsGrounded(){
+        Vector2 boxCastOrigin = new Vector2(_feetColl.bounds.center.x, _feetColl.bounds.min.y);
+        Vector2 boxCastSize = new Vector2(_feetColl.bounds.size.x, moveStats.groundDetectionRayLength);
+
+        _groundHit = Physics2D.BoxCast(boxCastOrigin, boxCastSize, 0f, Vector2.down, moveStats.groundDetectionRayLength, moveStats.groundLayer);
+
+        if (_groundHit.collider != null ){
+            isGrounded = true;
+        }
+        else{ isGrounded = false; }
     
+        if (moveStats.debugShowIsGroundedBox){
+            Color rayColor;
+            if (isGrounded){
+                rayColor = Color.green;
+            }
+
+            else { rayColor = Color.red; }
+
+            Debug.DrawRay(new Vector2(boxCastOrigin.x - boxCastSize.x / 2, boxCastOrigin.y), Vector2.down * moveStats.groundDetectionRayLength, rayColor);
+            Debug.DrawRay(new Vector2(boxCastOrigin.x + boxCastSize.x / 2, boxCastOrigin.y), Vector2.down * moveStats.groundDetectionRayLength, rayColor);
+            Debug.DrawRay(new Vector2(boxCastOrigin.x - boxCastSize.x / 2, boxCastOrigin.y - moveStats.groundDetectionRayLength), Vector2.right * boxCastSize.x, rayColor);
+
+        }
+            
+
+    }
+    #endregion
+
 }

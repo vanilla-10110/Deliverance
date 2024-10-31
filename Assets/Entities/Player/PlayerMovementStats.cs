@@ -9,7 +9,7 @@ public class PlayerMovementStats : ScriptableObject
 {
 
     [Header("Walk")]
-    [Range(1f, 100f)] public float maxWalkSpeed = 12.5f;
+    [Range(1f, 100f)] public float maxRunSpeed = 12.5f;
     [Range(0.251f, 50f)] public float groundAcceleration = 5f;
     [Range(0.251f, 50f)] public float groundDecceleration = 20f;
     [Range(0.251f, 50f)] public float airAcceleration = 5f;
