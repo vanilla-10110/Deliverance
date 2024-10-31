@@ -45,3 +45,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stateEnum: 5
+  playerRef: {fileID: 0}
+  dashDuration: 0.1

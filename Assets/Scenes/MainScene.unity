@@ -276,8 +276,12 @@ PrefabInstance:
       value: PLAYER
       objectReference: {fileID: 0}
     - target: {fileID: 418728684730432807, guid: 96a63cec7e5091e4ab60f92bab1bda88, type: 3}
-      propertyPath: stateEnum
-      value: 5
+      propertyPath: dashSpeed
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 418728684730432807, guid: 96a63cec7e5091e4ab60f92bab1bda88, type: 3}
+      propertyPath: dashDuration
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 1360484251216433638, guid: 96a63cec7e5091e4ab60f92bab1bda88, type: 3}
       propertyPath: m_LocalPosition.x
@@ -327,14 +331,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: JumpingStateNode
       objectReference: {fileID: 0}
-    - target: {fileID: 5500889797869246763, guid: 96a63cec7e5091e4ab60f92bab1bda88, type: 3}
-      propertyPath: stateEnum
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6005133251166858662, guid: 96a63cec7e5091e4ab60f92bab1bda88, type: 3}
-      propertyPath: stateEnum
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8083095676620259423, guid: 96a63cec7e5091e4ab60f92bab1bda88, type: 3}
       propertyPath: playerRef
       value: 
@@ -367,10 +363,6 @@ PrefabInstance:
       propertyPath: stateArray.Array.data[5]
       value: 
       objectReference: {fileID: 2007116943}
-    - target: {fileID: 9140447510951582064, guid: 96a63cec7e5091e4ab60f92bab1bda88, type: 3}
-      propertyPath: stateEnum
-      value: 4
-      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9115597570117403684, guid: 96a63cec7e5091e4ab60f92bab1bda88, type: 3}
     m_RemovedGameObjects: []
