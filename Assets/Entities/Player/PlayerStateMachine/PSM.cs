@@ -8,12 +8,16 @@ public class PSM : BaseStateMachine
     [SerializeField] private BasePlayerState[] stateArray;
 
     [SerializeField] private EnumBus.PLAYER_STATES initialState = EnumBus.PLAYER_STATES.IDLE;
+
+    public EnumBus.PLAYER_STATES prevState; // for any special state behaviour that depends on the previous state - ie. dash into falling
     new protected BasePlayerState CurrentState {get; private set;}
-    public Player playerRef;
+    
+    private Player playerRef;
 
     public void OnAwake(Player newPlayerRef){
 
         CurrentState = GetState(initialState);
+        
 
         playerRef = newPlayerRef;
 
@@ -44,13 +48,14 @@ public class PSM : BaseStateMachine
     public void TransitionStates(EnumBus.PLAYER_STATES newStateEnum)
     {
         CurrentState.OnExit();
+        prevState = CurrentState.stateEnum;
 
         CurrentState = GetState(newStateEnum);
 
         CurrentState.OnEnter();
     }
 
-    private BasePlayerState GetState(EnumBus.PLAYER_STATES stateEnum){
+    public BasePlayerState GetState(EnumBus.PLAYER_STATES stateEnum){
         return System.Array.Find<BasePlayerState>(stateArray, (state) => {return state.stateEnum == stateEnum;});
     }
 

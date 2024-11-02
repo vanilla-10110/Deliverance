@@ -13,7 +13,8 @@ public class IdleState : BasePlayerState
     public override void OnEnter()
     {
         base.OnEnter();
-
+        
+        playerRef.numberOfJumpsUsed = 0;
 
 
     }
@@ -22,17 +23,14 @@ public class IdleState : BasePlayerState
         base.OnUpdate();
 
         if (InputManager.jumpWasPressed){
-            // Debug.Log("jump pressed");
             ParentStateMachine.TransitionStates(EnumBus.PLAYER_STATES.JUMPING);
         }
 
         if (InputManager.dashWasPressed){
-            // Debug.Log("dash pressed");
             ParentStateMachine.TransitionStates(EnumBus.PLAYER_STATES.DASHING);
         }
 
         if (InputManager.movement.x != 0f){
-            // Debug.Log("jump pressed");
             ParentStateMachine.TransitionStates(EnumBus.PLAYER_STATES.RUNNING);
         }
 
@@ -45,7 +43,16 @@ public class IdleState : BasePlayerState
     public override void OnFixedUpdate()
     {
         base.OnFixedUpdate();
-        playerRef._rb.velocity = Vector2.Lerp(playerRef._rb.velocity, Vector2.zero, playerRef.moveStats.groundDecceleration * Time.fixedDeltaTime);
+        
+        playerRef.velocity.y = 0f;
+
+        if (Mathf.Abs(playerRef.velocity.x) < 0.01){
+            playerRef.velocity.x = 0f;
+        }
+        else if (playerRef.velocity.x != 0f){ 
+            playerRef.velocity.x += (playerRef.velocity.x * -1) * moveStatsRef.groundDecceleration * Time.fixedDeltaTime;
+        }
+
 
     }
 

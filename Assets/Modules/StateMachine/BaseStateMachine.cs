@@ -5,7 +5,7 @@ using UnityEngine;
 public class BaseStateMachine : MonoBehaviour
 {
     // public BaseState initialState; 
-   public virtual BaseState CurrentState {get; private set;}
+   protected virtual BaseState CurrentState {get; private set;}
 
 //    private void Awake(){
 //     currentState = initialState;

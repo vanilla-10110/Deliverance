@@ -11,6 +11,8 @@ public class ClimbingState : BasePlayerState
     public override void OnEnter()
     {
         base.OnEnter();
+        playerRef.numberOfJumpsUsed = 0;
+
     }
 
     public override void OnUpdate(){

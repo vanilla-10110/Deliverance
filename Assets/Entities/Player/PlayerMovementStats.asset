@@ -12,34 +12,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8647d0306abe4f14d9e090053e64fdbc, type: 3}
   m_Name: PlayerMovementStats
   m_EditorClassIdentifier: 
-  maxWalkSpeed: 12.5
-  groundAcceleration: 5
-  groundDecceleration: 20
-  airAcceleration: 10.2
-  airDecceleration: 3.4
-  maxDashSpeed: 20
+  maxRunSpeed: 6
+  maxAirHorizontalSpeed: 12.5
+  groundAcceleration: 31.5
+  groundDecceleration: 10.6
+  airAcceleration: 14.2
+  airDecceleration: 31
+  dashDuration: 0.102
+  dashSpeed: 32.7
+  afterDashFallingSpeedMultiplier: 1
+  afterDashFallingDuration: 0.05
   groundLayer:
     serializedVersion: 2
     m_Bits: 128
-  groundDetectionRayLength: 0.05
-  headDetectionRayLength: 0.02
-  headWidth: 0.75
-  jumpHeight: 100
-  jumpcHeightCompensationFactor: 1.1
-  timeTillJumpApex: 0.5
-  gravityOnReleaseMultiplier: 0.42
-  maxFallSpeed: 32.9
-  numberOfJumpsAllowed: 2
+  groundDetectionRayLength: 0.03
+  headDetectionRayLength: 0.04
+  headWidth: 0.375
+  jumpHeight: 3
+  jumpHeightCompensationFactor: 1.05
+  timeTillJumpApex: 0.3
+  gravityOnReleaseMultiplier: 2.76
+  numberOfJumpsAllowed: 3
   timeForUpwardsCancel: 0.0358
-  apexThreshold: 0.97
-  apexHangTime: 0.108
-  jumpBufferTime: 0.292
-  jumpCayoteTime: 0.1
+  apexThreshold: 0.877
+  apexHangTime: 0.1
+  jumpBufferTime: 0.2
+  jumpCayoteTime: 0.07
+  fallingMaxSpeed: 20
   debugShowIsGroundedBox: 1
-  debugShowHeadBumpBox: 0
-  showWalkJumpArc: 0
-  showDashJumpArc: 0
+  debugShowHeadBumpBox: 1
+  showWalkJumpArc: 1
+  showDashJumpArc: 1
   stopOnCollision: 1
   drawRight: 1
-  arcResolution: 20
-  visualisationSteps: 90
+  arcResolution: 31
+  visualisationSteps: 50

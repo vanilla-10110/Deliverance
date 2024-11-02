@@ -5,13 +5,14 @@ using UnityEngine;
 public abstract class BasePlayerState : BaseState
 {
     public EnumBus.PLAYER_STATES stateEnum;
-    // protected PSM psm;
 
     public static new PSM ParentStateMachine {get; private set;}
     public Player playerRef;
+    protected PlayerMovementStats moveStatsRef;
 
     public void InitialSetup(Player player){
         playerRef = player;
+       
     }
 
     public void OnAwake(PSM psm){
@@ -21,6 +22,7 @@ public abstract class BasePlayerState : BaseState
      public override void OnEnter()
     {
         base.OnEnter();
+        moveStatsRef = playerRef.moveStats; // re fetches the move stats (in case its not a continuous reference)
         Debug.Log("entering new state: " + name);
     }
 

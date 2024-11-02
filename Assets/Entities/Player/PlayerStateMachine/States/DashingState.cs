@@ -6,9 +6,10 @@ using UnityEngine;
 public class DashingState : BasePlayerState
 {
 
-    [Range(0.05f, 1f)][SerializeField] private float dashDuration = 0.2f;
-    [Range(1f, 100f)] [SerializeField] private float dashSpeed = 100f;
+    // [Range(0.05f, 1f)][SerializeField] private float dashDuration = 0.2f;
+    // [Range(1f, 100f)] [SerializeField] private float dashSpeed = 100f;
     private float timeSinceDashStart = 0f;
+    public Vector2 lastDashDirection;
     private Vector2 dashDirection = Vector2.zero;
 
 
@@ -18,6 +19,10 @@ public class DashingState : BasePlayerState
     public override void OnEnter()
     {
         base.OnEnter();
+        // Player trail renderer
+        playerRef.PlayerTrail.emitting = true;
+        playerRef.PlayerTrail.time = moveStatsRef.dashDuration * 3;
+
         timeSinceDashStart = 0f;
 
         if (InputManager.movement == Vector2.zero){
@@ -31,20 +36,23 @@ public class DashingState : BasePlayerState
     public override void OnUpdate(){
         base.OnUpdate();
 
-        if (timeSinceDashStart >= dashDuration){
+        if (timeSinceDashStart >= moveStatsRef.dashDuration && playerRef.isGrounded){
             ParentStateMachine.TransitionStates(EnumBus.PLAYER_STATES.IDLE);
-        } 
+        }
+
+        if (timeSinceDashStart >= moveStatsRef.dashDuration && !playerRef.isGrounded){
+            ParentStateMachine.TransitionStates(EnumBus.PLAYER_STATES.FALLING);
+        }
 
         timeSinceDashStart += Time.deltaTime;
 
-        Debug.Log(timeSinceDashStart);
     }
 
     public override void OnFixedUpdate()
     {
         base.OnFixedUpdate();
 
-        playerRef._rb.velocity = dashDirection * dashSpeed;//new Vector2( playerRef.moveStats.maxDashSpeed * dashDirection, 0f);
+        playerRef.velocity = dashDirection * moveStatsRef.dashSpeed;
 
     }
 
@@ -55,8 +63,11 @@ public class DashingState : BasePlayerState
 
     public override void OnExit(){
         base.OnExit();
+        playerRef.PlayerTrail.emitting = false ;
 
+        // reseting the stats so it doesnt carry over next time you dash
         timeSinceDashStart = 0f;
+        lastDashDirection = dashDirection;
         dashDirection = Vector2.zero;
     }
 

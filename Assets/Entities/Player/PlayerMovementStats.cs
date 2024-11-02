@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -10,13 +11,17 @@ public class PlayerMovementStats : ScriptableObject
 
     [Header("Walk")]
     [Range(1f, 100f)] public float maxRunSpeed = 12.5f;
+    [Range(1f, 100f)] public float maxAirHorizontalSpeed = 12.5f;
     [Range(0.251f, 50f)] public float groundAcceleration = 5f;
     [Range(0.251f, 50f)] public float groundDecceleration = 20f;
     [Range(0.251f, 50f)] public float airAcceleration = 5f;
     [Range(0.251f, 50f)] public float airDecceleration = 5f;
 
     [Header("Dash")]
-    [Range(1f, 100f)] public float maxDashSpeed = 20f;
+    [Range(0.05f, 1f)] public float dashDuration = 0.2f;
+    [Range(1f, 100f)] public float dashSpeed = 100f;
+    [Range(0.01f, 1f)] public float afterDashFallingSpeedMultiplier = 0.5f;
+    [Range(0.05f, 1f)] public float afterDashFallingDuration = 0.5f;
 
     [Header("Grounded/Collision Checks")]
     public LayerMask groundLayer;
@@ -27,10 +32,9 @@ public class PlayerMovementStats : ScriptableObject
 
     [Header("Jump")]
     public float jumpHeight = 6.5f;
-    [Range(1f, 1.1f)] public float jumpcHeightCompensationFactor = 1.05f; 
+    [Range(1f, 1.1f)] public float jumpHeightCompensationFactor = 1.05f; 
     public float timeTillJumpApex = 0.35f;
-    [Range(0.01f, 5f)] public float gravityOnReleaseMultiplier = 2f;
-    public float maxFallSpeed = 26f;
+
     [Range(1,5)] public int numberOfJumpsAllowed = 2;
 
     [Header("Jump Cut")]
@@ -46,6 +50,10 @@ public class PlayerMovementStats : ScriptableObject
     [Header("Jump Cayote Time")]
     [Range(0f,1f)] public float jumpCayoteTime = 0.1f;
 
+
+    [Header("Falling")]
+    [Range(0f,100f)] public float fallingMaxSpeed = 50f;
+    [Range(0.01f, 5f)] public float gravityOnReleaseMultiplier = 2f;
 
 
 
@@ -75,7 +83,7 @@ public class PlayerMovementStats : ScriptableObject
     }
 
     private void CalculateValues(){
-        adjustedJumpHeight = jumpHeight * jumpcHeightCompensationFactor;
+        adjustedJumpHeight = jumpHeight * jumpHeightCompensationFactor;
         gravity = -(2f * adjustedJumpHeight) / Mathf.Pow(timeTillJumpApex, 2f);
         initialJumpVelocity = Mathf.Abs(gravity) * timeTillJumpApex;
     }
