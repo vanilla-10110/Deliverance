@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using deVoid.Utils;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -13,6 +14,8 @@ public class UIManager : MonoBehaviour
     public GameObject MainUI;
     public GameObject GameOverOverlay;
     public GameObject ScoreLabel;
+
+    public GameObject PauseOverlay;
 
     public static UIManager Instance {get; private set; }
 
@@ -28,8 +31,14 @@ public class UIManager : MonoBehaviour
         // DontDestroyOnLoad(MainUI);
     }
 
+    private void ConnectSignals(){
+        Signals.Get<SignalBus.PauseGameSignal>().AddListener(ShowPauseOverlay);
+    }
+
     private void Start(){
         ShowMainUI();
+        ConnectSignals();
+    
     }
 
     public void ShowGameOverScreen(){
@@ -44,5 +53,10 @@ public class UIManager : MonoBehaviour
 
     public void SetScore(int newScore){
         ScoreLabel.GetComponent<TMPro.TextMeshProUGUI>().text = newScore.ToString(); 
+    }
+
+    public void ShowPauseOverlay(){
+        PauseOverlay.SetActive(true);
+        MainUI.SetActive(false);
     }
 }

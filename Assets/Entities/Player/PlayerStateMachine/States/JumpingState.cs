@@ -21,6 +21,8 @@ public class JumpingState : BasePlayerState
         isFastFalling = false;
 
         playerRef.velocity.y = moveStatsRef.initialJumpVelocity;
+
+        playerRef.animator.SetBool("isJumping", true);
     }
 
     public override void OnUpdate(){
@@ -109,6 +111,9 @@ public class JumpingState : BasePlayerState
         playerRef.numberOfJumpsUsed += 1;
 
         isPastApexThreshold = false;
+
+        playerRef.animator.SetBool("isJumping", false);
+
     }
 
 }

@@ -17,6 +17,9 @@ public class RunningState : BasePlayerState
         playerRef.numberOfJumpsUsed = 0;
         jumpCayoteTime = moveStatsRef.jumpCayoteTime;
 
+
+        playerRef.animator.SetBool("isRunning", true);
+
     }
 
     public override void OnUpdate(){
@@ -93,6 +96,8 @@ public class RunningState : BasePlayerState
         base.OnExit();
         jumpCayoteTime = 0f;
         cayoteBufferActive = false;
+
+        playerRef.animator.SetBool("isRunning", false);
     }
 
 }

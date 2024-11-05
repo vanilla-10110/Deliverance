@@ -30,10 +30,7 @@ public class FallingState : BasePlayerState
             }
         }
         if (ParentStateMachine.prevState == EnumBus.PLAYER_STATES.DASHING){
-            // if ((ParentStateMachine.GetState(ParentStateMachine.prevState) as DashingState).isFastFalling){
             isFastFalling = true;
-            // playerRef.velocity.y = -5f;
-            // }
         }
         
     }
@@ -68,6 +65,7 @@ public class FallingState : BasePlayerState
             jumpBufferTimeLeft = moveStatsRef.jumpBufferTime;
         }
         else if (InputManager.jumpWasPressed && playerRef.numberOfJumpsUsed < moveStatsRef.numberOfJumpsAllowed){
+            playerRef.animator.SetTrigger("doubleJumpTrigger");
             ParentStateMachine.TransitionStates(EnumBus.PLAYER_STATES.JUMPING);
         }
         

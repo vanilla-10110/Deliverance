@@ -13,7 +13,8 @@ public class Player : MonoBehaviour
     public PlayerMovementStats moveStats;
     [SerializeField] private Collider2D _feetColl;
     [SerializeField] private Collider2D _bodyColl;
-
+    
+    public Animator animator;
     private Rigidbody2D _rb;
     public TrailRenderer PlayerTrail {get; private set;}
 
@@ -39,7 +40,7 @@ public class Player : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         PlayerTrail = GetComponent<TrailRenderer>();
         PlayerTrail.emitting = false;
-
+        animator = GetComponent<Animator>();
     }
 
     private void Start(){
@@ -53,6 +54,8 @@ public class Player : MonoBehaviour
         IsHeadBumped(); 
 
         TurnCheck(InputManager.movement);
+
+        animator.SetBool("isOnGround", isGrounded);
     }
     
     private void FixedUpdate(){
