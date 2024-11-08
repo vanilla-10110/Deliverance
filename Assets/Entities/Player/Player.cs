@@ -34,6 +34,9 @@ public class Player : MonoBehaviour
 
     public PSM psm;
 
+    // dash vars
+    public int numberOfDashesUsed = 0;
+
 
     private void Awake(){
         isFacingRight = true;

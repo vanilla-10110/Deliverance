@@ -22,6 +22,7 @@ MonoBehaviour:
   dashSpeed: 32.7
   afterDashFallingSpeedMultiplier: 1
   afterDashFallingDuration: 0.05
+  numberOfDashesAllowed: 1
   groundLayer:
     serializedVersion: 2
     m_Bits: 128
@@ -31,7 +32,6 @@ MonoBehaviour:
   jumpHeight: 3
   jumpHeightCompensationFactor: 1.05
   timeTillJumpApex: 0.3
-  gravityOnReleaseMultiplier: 2.76
   numberOfJumpsAllowed: 3
   timeForUpwardsCancel: 0.0358
   apexThreshold: 0.877
@@ -39,6 +39,7 @@ MonoBehaviour:
   jumpBufferTime: 0.2
   jumpCayoteTime: 0.07
   fallingMaxSpeed: 20
+  gravityOnReleaseMultiplier: 2.76
   debugShowIsGroundedBox: 1
   debugShowHeadBumpBox: 1
   showWalkJumpArc: 1

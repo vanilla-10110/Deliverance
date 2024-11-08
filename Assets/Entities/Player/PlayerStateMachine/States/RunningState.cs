@@ -15,6 +15,7 @@ public class RunningState : BasePlayerState
     {
         base.OnEnter();
         playerRef.numberOfJumpsUsed = 0;
+        playerRef.numberOfDashesUsed = 0;
         jumpCayoteTime = moveStatsRef.jumpCayoteTime;
 
 

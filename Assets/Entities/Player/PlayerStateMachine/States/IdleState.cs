@@ -15,6 +15,7 @@ public class IdleState : BasePlayerState
         base.OnEnter();
         
         playerRef.numberOfJumpsUsed = 0;
+        playerRef.numberOfDashesUsed = 0;
 
 
     }

@@ -12,13 +12,14 @@ public class ClimbingState : BasePlayerState
     {
         base.OnEnter();
         playerRef.numberOfJumpsUsed = 0;
-
+        playerRef.numberOfDashesUsed = 0;
     }
 
     public override void OnUpdate(){
         base.OnUpdate();
 
-        if (InputManager.dashWasPressed){
+        if (InputManager.dashWasPressed && (playerRef.numberOfDashesUsed >= moveStatsRef.numberOfDashesAllowed))
+        {
             ParentStateMachine.TransitionStates(EnumBus.PLAYER_STATES.DASHING);
         }
 
