@@ -23,13 +23,17 @@ public abstract class BasePlayerState : BaseState
     {
         base.OnEnter();
         moveStatsRef = playerRef.moveStats; // re fetches the move stats (in case its not a continuous reference)
-        Debug.Log("entering new state: " + name);
+        if (playerRef.logStateMessages){
+            Debug.Log("entering new state: " + name);
+        }
     }
 
      public override void OnExit()
     {
         base.OnExit();
-        Debug.Log("exiting state: " + name);
+        if (playerRef.logStateMessages){
+            Debug.Log("exiting state: " + name);
+        }
     }
 
 }

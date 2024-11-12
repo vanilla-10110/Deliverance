@@ -32,6 +32,9 @@ public class Player : MonoBehaviour
     // jump vars
     public int numberOfJumpsUsed = 0;
 
+    [Header("Debug")]
+    public bool logStateMessages = false;
+
     public PSM psm;
 
 
@@ -41,10 +44,16 @@ public class Player : MonoBehaviour
         PlayerTrail = GetComponent<TrailRenderer>();
         PlayerTrail.emitting = false;
         animator = GetComponent<Animator>();
+
+        DontDestroyOnLoad(this.gameObject);
+
     }
 
     private void Start(){
+        GameManager.Instance.playerRef = this;
+
         psm.OnAwake(this);
+
     }
 
     private void Update(){

@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using deVoid.Utils;
+// using deVoid.Utils;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -20,6 +20,7 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance {get; private set; }
 
     private void Awake(){
+        // base.OnAwake();
         if (Instance != null && Instance != this){
             Destroy(this);
         }
@@ -32,7 +33,7 @@ public class UIManager : MonoBehaviour
     }
 
     private void ConnectSignals(){
-        Signals.Get<SignalBus.PauseGameSignal>().AddListener(ShowPauseOverlay);
+        // SignalBus.signalSample.Connect(ShowGameOverScreen);
     }
 
     private void Start(){
