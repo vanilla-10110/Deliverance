@@ -3,10 +3,23 @@ using UnityEngine;
 
 public class SignalBus : MonoBehaviour 
 {
-    public static GameSignal signalSample;
 
 
 
+    public static GameSignal StartMenuTriggerSignal = new();
+
+    public static SignalBus Instance {get; private set;}
+
+    private void Awake(){
+        DontDestroyOnLoad(gameObject);
+
+        if (Instance != null && Instance != this){
+            Destroy(this);
+        }
+        else {
+            Instance = this;
+        }
+    }
 
     
     // // you have to call the Signals class to use these, they are only here to be defined 

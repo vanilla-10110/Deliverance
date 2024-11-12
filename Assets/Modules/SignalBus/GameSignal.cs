@@ -1,9 +1,10 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class GameSignal : MonoBehaviour {
-    private List<UnityEvent> listeners = new List<UnityEvent>();
+    private readonly List<Action> listeners = new();
 
     private GameSignal Instance;
 
@@ -17,16 +18,16 @@ public class GameSignal : MonoBehaviour {
     }
 
     public void Emit(){
-        foreach (UnityEvent listener in listeners){
+        foreach (Action listener in listeners){
             listener.Invoke();
         }
     }
 
-    public void Connect(UnityEvent listener){
+    public void Connect(Action listener){
         listeners.Add(listener);
     }
 
-    public void Disconnect(UnityEvent listener){
+    public void Disconnect(Action listener){
         listeners.Remove(listener);
     }
 

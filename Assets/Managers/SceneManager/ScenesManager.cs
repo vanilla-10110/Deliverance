@@ -17,10 +17,12 @@ public class ScenesManager : MonoBehaviour
         }
     }
 
-    public void LoadNewScene(string scenePath){
-        currentScene =  SceneManager.GetSceneByPath(scenePath);
+    public void LoadNewScene(string sceneName){
+        Debug.Log("trying to load scene at path: " + sceneName);
 
-        SceneManager.LoadScene( currentScene.buildIndex);
+        SceneManager.LoadScene(sceneName);
+
+        currentScene = SceneManager.GetActiveScene();
     }
 
     public void SetCheckpoint(Vector3 newPosition){

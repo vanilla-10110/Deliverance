@@ -12,8 +12,10 @@ public class UIManager : MonoBehaviour
 {
 
     public GameObject MainUI;
-    public GameObject GameOverOverlay;
+    public GameObject GameOverScreen;
     public GameObject ScoreLabel;
+
+    [SerializeField] private GameObject StartMenu;
 
     public GameObject PauseOverlay;
 
@@ -28,8 +30,6 @@ public class UIManager : MonoBehaviour
             Instance = this;
         }
 
-        // DontDestroyOnLoad(ScoreLabel);
-        // DontDestroyOnLoad(MainUI);
     }
 
     private void ConnectSignals(){
@@ -37,19 +37,24 @@ public class UIManager : MonoBehaviour
     }
 
     private void Start(){
-        ShowMainUI();
+        // ShowMainUI();
         ConnectSignals();
-    
     }
 
     public void ShowGameOverScreen(){
         MainUI.SetActive(false);
-        GameOverOverlay.SetActive(true);
+        GameOverScreen.SetActive(true);
+    }
+
+    public void ShowStartMenu(){
+        MainUI.SetActive(false);
+        GameOverScreen.SetActive(false);
+        StartMenu.SetActive(true);
     }
 
     public void ShowMainUI(){
         MainUI.SetActive(true);
-        GameOverOverlay.SetActive(false);
+        GameOverScreen.SetActive(false);
     }
 
     public void SetScore(int newScore){

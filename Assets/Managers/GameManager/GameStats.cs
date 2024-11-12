@@ -7,7 +7,8 @@ using UnityEngine;
 
 public class GameStats : ScriptableObject
 {
-    public int wealth = 0;
 
+    public EnumBus.GAME_STATE currentGameState = EnumBus.GAME_STATE.START_MENU;
+    public int wealth = 0;
 
 }

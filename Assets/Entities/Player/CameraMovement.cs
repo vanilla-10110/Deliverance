@@ -10,14 +10,20 @@ public class CameraMovement : MonoBehaviour
     [SerializeField] Vector2 offset;
 
     void LateUpdate() {
-        Vector3 finalPosition = player.transform.position;
 
-        finalPosition.x += offset.x;
-        finalPosition.y += offset.y;
+        if (
+            player != null &&
+            GameManager.Instance.gameStats.currentGameState != EnumBus.GAME_STATE.START_MENU
+        ){
+            Vector3 finalPosition = player.transform.position;
 
-        finalPosition.z = -10;
+            finalPosition.x += offset.x;
+            finalPosition.y += offset.y;
 
-        transform.position = Vector3.Lerp(transform.position, finalPosition, smoothSpeed * Time.deltaTime);
+            finalPosition.z = -10;
+
+            transform.position = Vector3.Lerp(transform.position, finalPosition, smoothSpeed * Time.deltaTime);
+        }
     }
 
 }

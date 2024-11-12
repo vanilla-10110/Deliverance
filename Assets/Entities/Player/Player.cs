@@ -37,19 +37,23 @@ public class Player : MonoBehaviour
 
     public PSM psm;
 
-
     private void Awake(){
         isFacingRight = true;
         _rb = GetComponent<Rigidbody2D>();
         PlayerTrail = GetComponent<TrailRenderer>();
-        PlayerTrail.emitting = false;
         animator = GetComponent<Animator>();
 
-        DontDestroyOnLoad(this.gameObject);
+        // DontDestroyOnLoad(this.gameObject);
 
     }
 
     private void Start(){
+        if (GameObject.Find("Player")){
+            Destroy(this.gameObject);
+        }
+
+        PlayerTrail.emitting = false;
+
         GameManager.Instance.playerRef = this;
 
         psm.OnAwake(this);
