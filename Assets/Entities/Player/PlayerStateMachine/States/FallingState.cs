@@ -70,7 +70,8 @@ public class FallingState : BasePlayerState
         }
         
         // for state transitions
-        if (InputManager.dashWasPressed){
+        if (InputManager.dashWasPressed && playerRef.numberOfDashesUsed <= moveStatsRef.numberOfDashesAllowed)
+        {
             ParentStateMachine.TransitionStates(EnumBus.PLAYER_STATES.DASHING);
         }
 

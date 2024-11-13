@@ -35,6 +35,9 @@ public class Player : MonoBehaviour
     [Header("Debug")]
     public bool logStateMessages = false;
 
+    // dash vars
+    public int numberOfDashesUsed = 0;
+
     public PSM psm;
 
     private void Awake(){

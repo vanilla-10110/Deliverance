@@ -22,6 +22,7 @@ public class PlayerMovementStats : ScriptableObject
     [Range(1f, 100f)] public float dashSpeed = 100f;
     [Range(0.01f, 1f)] public float afterDashFallingSpeedMultiplier = 0.5f;
     [Range(0.05f, 1f)] public float afterDashFallingDuration = 0.5f;
+    [Range(0, 2)] public int numberOfDashesAllowed = 1;
 
     [Header("Grounded/Collision Checks")]
     public LayerMask groundLayer;

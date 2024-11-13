@@ -19,6 +19,20 @@ public class DashingState : BasePlayerState
     public override void OnEnter()
     {
         base.OnEnter();
+
+        if (playerRef.numberOfDashesUsed >= moveStatsRef.numberOfDashesAllowed)
+        {
+            if (playerRef.isGrounded)
+            {
+                ParentStateMachine.TransitionStates(EnumBus.PLAYER_STATES.IDLE);
+            }
+            else
+            {
+                ParentStateMachine.TransitionStates(EnumBus.PLAYER_STATES.FALLING);
+            }
+        }
+        else
+        {
         // Player trail renderer
         playerRef.PlayerTrail.emitting = true;
         playerRef.PlayerTrail.time = moveStatsRef.dashDuration * 3;
@@ -30,11 +44,24 @@ public class DashingState : BasePlayerState
         }
         else {
             dashDirection = InputManager.movement;
+            }
         }
     }
 
     public override void OnUpdate(){
         base.OnUpdate();
+
+        if (playerRef.numberOfDashesUsed >= moveStatsRef.numberOfDashesAllowed)
+        {
+            if (playerRef.isGrounded)
+            {
+                ParentStateMachine.TransitionStates(EnumBus.PLAYER_STATES.IDLE);
+            }
+            else
+            {
+                ParentStateMachine.TransitionStates(EnumBus.PLAYER_STATES.FALLING);
+            }
+        }
 
         if (timeSinceDashStart >= moveStatsRef.dashDuration && playerRef.isGrounded){
             ParentStateMachine.TransitionStates(EnumBus.PLAYER_STATES.IDLE);
@@ -63,6 +90,7 @@ public class DashingState : BasePlayerState
 
     public override void OnExit(){
         base.OnExit();
+        playerRef.numberOfDashesUsed += 1;
         playerRef.PlayerTrail.emitting = false ;
 
         // reseting the stats so it doesnt carry over next time you dash
