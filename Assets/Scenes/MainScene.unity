@@ -176,11 +176,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7082649886862558851, guid: 28595cc81a3b6da47a4239774c575487, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 960
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7082649886862558851, guid: 28595cc81a3b6da47a4239774c575487, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1030
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7082649886862558851, guid: 28595cc81a3b6da47a4239774c575487, type: 3}
       propertyPath: m_LocalPosition.z
@@ -221,6 +221,10 @@ PrefabInstance:
     - target: {fileID: 8216620885661045205, guid: 28595cc81a3b6da47a4239774c575487, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 50.55005
+      objectReference: {fileID: 0}
+    - target: {fileID: 8690907324398489404, guid: 28595cc81a3b6da47a4239774c575487, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LoadLevelFromName
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:

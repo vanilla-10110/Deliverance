@@ -55,6 +55,7 @@ public class UIManager : MonoBehaviour
     public void ShowMainUI(){
         MainUI.SetActive(true);
         GameOverScreen.SetActive(false);
+        StartMenu.SetActive(false);
     }
 
     public void SetScore(int newScore){

@@ -18,7 +18,6 @@ public class GameManager : MonoBehaviour
     public GameStats gameStats;
     public Player playerRef = null;
 
-
     [SerializeReference] private string FirstLevelPath;
     [SerializeReference] private GameObject playerPrefab;
 
@@ -40,6 +39,8 @@ public class GameManager : MonoBehaviour
         SignalBus.StartMenuTriggerSignal.Connect(OnStartMenuTrigger);
 
         SignalBus.StartMenuTriggerSignal.Emit();
+
+
         UpdateUI();
     }
 
@@ -52,7 +53,10 @@ public class GameManager : MonoBehaviour
         sceneManager.RestartOnCheckpoint(playerRef.gameObject);
     }
 
-    public void LoadLevelFromPath(string sceneName){
+    public void LoadLevelFromName(string sceneName){
+        playerRef.transform.position = new Vector3(0, 0, 0);
+
+        uiManager.ShowMainUI();
         sceneManager.LoadNewScene(sceneName);
     }
 
