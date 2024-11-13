@@ -32,22 +32,35 @@ public class Player : MonoBehaviour
     // jump vars
     public int numberOfJumpsUsed = 0;
 
-    public PSM psm;
+    [Header("Debug")]
+    public bool logStateMessages = false;
 
     // dash vars
     public int numberOfDashesUsed = 0;
 
+    public PSM psm;
 
     private void Awake(){
         isFacingRight = true;
         _rb = GetComponent<Rigidbody2D>();
         PlayerTrail = GetComponent<TrailRenderer>();
-        PlayerTrail.emitting = false;
         animator = GetComponent<Animator>();
+
+        // DontDestroyOnLoad(this.gameObject);
+
     }
 
     private void Start(){
+        if (GameObject.Find("Player")){
+            Destroy(this.gameObject);
+        }
+
+        PlayerTrail.emitting = false;
+
+        GameManager.Instance.playerRef = this;
+
         psm.OnAwake(this);
+
     }
 
     private void Update(){

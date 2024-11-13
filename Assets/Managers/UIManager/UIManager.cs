@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using deVoid.Utils;
+// using deVoid.Utils;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -12,14 +12,17 @@ public class UIManager : MonoBehaviour
 {
 
     public GameObject MainUI;
-    public GameObject GameOverOverlay;
+    public GameObject GameOverScreen;
     public GameObject ScoreLabel;
+
+    [SerializeField] private GameObject StartMenu;
 
     public GameObject PauseOverlay;
 
     public static UIManager Instance {get; private set; }
 
     private void Awake(){
+        // base.OnAwake();
         if (Instance != null && Instance != this){
             Destroy(this);
         }
@@ -27,28 +30,31 @@ public class UIManager : MonoBehaviour
             Instance = this;
         }
 
-        // DontDestroyOnLoad(ScoreLabel);
-        // DontDestroyOnLoad(MainUI);
     }
 
     private void ConnectSignals(){
-        Signals.Get<SignalBus.PauseGameSignal>().AddListener(ShowPauseOverlay);
+        // SignalBus.signalSample.Connect(ShowGameOverScreen);
     }
 
     private void Start(){
-        ShowMainUI();
+        // ShowMainUI();
         ConnectSignals();
-    
     }
 
     public void ShowGameOverScreen(){
         MainUI.SetActive(false);
-        GameOverOverlay.SetActive(true);
+        GameOverScreen.SetActive(true);
+    }
+
+    public void ShowStartMenu(){
+        MainUI.SetActive(false);
+        GameOverScreen.SetActive(false);
+        StartMenu.SetActive(true);
     }
 
     public void ShowMainUI(){
         MainUI.SetActive(true);
-        GameOverOverlay.SetActive(false);
+        GameOverScreen.SetActive(false);
     }
 
     public void SetScore(int newScore){
