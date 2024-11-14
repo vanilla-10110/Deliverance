@@ -196,7 +196,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1944100328275994612, guid: e00926ea052ea004dab4e93a9afda2eb, type: 3}
       propertyPath: targetSpawnpointId
-      value: -1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1944100328275994612, guid: e00926ea052ea004dab4e93a9afda2eb, type: 3}
       propertyPath: sceneNameToTranstionTo
