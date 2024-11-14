@@ -1,12 +1,30 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class ScenesManager : MonoBehaviour
 {
-    private UnityEngine.SceneManagement.Scene currentScene;
+    private AsyncOperation loadSceneTask;
 
-    private Vector3 currentCheckpoint;
+    public enum STATE {
+        preLoading,
+        loading,
+        finishedLoading
+    }
+
+    public STATE currentState = STATE.finishedLoading;
+    private string currentSceneName;
+
+    private List<SpawnpointTrigger> spawnpointList = new();
+
+    public static int currentSpawnPointId = -1;
     public static ScenesManager Instance {get; private set;} 
+
+    private GameObject gameObjectHeld = null;
 
     private void Awake(){
         if (Instance != null && Instance != this){
@@ -17,26 +35,57 @@ public class ScenesManager : MonoBehaviour
         }
     }
 
-    public void LoadNewScene(string sceneName){
-        Debug.Log("trying to load scene at path: " + sceneName);
-
-        SceneManager.LoadScene(sceneName);
-
-        currentScene = SceneManager.GetActiveScene();
+    public void LoadScene(string sceneName){
+        currentSceneName = sceneName;
+        currentState = STATE.preLoading;
     }
 
-    public void SetCheckpoint(Vector3 newPosition){
-        currentCheckpoint = newPosition;
-
-        Debug.Log("Checkpoint set to "+ currentCheckpoint);
-    }
-
-    public void RestartOnCheckpoint(GameObject player){
-        if (currentCheckpoint != null){
-            Debug.Log("Restarting from checkpoint");
-            player.transform.position = currentCheckpoint;
+    private void Update(){
+        if (currentState == STATE.preLoading && currentSceneName != null){
+            loadSceneTask = SceneManager.LoadSceneAsync(currentSceneName);
+            
+            currentState = STATE.loading;
+        }
+        if (currentState == STATE.loading && loadSceneTask.isDone){
+            currentState = STATE.finishedLoading;
+            SignalBus.newSceneLoaded.Emit();
         }
 
+        if (gameObjectHeld != null){
+            SpawnpointTrigger spawnPoint = GetSpawnpoint(currentSpawnPointId);
+            if (spawnPoint != null){
+                if (spawnPoint is RoomTransitionTrigger){
+                    (spawnPoint as RoomTransitionTrigger).exitedAreaSinceSpawn = false;
+                }
+                gameObjectHeld.transform.position = spawnPoint.position; 
+                gameObjectHeld = null;
+            }
+        }
+    }
+    
+    public void SetSpawnpoint(int spawnPointID){
+        currentSpawnPointId = spawnPointID;
+    }
+
+    public void AddSpawnpointToList(SpawnpointTrigger spawnPoint){
+        spawnpointList.Add(spawnPoint);
+    }
+
+    public void MoveGameobjectToSpawnpoint(GameObject gameObject){
+        gameObjectHeld = gameObject;
+    }
+
+    public void RemoveSpawnpoint(SpawnpointTrigger spawnpoint){
+        spawnpointList.Remove(spawnpoint);
+    }
+
+    public void RemoveAllSpawnpoints(){
+        spawnpointList.Clear();
+        currentSpawnPointId = -1;
+    }
+
+    public SpawnpointTrigger GetSpawnpoint(int spawnPointId){
+        return spawnpointList.Find(p => p.id == spawnPointId);
     }
 
 }

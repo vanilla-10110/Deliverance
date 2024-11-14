@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 157055334622377326}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -139,6 +139,7 @@ MonoBehaviour:
   bumpedHead: 0
   numberOfJumpsUsed: 0
   logStateMessages: 0
+  numberOfDashesUsed: 0
   psm: {fileID: 8083095676620259423}
 --- !u!95 &1900021295697218004
 Animator:

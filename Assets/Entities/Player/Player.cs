@@ -6,6 +6,7 @@ using System.Threading;
 using System.Xml.Serialization;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Player : MonoBehaviour
 {
@@ -51,6 +52,8 @@ public class Player : MonoBehaviour
     }
 
     private void Start(){
+        SignalBus.newSceneLoaded.Connect(ChangePosition);
+
         if (GameObject.Find("Player")){
             Destroy(this.gameObject);
         }
@@ -60,7 +63,15 @@ public class Player : MonoBehaviour
         GameManager.Instance.playerRef = this;
 
         psm.OnAwake(this);
+    }
 
+    private void OnDestroy(){
+        SignalBus.newSceneLoaded.Disconnect(ChangePosition);
+
+    }
+
+    private void ChangePosition(){
+        GameManager.Instance.MovePlayerToSpawnpoint();        
     }
 
     private void Update(){

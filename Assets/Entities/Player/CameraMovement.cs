@@ -12,8 +12,7 @@ public class CameraMovement : MonoBehaviour
     void LateUpdate() {
 
         if (
-            player != null &&
-            GameManager.Instance.gameStats.currentGameState != EnumBus.GAME_STATE.START_MENU
+            player != null
         ){
             Vector3 finalPosition = player.transform.position;
 

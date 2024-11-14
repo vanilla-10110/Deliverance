@@ -11,13 +11,13 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
 
-    public GameObject MainUI;
-    public GameObject GameOverScreen;
-    public GameObject ScoreLabel;
+    [SerializeField] private GameObject MainUI;
+    [SerializeField] private GameObject GameOverScreen;
+    [SerializeField] private GameObject ScoreLabel;
 
     [SerializeField] private GameObject StartMenu;
 
-    public GameObject PauseOverlay;
+    [SerializeField] private GameObject PauseOverlay;
 
     public static UIManager Instance {get; private set; }
 
@@ -56,6 +56,10 @@ public class UIManager : MonoBehaviour
         MainUI.SetActive(true);
         GameOverScreen.SetActive(false);
         StartMenu.SetActive(false);
+    }
+
+    public void UpdateUITitle(string title){
+        MainUI.transform.Find("LevelLabel").GetComponent<TMPro.TextMeshProUGUI>().text = title;
     }
 
     public void SetScore(int newScore){
