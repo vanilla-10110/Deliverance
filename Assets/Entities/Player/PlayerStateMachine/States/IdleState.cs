@@ -39,6 +39,12 @@ public class IdleState : BasePlayerState
             ParentStateMachine.TransitionStates(EnumBus.PLAYER_STATES.FALLING);
 
         }
+
+        if (InputManager.climbWasPressed && playerRef.isClimbable)
+        {
+            ParentStateMachine.TransitionStates(EnumBus.PLAYER_STATES.CLIMBING);
+        }
+
     }
 
     public override void OnFixedUpdate()

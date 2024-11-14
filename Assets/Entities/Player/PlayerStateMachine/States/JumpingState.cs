@@ -36,6 +36,10 @@ public class JumpingState : BasePlayerState
         if (InputManager.dashWasPressed && (playerRef.numberOfDashesUsed >= moveStatsRef.numberOfDashesAllowed)){
             ParentStateMachine.TransitionStates(EnumBus.PLAYER_STATES.DASHING);
         }
+        if (InputManager.climbWasPressed && playerRef.isClimbable)
+        {
+            ParentStateMachine.TransitionStates(EnumBus.PLAYER_STATES.CLIMBING);
+        }
 
         if (playerRef.numberOfJumpsUsed >= moveStatsRef.numberOfJumpsAllowed){
             ParentStateMachine.TransitionStates(EnumBus.PLAYER_STATES.FALLING);
