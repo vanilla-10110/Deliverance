@@ -13,11 +13,13 @@ public class InputManager : MonoBehaviour
     public static bool jumpIsHeld;
     public static bool jumpWasReleased;
     public static bool dashWasPressed;
+    public static bool climbWasPressed;
     public static bool dashIsheld;
 
     private InputAction _moveAction;
     private InputAction _jumpAction;
     private InputAction _dashAction;
+    private InputAction _climbAction;
 
 
     private void Awake(){
@@ -26,6 +28,7 @@ public class InputManager : MonoBehaviour
         _moveAction = playerInput.actions["Move"];
         _jumpAction = playerInput.actions["Jump"];
         _dashAction = playerInput.actions["Dash"];
+        _climbAction = playerInput.actions["Climb"];
 
     }
 
@@ -39,5 +42,7 @@ public class InputManager : MonoBehaviour
 
         dashWasPressed = _dashAction.WasPressedThisFrame();
         dashIsheld = _dashAction.IsPressed();
+
+        climbWasPressed = _climbAction.WasPressedThisFrame();
     }
 }

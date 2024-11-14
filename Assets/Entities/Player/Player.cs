@@ -29,6 +29,8 @@ public class Player : MonoBehaviour
     public bool isGrounded;
     public bool bumpedHead;
 
+    public bool isClimbable;
+
     // jump vars
     public int numberOfJumpsUsed = 0;
 
@@ -157,6 +159,38 @@ public class Player : MonoBehaviour
             Debug.DrawRay(new Vector2(boxCastOrigin.x + boxCastSize.x / 2, boxCastOrigin.y), Vector2.up * moveStats.headDetectionRayLength, rayColor);
             Debug.DrawRay(new Vector2(boxCastOrigin.x - boxCastSize.x / 2, boxCastOrigin.y + moveStats.headDetectionRayLength), Vector2.right * boxCastSize.x, rayColor);
 
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log("ENTER" + collision.tag);
+        if (collision.CompareTag("Ladder"))
+        {
+            if (collision.gameObject.GetComponent<Interaction>().Grown == true)
+            {
+                isClimbable = true;
+            }
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Ladder"))
+        {
+            if (collision.gameObject.GetComponent<Interaction>().Grown == true)
+            {
+                isClimbable = true;
+            }
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        Debug.Log("EXIT" + collision.tag);
+        if (collision.CompareTag("Ladder"))
+        {
+            isClimbable = false;
         }
     }
     #endregion
