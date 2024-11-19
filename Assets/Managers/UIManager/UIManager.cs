@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 // using deVoid.Utils;
 using TMPro;
+using Unity.Burst;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
@@ -18,6 +19,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject StartMenu;
 
     [SerializeField] private GameObject PauseOverlay;
+
+    [SerializeField] private GameObject HealthBar;
 
     public static UIManager Instance {get; private set; }
 
@@ -64,6 +67,19 @@ public class UIManager : MonoBehaviour
 
     public void SetScore(int newScore){
         ScoreLabel.GetComponent<TMPro.TextMeshProUGUI>().text = newScore.ToString(); 
+    }
+
+    public void InitialiseHealth(EntityStatsScriptableObject healthObj){
+        Image img = HealthBar.GetComponent<Image>();
+        img.fillAmount = healthObj.health / healthObj.maxHealth;
+
+        healthObj.HealthChangedEvent.AddListener(ChangeHealth);
+    }
+
+    public void ChangeHealth(int newHealth, int maxHealth){
+        Debug.Log("Changing UI health: " + (float)newHealth / maxHealth);
+        
+        HealthBar.GetComponent<Image>().fillAmount = (float)newHealth / maxHealth;
     }
 
     public void ShowPauseOverlay(){

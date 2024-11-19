@@ -51,6 +51,8 @@ public class GameManager : MonoBehaviour
 
         gameStats.currentSceneName = SceneManager.GetActiveScene().name;
         
+        uiManager.InitialiseHealth(playerStats);
+
         UpdateUI();
     }
 

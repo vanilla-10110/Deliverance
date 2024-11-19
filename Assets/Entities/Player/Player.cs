@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Xml.Serialization;
 using Unity.VisualScripting;
@@ -46,9 +47,6 @@ public class Player : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         PlayerTrail = GetComponent<TrailRenderer>();
         animator = GetComponent<Animator>();
-
-        // DontDestroyOnLoad(this.gameObject);
-
     }
 
     private void Start(){
@@ -67,11 +65,10 @@ public class Player : MonoBehaviour
 
     private void OnDestroy(){
         SignalBus.newSceneLoaded.Disconnect(ChangePosition);
-
     }
 
     private void ChangePosition(){
-        GameManager.Instance.MovePlayerToSpawnpoint();        
+        GameManager.Instance.MovePlayerToSpawnpoint();
     }
 
     private void Update(){
@@ -100,7 +97,6 @@ public class Player : MonoBehaviour
         else if (!isFacingRight && moveInput.x > 0) {
             Turn(true);
         }
-
     }
 
     private void Turn (bool turnRight){
@@ -172,4 +168,14 @@ public class Player : MonoBehaviour
     }
     #endregion
 
+    public void ChangeHealth(int value){
+        if (GameManager.Instance.playerStats.health > 0){
+            if (value < 0){
+               GameManager.Instance.playerStats.DecreaseHealth(value); 
+            }
+            else if (value > 0){
+                GameManager.Instance.playerStats.IncreaseHealth(value);
+            }
+        }
+    }
 }

@@ -123,6 +123,7 @@ MonoBehaviour:
   ScoreLabel: {fileID: 7018421387467222724}
   StartMenu: {fileID: 405417238737868660}
   PauseOverlay: {fileID: 258928565043164545}
+  HealthBar: {fileID: 5988835336676688540}
 --- !u!1001 &5373687466358143552
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -338,6 +339,11 @@ PrefabInstance:
 --- !u!224 &1430198766450806044 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6850819287648851496, guid: 87f1d3fe9c4905740ba2d6c6de5f2876, type: 3}
+  m_PrefabInstance: {fileID: 5533773763020380980}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5988835336676688540 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2294434378733787560, guid: 87f1d3fe9c4905740ba2d6c6de5f2876, type: 3}
   m_PrefabInstance: {fileID: 5533773763020380980}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &7018421387467222724 stripped
