@@ -53,6 +53,7 @@ MonoBehaviour:
   soundManager: {fileID: 15601471538958112}
   sceneManager: {fileID: 5173381844124607116}
   gameStats: {fileID: 11400000, guid: 85b2bae36423ebb4b8b8b82c8e724cd2, type: 2}
+  playerStats: {fileID: 11400000, guid: 1e197abafd0ccf34fa03eac6eab7b0b3, type: 2}
   playerRef: {fileID: 0}
   startOnMenu: 0
 --- !u!1001 &3994135965527911164

@@ -16,7 +16,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private UIManager uiManager;
     [SerializeField] private SoundManager soundManager;
     [SerializeField] private ScenesManager sceneManager;
-    public GameStats gameStats;
+    public  GameStats gameStats;
+    public  EntityStatsScriptableObject playerStats;
+    
     public Player playerRef = null;
 
     [Header("Toggables")]
@@ -49,6 +51,8 @@ public class GameManager : MonoBehaviour
 
         gameStats.currentSceneName = SceneManager.GetActiveScene().name;
         
+        uiManager.InitialiseHealth(playerStats);
+
         UpdateUI();
     }
 
@@ -60,6 +64,7 @@ public class GameManager : MonoBehaviour
 
     private void OnStartMenuTrigger(){
         Debug.Log("start menu triggered");
+        gameStats.currentGameState = EnumBus.GAME_STATE.HUB;
         uiManager.ShowStartMenu();
     }
 
@@ -71,8 +76,6 @@ public class GameManager : MonoBehaviour
         gameStats.currentSceneName = sceneName;
         UpdateUI();
         uiManager.ShowMainUI();
-        
-        // playerRef.transform.position = sceneManager.GetSpawnpoint(sceneManager.currentSpawnPointId).position;
     }
 
     public void LoadLevelFromNameWithTarget(string sceneName, int targetSpawnID){
@@ -83,10 +86,7 @@ public class GameManager : MonoBehaviour
         gameStats.currentSceneName = sceneName;
         UpdateUI();
         uiManager.ShowMainUI();
-
-        // playerRef.transform.position = sceneManager.GetSpawnpoint(targetSpawnID).position;
     }
-
 
     public void GameOverActions(){
         uiManager.ShowGameOverScreen();
