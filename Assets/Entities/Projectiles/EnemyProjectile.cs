@@ -40,15 +40,12 @@ public class EnemyProjectile : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (other.gameObject.CompareTag("Player") && other.gameObject.name == "Body")
+        if (collider.gameObject.CompareTag("Player") && collider.gameObject.name == "Body")
         {
             //Damage the player by 1
-            if (other.transform.parent.parent.gameObject.GetComponent<Player>().Health > 0)
-            {
-                other.transform.parent.parent.gameObject.GetComponent<Player>().Health -= 1;
-            }
+            collider.GetComponentInParent<Player>().ChangeHealth(-1);
             //Delete projectile when it touches the player (we can add effects here)
             Destroy(gameObject);
         }

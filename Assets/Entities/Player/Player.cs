@@ -43,10 +43,6 @@ public class Player : MonoBehaviour
 
     public PSM psm;
 
-    //Health vars
-    public int Health = 5;
-    public int maxHealth = 10;
-
     private void Awake(){
         isFacingRight = true;
         _rb = GetComponent<Rigidbody2D>();
@@ -223,6 +219,8 @@ public class Player : MonoBehaviour
             }
         }
     }
+
+
 
     #region Attack Related
     [NonSerialized] public bool canAttack = true;

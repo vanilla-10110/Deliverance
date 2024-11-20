@@ -6,7 +6,7 @@ using UnityEngine.Events;
 [CreateAssetMenu(menuName = "Entity Stats")]
 public class EntityStatsScriptableObject : ScriptableObject {
     public int health = 5;
-    public int maxHealth = 5;
+    public int maxHealth = 10;
     public int maxHealthLimit = 10;
 
     [System.NonSerialized]
