@@ -20,6 +20,8 @@ public class DashingState : BasePlayerState
     {
         base.OnEnter();
 
+        playerRef.canAttack = false;
+
         if (playerRef.numberOfDashesUsed >= moveStatsRef.numberOfDashesAllowed)
         {
             if (playerRef.isGrounded)
@@ -90,6 +92,8 @@ public class DashingState : BasePlayerState
 
     public override void OnExit(){
         base.OnExit();
+        playerRef.canAttack = true;
+
         playerRef.numberOfDashesUsed += 1;
         playerRef.PlayerTrail.emitting = false ;
 

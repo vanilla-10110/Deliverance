@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Manager
   - Ladder
+  - AttackArea
+  - Hurtbox
+  - Hitbox
   layers:
   - Default
   - TransparentFX
@@ -17,7 +20,7 @@ TagManager:
   - Floor
   - Collectable
   - Interactable
-  - 
+  - Enemy
   - 
   - 
   - 

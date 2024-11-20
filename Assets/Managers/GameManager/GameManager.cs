@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     public Player playerRef = null;
 
     [Header("Toggables")]
-    [SerializeField] bool startOnMenu = false; 
+    [SerializeField] bool startOnMenu = false;
 
     // to use the game manager - call GameManager.Instance and then any function you can find here
     public static GameManager Instance {get; private set;}

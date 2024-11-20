@@ -40,6 +40,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "MainAttack",
+                    "type": "Button",
+                    "id": "81b13940-706d-4862-9638-a1b8eecfc49a",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -320,12 +329,12 @@
                 },
                 {
                     "name": "",
-                    "id": "3de49f97-8e6c-4675-8db7-d72992f41fd8",
-                    "path": "",
+                    "id": "5b08c807-1d24-4ced-8e64-a0e49b93046e",
+                    "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Climb",
+                    "action": "MainAttack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

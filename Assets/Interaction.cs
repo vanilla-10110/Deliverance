@@ -10,11 +10,6 @@ public class Interaction : MonoBehaviour
     public bool Grown = false;
     private bool Growable = false;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
