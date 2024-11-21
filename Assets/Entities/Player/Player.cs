@@ -12,6 +12,8 @@ public class Player : MonoBehaviour
     public PlayerMovementStats moveStats;
     [SerializeField] private Collider2D _feetColl;
     [SerializeField] private Collider2D _bodyColl;
+
+    [SerializeField] private Hitbox _hitbox;
     
     public Animator animator;
     private Rigidbody2D _rb;
@@ -56,6 +58,12 @@ public class Player : MonoBehaviour
         if (GameObject.Find("Player")){
             Destroy(this.gameObject);
         }
+
+        if (_hitbox){
+            _hitbox.HitDetected.AddListener((int damageValue) => {GameManager.Instance.playerStats.DecreaseHealth(damageValue);});
+        }
+
+        
 
         PlayerTrail.emitting = false;
 
@@ -172,7 +180,6 @@ public class Player : MonoBehaviour
             Debug.DrawRay(new Vector2(boxCastOrigin.x - boxCastSize.x / 2, boxCastOrigin.y), Vector2.up * moveStats.headDetectionRayLength, rayColor);
             Debug.DrawRay(new Vector2(boxCastOrigin.x + boxCastSize.x / 2, boxCastOrigin.y), Vector2.up * moveStats.headDetectionRayLength, rayColor);
             Debug.DrawRay(new Vector2(boxCastOrigin.x - boxCastSize.x / 2, boxCastOrigin.y + moveStats.headDetectionRayLength), Vector2.right * boxCastSize.x, rayColor);
-
         }
     }
 
@@ -258,7 +265,7 @@ public class Player : MonoBehaviour
 
     private void ActivateAttackArea(ATTACK_DIRECTION dir){
         if (canAttack){
-            // Debug.Log("initiating attack");
+            animator.SetTrigger("isAttacking");
             GetAttackArea(dir).ActivateHurtBox(0.1f, 1);
         }
     }

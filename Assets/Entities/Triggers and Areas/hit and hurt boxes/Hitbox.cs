@@ -44,7 +44,7 @@ public class Hitbox : MonoBehaviour
         }
 
         if (collider.gameObject.CompareTag("Hurtbox")){
-            Debug.Log("hurtbox entered hitbox: " + collider.gameObject.GetComponent<Hurtbox>().damageValue + " damage");
+            // Debug.Log("hurtbox entered hitbox: " + collider.gameObject.GetComponent<Hurtbox>().damageValue + " damage");
 
             HitDetected.Invoke(collider.gameObject.GetComponent<Hurtbox>().damageValue);
         }
