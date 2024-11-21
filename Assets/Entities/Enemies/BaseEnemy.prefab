@@ -144,6 +144,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b47b35b78953f6747b78b4fbe3fdef14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyStats: {fileID: 0}
+  _hitbox: {fileID: 3522002286388824513}
 --- !u!1001 &6946953458259532170
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -201,6 +203,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 83f25248a2f57624a948c37e4d52e0e6, type: 3}
+--- !u!114 &3522002286388824513 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5802926836126765131, guid: 83f25248a2f57624a948c37e4d52e0e6, type: 3}
+  m_PrefabInstance: {fileID: 6946953458259532170}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c085af0f361477d48b444d9e443c1d4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &9200607766221001954 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2289985135962393960, guid: 83f25248a2f57624a948c37e4d52e0e6, type: 3}

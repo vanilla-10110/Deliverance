@@ -11,6 +11,7 @@ public class Hurtbox : MonoBehaviour
     [NonSerialized] public int damageValue = 0;
 
     [NonSerialized] public UnityEvent HitboxDetected = new();
+    [NonSerialized] public UnityEvent AttackTimeFinished = new();
 
     private Collider2D _coll;
 
@@ -31,12 +32,12 @@ public class Hurtbox : MonoBehaviour
             gameObject.SetActive(false);
             activeDuration = 0f;
             damageValue = 0;
+            AttackTimeFinished.Invoke();
         }
 
         if (drawDebugBoxes){
             DrawDebugBoxes();
         }
-
     }
 
     // for more control, i made it so you need to pass a duration and damage value which are both reset to 0 after duration has lapsed
@@ -49,7 +50,7 @@ public class Hurtbox : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collider){
         // do nothing if collider is meant to be ignored
         if (collider.gameObject.CompareTag("Hitbox")){
-            Debug.Log("hitbox dected in hurtbox");
+            // Debug.Log("hitbox dected in hurtbox");
             HitboxDetected.Invoke();
         }
     } 
