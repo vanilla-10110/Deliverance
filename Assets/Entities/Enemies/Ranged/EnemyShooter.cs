@@ -7,6 +7,9 @@ public class EnemyShooter : MonoBehaviour
     public GameObject projectile;
     public Transform projectilePos;
 
+    public float attackRange;
+    public float attackSpeed;
+
     private float timer;
     private GameObject player;
 
@@ -23,11 +26,11 @@ public class EnemyShooter : MonoBehaviour
         float distance = Vector2.Distance(transform.position, player.transform.position);
 
 
-        if (distance < 7)
+        if (distance < attackRange)
         {
             timer += Time.deltaTime;
 
-            if (timer > 2)
+            if (timer > attackSpeed)
             {
                 timer = 0;
                 shoot();
@@ -38,5 +41,11 @@ public class EnemyShooter : MonoBehaviour
     void shoot()
     {
         Instantiate(projectile, projectilePos.position, Quaternion.identity);
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, attackRange);
     }
 }
