@@ -1041,6 +1041,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BaseFlyingAngel
       objectReference: {fileID: 0}
+    - target: {fileID: 6137391843830471184, guid: e7ae96c605ff33c45a441949c8704d47, type: 3}
+      propertyPath: attackSpeed
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 6954615004764859227, guid: e7ae96c605ff33c45a441949c8704d47, type: 3}
       propertyPath: m_LocalPosition.x
       value: -6.44
