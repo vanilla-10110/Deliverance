@@ -1,9 +1,8 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
-using System.Xml.Serialization;
+using System.Text.RegularExpressions;
+using AYellowpaper.SerializedCollections;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -13,27 +12,36 @@ public class Player : MonoBehaviour
     public PlayerMovementStats moveStats;
     [SerializeField] private Collider2D _feetColl;
     [SerializeField] private Collider2D _bodyColl;
+
+    [SerializeField] private Hitbox _hitbox;
     
     public Animator animator;
     private Rigidbody2D _rb;
     public TrailRenderer PlayerTrail {get; private set;}
 
-    public Vector2 velocity = Vector2.zero;
-    public bool isFacingRight;
+    [NonSerialized] public Vector2 velocity = Vector2.zero;
+    [NonSerialized] public bool isFacingRight;
 
     //collision check vars
     private RaycastHit2D _leftGroundHit;
     private RaycastHit2D _rightGroundHit;
 
     private RaycastHit2D _headHit;
-    public bool isGrounded;
-    public bool bumpedHead;
+    [NonSerialized] public bool isGrounded;
+    [NonSerialized] public bool bumpedHead;
+    [NonSerialized] public bool isClimbable;
 
     // jump vars
-    public int numberOfJumpsUsed = 0;
+    [NonSerialized] public int numberOfJumpsUsed = 0;
 
     [Header("Debug")]
     public bool logStateMessages = false;
+
+    // dash vars
+    [NonSerialized] public int numberOfDashesUsed = 0;
+    
+
+
 
     public PSM psm;
 
@@ -42,22 +50,34 @@ public class Player : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         PlayerTrail = GetComponent<TrailRenderer>();
         animator = GetComponent<Animator>();
-
-        // DontDestroyOnLoad(this.gameObject);
-
     }
 
     private void Start(){
+        SignalBus.newSceneLoaded.Connect(ChangePosition);
+
         if (GameObject.Find("Player")){
             Destroy(this.gameObject);
         }
+
+        if (_hitbox){
+            _hitbox.HitDetected.AddListener((int damageValue) => {GameManager.Instance.playerStats.DecreaseHealth(damageValue);});
+        }
+
+        
 
         PlayerTrail.emitting = false;
 
         GameManager.Instance.playerRef = this;
 
         psm.OnAwake(this);
+    }
 
+    private void OnDestroy(){
+        SignalBus.newSceneLoaded.Disconnect(ChangePosition);
+    }
+
+    private void ChangePosition(){
+        GameManager.Instance.MovePlayerToSpawnpoint();
     }
 
     private void Update(){
@@ -67,6 +87,12 @@ public class Player : MonoBehaviour
         IsHeadBumped(); 
 
         TurnCheck(InputManager.movement);
+
+        UpdateAttackArea();
+
+        if (InputManager.attackWasPressed){
+            ActivateAttackArea(currentAttackDirection);
+        }
 
         animator.SetBool("isOnGround", isGrounded);
     }
@@ -86,17 +112,18 @@ public class Player : MonoBehaviour
         else if (!isFacingRight && moveInput.x > 0) {
             Turn(true);
         }
-
     }
 
     private void Turn (bool turnRight){
         if (turnRight){
             isFacingRight = true;
-            transform.Rotate(0f, 180f, 0f);
+            GetComponent<SpriteRenderer>().flipX = false;
         }
+
         else {
             isFacingRight = false;
-            transform.Rotate(0f, -180f, 0f);
+            GetComponent<SpriteRenderer>().flipX = true;
+
         }
     }
 
@@ -153,9 +180,96 @@ public class Player : MonoBehaviour
             Debug.DrawRay(new Vector2(boxCastOrigin.x - boxCastSize.x / 2, boxCastOrigin.y), Vector2.up * moveStats.headDetectionRayLength, rayColor);
             Debug.DrawRay(new Vector2(boxCastOrigin.x + boxCastSize.x / 2, boxCastOrigin.y), Vector2.up * moveStats.headDetectionRayLength, rayColor);
             Debug.DrawRay(new Vector2(boxCastOrigin.x - boxCastSize.x / 2, boxCastOrigin.y + moveStats.headDetectionRayLength), Vector2.right * boxCastSize.x, rayColor);
+        }
+    }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        // Debug.Log("ENTER" + collision.tag);
+        if (collision.CompareTag("Ladder"))
+        {
+            if (collision.gameObject.GetComponent<Interaction>().Grown == true)
+            {
+                isClimbable = true;
+            }
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Ladder"))
+        {
+            if (collision.gameObject.GetComponent<Interaction>().Grown == true)
+            {
+                isClimbable = true;
+            }
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        // Debug.Log("EXIT" + collision.tag);
+        if (collision.CompareTag("Ladder"))
+        {
+            isClimbable = false;
         }
     }
     #endregion
 
+    public void ChangeHealth(int value){
+        if (GameManager.Instance.playerStats.health > 0){
+            if (value < 0){
+               GameManager.Instance.playerStats.DecreaseHealth(value); 
+            }
+            else if (value > 0){
+                GameManager.Instance.playerStats.IncreaseHealth(value);
+            }
+        }
+    }
+
+
+
+    #region Attack Related
+    [NonSerialized] public bool canAttack = true;
+    [Serializable] public enum ATTACK_DIRECTION {RIGHT, LEFT, BOTTOM, TOP};
+
+    [SerializedDictionary("AttackAreaEnum","Hurtbox")]
+    public SerializedDictionary<ATTACK_DIRECTION, Hurtbox> attackHurtboxes;
+
+    private ATTACK_DIRECTION currentAttackDirection = ATTACK_DIRECTION.RIGHT;
+    
+    // to check and update where which attack area should be active
+    private void UpdateAttackArea(){
+        // up or down takes input priority  
+        if (InputManager.movement.y != 0){
+            switch (InputManager.movement.y) {
+                case 1:
+                    currentAttackDirection = ATTACK_DIRECTION.TOP;
+                    return;
+                case -1:
+                    currentAttackDirection = ATTACK_DIRECTION.BOTTOM;
+                    return;
+            }
+        }
+        switch (isFacingRight) {
+            case true:
+                currentAttackDirection = ATTACK_DIRECTION.RIGHT;
+                return;
+            case false:
+                currentAttackDirection = ATTACK_DIRECTION.LEFT;
+                return;
+        }
+    }
+
+    private Hurtbox GetAttackArea(ATTACK_DIRECTION dir){
+        return attackHurtboxes[dir];
+    }
+
+    private void ActivateAttackArea(ATTACK_DIRECTION dir){
+        if (canAttack){
+            animator.SetTrigger("isAttacking");
+            GetAttackArea(dir).ActivateHurtBox(0.1f, 1);
+        }
+    }
+    #endregion
 }

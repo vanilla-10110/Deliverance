@@ -15,6 +15,7 @@ public class RunningState : BasePlayerState
     {
         base.OnEnter();
         playerRef.numberOfJumpsUsed = 0;
+        playerRef.numberOfDashesUsed = 0;
         jumpCayoteTime = moveStatsRef.jumpCayoteTime;
 
 
@@ -60,7 +61,10 @@ public class RunningState : BasePlayerState
             ParentStateMachine.TransitionStates(EnumBus.PLAYER_STATES.DASHING);
         }
 
-
+        if (InputManager.climbWasPressed && playerRef.isClimbable)
+        {
+            ParentStateMachine.TransitionStates(EnumBus.PLAYER_STATES.CLIMBING);
+        }
 
     }
 

@@ -4,14 +4,15 @@ using UnityEngine;
 public class SignalBus : MonoBehaviour 
 {
 
-
-
+    // Game state related
     public static GameSignal StartMenuTriggerSignal = new();
+    public static GameSignal newSceneLoaded = new();
+
 
     public static SignalBus Instance {get; private set;}
 
     private void Awake(){
-        DontDestroyOnLoad(gameObject);
+        // DontDestroyOnLoad(this);
 
         if (Instance != null && Instance != this){
             Destroy(this);

@@ -70,8 +70,14 @@ public class FallingState : BasePlayerState
         }
         
         // for state transitions
-        if (InputManager.dashWasPressed){
+        if (InputManager.dashWasPressed && playerRef.numberOfDashesUsed <= moveStatsRef.numberOfDashesAllowed)
+        {
             ParentStateMachine.TransitionStates(EnumBus.PLAYER_STATES.DASHING);
+        }
+
+        if (InputManager.climbWasPressed && playerRef.isClimbable)
+        {
+            ParentStateMachine.TransitionStates(EnumBus.PLAYER_STATES.CLIMBING);
         }
 
         if (playerRef.isGrounded && jumpBufferTimeLeft > 0f){
