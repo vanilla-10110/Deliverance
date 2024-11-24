@@ -39,10 +39,10 @@ public class GameManager : MonoBehaviour
     }
 
     private void Start(){
-        SignalBus.StartMenuTriggerSignal.Connect(OnStartMenuTrigger);
+        SignalBus.StartMenuTriggerSignal.AddListener(OnStartMenuTrigger);
 
         if (startOnMenu == true){
-            SignalBus.StartMenuTriggerSignal.Emit();
+            SignalBus.StartMenuTriggerSignal.Invoke();
         }
 
         else{

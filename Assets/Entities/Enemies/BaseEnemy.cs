@@ -23,4 +23,8 @@ public class BaseEnemy : MonoBehaviour
         enemyStats.DecreaseHealth(damageValue);
         Debug.Log("i am damaged, health is now " + enemyStats.health);
     }
+
+    void OnDestroy(){
+        SignalBus.DestroyedEntityEvent.Invoke();
+    }
 }

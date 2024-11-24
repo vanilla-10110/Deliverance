@@ -19,12 +19,18 @@ public class InputManager : MonoBehaviour
     public static bool attackIsPressed;
     public static bool attackWasReleased;
 
+    [Header("Interact")]
+    public static bool interactWasPressed;
+    public static bool interactIsPressed;
+    public static bool interactWasReleased;
+
+
     private InputAction _moveAction;
     private InputAction _jumpAction;
     private InputAction _dashAction;
     private InputAction _climbAction;
-
     private InputAction _attackAction;
+    private InputAction _interactAction;
 
     private void Awake(){
         playerInput = GetComponent<PlayerInput>();
@@ -34,6 +40,7 @@ public class InputManager : MonoBehaviour
         _dashAction = playerInput.actions["Dash"];
         _climbAction = playerInput.actions["Climb"];
         _attackAction = playerInput.actions["MainAttack"];
+        _interactAction = playerInput.actions["Interact"];
     }
 
     private void Update()
@@ -52,5 +59,9 @@ public class InputManager : MonoBehaviour
         attackWasPressed = _attackAction.WasPressedThisFrame();
         attackIsPressed = _attackAction.IsPressed();
         attackWasReleased = _attackAction.WasReleasedThisFrame();
+
+        interactWasPressed = _interactAction.WasPressedThisFrame();
+        interactIsPressed = _interactAction.IsPressed();
+        interactWasReleased = _interactAction.WasReleasedThisFrame();
     }
 }

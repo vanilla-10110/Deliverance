@@ -53,7 +53,7 @@ public class Player : MonoBehaviour
     }
 
     private void Start(){
-        SignalBus.newSceneLoaded.Connect(ChangePosition);
+        SignalBus.newSceneLoaded.AddListener(ChangePosition);
 
         if (GameObject.Find("Player")){
             Destroy(this.gameObject);
@@ -73,7 +73,7 @@ public class Player : MonoBehaviour
     }
 
     private void OnDestroy(){
-        SignalBus.newSceneLoaded.Disconnect(ChangePosition);
+        SignalBus.newSceneLoaded.RemoveListener(ChangePosition);
     }
 
     private void ChangePosition(){
@@ -269,6 +269,7 @@ public class Player : MonoBehaviour
         if (canAttack){
             animator.SetTrigger("isAttacking");
             GetAttackArea(dir).ActivateHurtBox(0.1f, 1);
+            SignalBus.AbilityUsedEvent.Invoke(EnumBus.PLAYER_ABILITIES.LIGHT_ATTACK.ToString());
         }
     }
     #endregion
