@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class BaseEnemy : MonoBehaviour
 {
+    public int StartingHealth;
+
     public EntityStatsScriptableObject enemyStats;
     [SerializeField] private Hitbox _hitbox;
 
-    private void Awake(){
-        enemyStats = new();
+    private void Awake() {
+        enemyStats = new()
+        {
+            health = StartingHealth
+        };
     }
 
     private void Start(){

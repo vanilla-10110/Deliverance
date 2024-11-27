@@ -25,28 +25,16 @@ public class FlyingFollower : MonoBehaviour
     {
         float distanceFromPlayer = Vector2.Distance(player.position, transform.position);
 
-        if (distanceFromPlayer < lineOfSight)
-        {
-            if (distanceFromPlayer > personalSpace + 0.25)
-            {
-                currentSpeed = Mathf.SmoothDamp(currentSpeed, speed, ref speedVelocity, smoothDuration);
-            }
-            else if (distanceFromPlayer < personalSpace - 0.1)
-            {
-                currentSpeed = Mathf.SmoothDamp(currentSpeed, -speed * (float)2, ref speedVelocity, smoothDuration * (float)0.5);
-            }
-            else
-            {
-                currentSpeed = Mathf.SmoothDamp(currentSpeed, 0f, ref speedVelocity, smoothDuration);
-            }
+        var speedMod = (distanceFromPlayer < personalSpace - 0.1 && distanceFromPlayer < lineOfSight ? -2f :
+            distanceFromPlayer > personalSpace + 0.25 && distanceFromPlayer < lineOfSight ? 1f :
+            0f);
+        var durationMod = (distanceFromPlayer < personalSpace - 0.1 && distanceFromPlayer < lineOfSight ? .5f : 1f);
 
-            transform.position = Vector2.MoveTowards(transform.position, player.position, currentSpeed * Time.deltaTime);
-        }
-        else
-        {
-            currentSpeed = Mathf.SmoothDamp(currentSpeed, 0f, ref speedVelocity, smoothDuration);
-            //transform.position = Vector2.MoveTowards(transform.position, player.position, currentSpeed * Time.deltaTime);
-        }
+        currentSpeed = Mathf.SmoothDamp(currentSpeed, speed * speedMod, ref speedVelocity, smoothDuration * durationMod);
+
+        transform.position = Vector2.MoveTowards(transform.position, player.position, currentSpeed * Time.deltaTime);
+
+        transform.localScale = new Vector2((transform.InverseTransformPoint(player.transform.position).x < 0 ? transform.localScale.x : -transform.localScale.x), transform.localScale.y);
     }
 
     private void OnDrawGizmosSelected()
