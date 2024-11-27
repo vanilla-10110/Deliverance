@@ -9,6 +9,13 @@ public class BaseEnemy : MonoBehaviour
     public EntityStatsScriptableObject enemyStats;
     [SerializeField] private Hitbox _hitbox;
 
+    public SpriteRenderer _spriteRenderer;
+    public Animator _animator;
+
+    [SerializeField] protected List<Collider2D> playerDetectionAreas;
+
+    [SerializeField] private bool destroyEntityOnDead = true;
+
     private void Awake() {
         enemyStats = new()
         {
