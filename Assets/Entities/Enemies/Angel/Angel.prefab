@@ -241,6 +241,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ff35ca27e5f5a9448fcf871f7ca8b5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  StartingHealth: 0
   enemyStats: {fileID: 11400000, guid: 811a9fee7f543634f9493c28913a887b, type: 2}
   _hitbox: {fileID: 7746068308662701081}
   _spriteRenderer: {fileID: 3601806709737813259}
@@ -741,6 +742,14 @@ PrefabInstance:
     - target: {fileID: 7063762721588655948, guid: 83f25248a2f57624a948c37e4d52e0e6, type: 3}
       propertyPath: CollisionModule.collidesWithDynamic
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7063762721588655948, guid: 83f25248a2f57624a948c37e4d52e0e6, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7063762721588655948, guid: 83f25248a2f57624a948c37e4d52e0e6, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.80784315
       objectReference: {fileID: 0}
     - target: {fileID: 7063762721588655948, guid: 83f25248a2f57624a948c37e4d52e0e6, type: 3}
       propertyPath: InitialModule.gravityModifier.scalar

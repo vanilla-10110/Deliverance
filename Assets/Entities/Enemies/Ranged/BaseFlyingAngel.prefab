@@ -153,8 +153,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b47b35b78953f6747b78b4fbe3fdef14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  StartingHealth: 0
   enemyStats: {fileID: 0}
   _hitbox: {fileID: 2189092421154745845}
+  _spriteRenderer: {fileID: 0}
+  _animator: {fileID: 0}
+  playerDetectionAreas: []
+  destroyEntityOnDead: 1
 --- !u!114 &281549435756109197
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -261,6 +266,14 @@ PrefabInstance:
     - target: {fileID: 2289985135962393960, guid: 83f25248a2f57624a948c37e4d52e0e6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7063762721588655948, guid: 83f25248a2f57624a948c37e4d52e0e6, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7063762721588655948, guid: 83f25248a2f57624a948c37e4d52e0e6, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.80784315
       objectReference: {fileID: 0}
     - target: {fileID: 8361895141913843242, guid: 83f25248a2f57624a948c37e4d52e0e6, type: 3}
       propertyPath: m_Name
