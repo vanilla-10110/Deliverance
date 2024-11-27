@@ -3,105 +3,106 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RunningState : BasePlayerState
+public class PlayerRunningState : BasePlayerState<PlayerStateManager.PLAYER_STATES>
 {
     protected float jumpCayoteTime = 0f;
     protected bool cayoteBufferActive = false;
-
-    private void Awake(){
-        stateEnum = EnumBus.PLAYER_STATES.RUNNING;
-    }
-    public override void OnEnter()
-    {
-        base.OnEnter();
-        playerRef.numberOfJumpsUsed = 0;
-        playerRef.numberOfDashesUsed = 0;
-        jumpCayoteTime = moveStatsRef.jumpCayoteTime;
-
-
-        playerRef.animator.SetBool("isRunning", true);
-
+    public PlayerRunningState(PlayerStateContext context, PlayerStateManager.PLAYER_STATES stateKey,  PlayerStateManager _psm) : base(context, stateKey, _psm){
+        Context = context;
+        psm = _psm;
     }
 
-    public override void OnUpdate(){
-        base.OnUpdate();
+    public override void EnterState() {
+        Context.Player.numberOfJumpsUsed = 0;
+        Context.Player.numberOfDashesUsed = 0;
+        jumpCayoteTime = Context.PlayerMovementStats.jumpCayoteTime;
 
+
+        Context.Player.animator.SetBool("isRunning", true);
+    }
+    public override void ExitState(){
+        jumpCayoteTime = 0f;
+        cayoteBufferActive = false;
+
+        Context.Player.animator.SetBool("isRunning", false);
+
+        Context.SetPrevState(StateKey);
+
+    }
+
+    public override void UpdateState() {
         // for jump cayote time
-        if (!playerRef.isGrounded && jumpCayoteTime > 0f){
+        if (!Context.Player.isGrounded && jumpCayoteTime > 0f){
             cayoteBufferActive = true;
         }
 
         // reset cayote properties if on ground again
-        if (playerRef.isGrounded){
+        if (Context.Player.isGrounded){
             cayoteBufferActive = false;
-            jumpCayoteTime = moveStatsRef.jumpCayoteTime;
+            jumpCayoteTime = Context.PlayerMovementStats.jumpCayoteTime;
         }        
 
         // for state transitions
         if (cayoteBufferActive){
-            if (jumpCayoteTime <= 0f){
-                // only transition to these if cayote time is 0 or less
-                ParentStateMachine.TransitionStates(EnumBus.PLAYER_STATES.FALLING);
-            }
-
-            else if (jumpCayoteTime > 0f){
+            if (jumpCayoteTime > 0f){
                 jumpCayoteTime -= Time.deltaTime;
             }
         }
 
-        if (InputManager.movement.x == 0 && playerRef.isGrounded){
-            ParentStateMachine.TransitionStates(EnumBus.PLAYER_STATES.IDLE);
-        }
-
-        if (InputManager.jumpWasPressed){
-            ParentStateMachine.TransitionStates(EnumBus.PLAYER_STATES.JUMPING);
-        }
-
-        if (InputManager.dashWasPressed){
-            ParentStateMachine.TransitionStates(EnumBus.PLAYER_STATES.DASHING);
-        }
-
-        if (InputManager.climbWasPressed && playerRef.isClimbable)
-        {
-            ParentStateMachine.TransitionStates(EnumBus.PLAYER_STATES.CLIMBING);
-        }
+       
 
     }
 
-    public override void OnFixedUpdate()
-    {
-        base.OnFixedUpdate();
+    public override void FixedUpdateState() {
         
-        playerRef.velocity.y = 0f;
+        Context.Player.velocity.y = 0f;
 
 
         // if turning other direction
         if (
-            (InputManager.movement.x < 0 && playerRef.velocity.x > 0) ||
-            (InputManager.movement.x > 0 && playerRef.velocity.x < 0)
+            (InputManager.movement.x < 0 && Context.Player.velocity.x > 0) ||
+            (InputManager.movement.x > 0 && Context.Player.velocity.x < 0)
         ){
-            playerRef.velocity.x = InputManager.movement.x * Mathf.Pow(moveStatsRef.groundDecceleration, moveStatsRef.groundDecceleration) * Time.fixedDeltaTime;
+            Context.Player.velocity.x = InputManager.movement.x * Mathf.Pow(Context.PlayerMovementStats.groundDecceleration, Context.PlayerMovementStats.groundDecceleration) * Time.fixedDeltaTime;
         }
         // else normal accel
         else {
-            playerRef.velocity.x += (InputManager.movement.x * moveStatsRef.groundAcceleration) * Time.fixedDeltaTime;
+            Context.Player.velocity.x += (InputManager.movement.x * Context.PlayerMovementStats.groundAcceleration) * Time.fixedDeltaTime;
         }
 
-        playerRef.velocity.x = Mathf.Clamp(playerRef.velocity.x, -moveStatsRef.maxRunSpeed, moveStatsRef.maxRunSpeed);
+        Context.Player.velocity.x = Mathf.Clamp(Context.Player.velocity.x, -Context.PlayerMovementStats.maxRunSpeed, Context.PlayerMovementStats.maxRunSpeed);
     }
 
 
-    public override void OnHurt()
-    {
-        base.OnHurt();
-    }
+    
+    public override PlayerStateManager.PLAYER_STATES GetNextState(){
 
-    public override void OnExit(){
-        base.OnExit();
-        jumpCayoteTime = 0f;
-        cayoteBufferActive = false;
+         if (jumpCayoteTime <= 0f){
+                // only transition to these if cayote time is 0 or less
+                return PlayerStateManager.PLAYER_STATES.FALLING;
+        }
+        if (InputManager.movement.x == 0 && Context.Player.isGrounded){
+            return PlayerStateManager.PLAYER_STATES.IDLE;
+        }
 
-        playerRef.animator.SetBool("isRunning", false);
+        if (InputManager.jumpWasPressed){
+            return PlayerStateManager.PLAYER_STATES.JUMPING;
+        }
+
+        if (InputManager.dashWasPressed){
+            return PlayerStateManager.PLAYER_STATES.DASHING;
+        }
+
+        if (InputManager.climbWasPressed && Context.Player.isClimbable) {
+            return PlayerStateManager.PLAYER_STATES.CLIMBING;
+        }
+        return StateKey;
     }
+    public override void OnTriggerEnter(Collider collider){}
+    public override void OnTriggerStay(Collider collider){}
+    public override void OnTriggerExit(Collider collider){}
+
+
+
 
 }

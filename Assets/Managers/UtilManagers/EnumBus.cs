@@ -9,6 +9,9 @@ public class EnumBus {
     public enum PLAYER_STATES {
         IDLE, RUNNING, JUMPING, FALLING, CLIMBING, DASHING
     }
+    public enum PLAYER_ABILITIES {
+        LIGHT_ATTACK, UPPIES, DASH, JUMP
+    }
 
 
 }

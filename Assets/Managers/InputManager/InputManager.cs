@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour
@@ -19,12 +20,22 @@ public class InputManager : MonoBehaviour
     public static bool attackIsPressed;
     public static bool attackWasReleased;
 
+    [Header("Interact")]
+    public static bool interactWasPressed;
+    public static bool interactIsPressed;
+    public static bool interactWasReleased;
+
+    [Header("UI")]
+    public static bool pauseWasPressed;
+
+
     private InputAction _moveAction;
     private InputAction _jumpAction;
     private InputAction _dashAction;
     private InputAction _climbAction;
-
     private InputAction _attackAction;
+    private InputAction _interactAction;
+    private InputAction _pauseAction;
 
     private void Awake(){
         playerInput = GetComponent<PlayerInput>();
@@ -34,7 +45,10 @@ public class InputManager : MonoBehaviour
         _dashAction = playerInput.actions["Dash"];
         _climbAction = playerInput.actions["Climb"];
         _attackAction = playerInput.actions["MainAttack"];
+        _interactAction = playerInput.actions["Interact"];
+        _pauseAction = playerInput.actions["Pause"];
     }
+
 
     private void Update()
     {
@@ -52,5 +66,12 @@ public class InputManager : MonoBehaviour
         attackWasPressed = _attackAction.WasPressedThisFrame();
         attackIsPressed = _attackAction.IsPressed();
         attackWasReleased = _attackAction.WasReleasedThisFrame();
+
+        interactWasPressed = _interactAction.WasPressedThisFrame();
+        interactIsPressed = _interactAction.IsPressed();
+        interactWasReleased = _interactAction.WasReleasedThisFrame();
+
+        pauseWasPressed = _pauseAction.WasPressedThisFrame();
+
     }
 }

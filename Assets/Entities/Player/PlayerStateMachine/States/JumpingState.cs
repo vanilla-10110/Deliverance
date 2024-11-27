@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class JumpingState : BasePlayerState
+public class PlayerJumpingState : BasePlayerState<PlayerStateManager.PLAYER_STATES>
 {
 
     // apex vars
@@ -10,77 +10,51 @@ public class JumpingState : BasePlayerState
     protected float timePastApexThreshold;
     protected bool isPastApexThreshold;
 
-    public bool isFastFalling = false;
-
-    private void Awake(){
-        stateEnum = EnumBus.PLAYER_STATES.JUMPING;
-    }
-    public override void OnEnter()
-    {
-        base.OnEnter();
-        isFastFalling = false;
-
-        playerRef.velocity.y = moveStatsRef.initialJumpVelocity;
-
-        playerRef.animator.SetBool("isJumping", true);
+    public PlayerJumpingState(PlayerStateContext context, PlayerStateManager.PLAYER_STATES stateKey, PlayerStateManager _psm) : base(context, stateKey, _psm){
+        Context = context;
+        psm = _psm;
     }
 
-    public override void OnUpdate(){
-        base.OnUpdate();
+    public override void EnterState(){
+        Context.playerIsFastFalling = false;
 
-        if (playerRef.bumpedHead){
-            isFastFalling = true;
-            ParentStateMachine.TransitionStates(EnumBus.PLAYER_STATES.FALLING);
-        }
+        Context.Player.velocity.y = Context.PlayerMovementStats.initialJumpVelocity;
 
-        if (InputManager.dashWasPressed && (playerRef.numberOfDashesUsed >= moveStatsRef.numberOfDashesAllowed)){
-            ParentStateMachine.TransitionStates(EnumBus.PLAYER_STATES.DASHING);
-        }
-        if (InputManager.climbWasPressed && playerRef.isClimbable)
-        {
-            ParentStateMachine.TransitionStates(EnumBus.PLAYER_STATES.CLIMBING);
-        }
+        Context.Player.animator.SetBool("isJumping", true);
 
-        if (playerRef.numberOfJumpsUsed >= moveStatsRef.numberOfJumpsAllowed){
-            ParentStateMachine.TransitionStates(EnumBus.PLAYER_STATES.FALLING);
-        }
+        SignalBus.AbilityUsedEvent.Invoke(EnumBus.PLAYER_ABILITIES.JUMP.ToString());
+    }   
+    public override void ExitState(){
+        Context.Player.numberOfJumpsUsed += 1;
 
-        if (InputManager.jumpWasReleased){
-            isFastFalling = true;
-            ParentStateMachine.TransitionStates(EnumBus.PLAYER_STATES.FALLING);
-        }
+        isPastApexThreshold = false;
 
-        if (isPastApexThreshold && timePastApexThreshold > moveStatsRef.apexHangTime){
-            ParentStateMachine.TransitionStates(EnumBus.PLAYER_STATES.FALLING);
-        }
+        Context.Player.animator.SetBool("isJumping", false);
+
+        Context.SetPrevState(StateKey);
+
 
     }
+    public override void UpdateState(){}
 
-    public override void OnFixedUpdate()
-    {
-        base.OnFixedUpdate();
-        
-        // Vector2 targetVelocity = new Vector2(InputManager.movement.x * moveStatsRef.airAcceleration, playerRef.velocity.y);
-
-
-        // horizontal movement related
+    public override void FixedUpdateState(){
         if (
-            (InputManager.movement.x < 0 && playerRef.velocity.x > 0) ||
-            (InputManager.movement.x > 0 && playerRef.velocity.x < 0)
+            (InputManager.movement.x < 0 && Context.Player.velocity.x > 0) ||
+            (InputManager.movement.x > 0 && Context.Player.velocity.x < 0)
         ){
-            playerRef.velocity.x = InputManager.movement.x * Mathf.Pow(moveStatsRef.airAcceleration, moveStatsRef.airDecceleration) * Time.fixedDeltaTime;
+            Context.Player.velocity.x = InputManager.movement.x * Mathf.Pow(Context.PlayerMovementStats.airAcceleration, Context.PlayerMovementStats.airDecceleration) * Time.fixedDeltaTime;
         }
         // else normal accel
         else {
-            playerRef.velocity.x += (InputManager.movement.x * moveStatsRef.airAcceleration) * Time.fixedDeltaTime;
+            Context.Player.velocity.x += (InputManager.movement.x * Context.PlayerMovementStats.airAcceleration) * Time.fixedDeltaTime;
         }
 
-        playerRef.velocity.x = Mathf.Clamp(playerRef.velocity.x, -moveStatsRef.maxAirHorizontalSpeed, moveStatsRef.maxAirHorizontalSpeed);
+        Context.Player.velocity.x = Mathf.Clamp(Context.Player.velocity.x, -Context.PlayerMovementStats.maxAirHorizontalSpeed, Context.PlayerMovementStats.maxAirHorizontalSpeed);
 
 
         // APEX CONTROLS
-        apexPoint = Mathf.InverseLerp(moveStatsRef.initialJumpVelocity, 0f, playerRef.velocity.y);
-        if (apexPoint > moveStatsRef.apexThreshold){
+        apexPoint = Mathf.InverseLerp(Context.PlayerMovementStats.initialJumpVelocity, 0f, Context.Player.velocity.y);
+        if (apexPoint > Context.PlayerMovementStats.apexThreshold){
             if (!isPastApexThreshold){
                 isPastApexThreshold = true;
 
@@ -90,34 +64,49 @@ public class JumpingState : BasePlayerState
             if (isPastApexThreshold){
                 timePastApexThreshold += Time.fixedDeltaTime;
 
-                if (timePastApexThreshold < moveStatsRef.apexHangTime){
-                    playerRef.velocity.y = 0f;
+                if (timePastApexThreshold < Context.PlayerMovementStats.apexHangTime){
+                    Context.Player.velocity.y = 0f;
                 }
             }
         }
 
         // GRAVITY ON ASCENDING BUT BEFORE APEX THRESHOLD
-        else if (apexPoint <= moveStatsRef.apexThreshold){
-            playerRef.velocity.y += moveStatsRef.gravity * Time.fixedDeltaTime;
+        else if (apexPoint <= Context.PlayerMovementStats.apexThreshold){
+            Context.Player.velocity.y += Context.PlayerMovementStats.gravity * Time.fixedDeltaTime;
+        }
+    }
+    public override PlayerStateManager.PLAYER_STATES GetNextState(){
+
+        if (Context.Player.bumpedHead){
+            Context.playerIsFastFalling = true;
+            return PlayerStateManager.PLAYER_STATES.FALLING;
         }
 
-        // playerRef.velocity = Vector2.Lerp(playerRef.velocity, targetVelocity, Time.fixedDeltaTime);
+        if (InputManager.dashWasPressed && (Context.Player.numberOfDashesUsed >= Context.PlayerMovementStats.numberOfDashesAllowed)){
+            return PlayerStateManager.PLAYER_STATES.DASHING;
+        }
+        if (InputManager.climbWasPressed && Context.Player.isClimbable)
+        {
+            return PlayerStateManager.PLAYER_STATES.CLIMBING;
+        }
+
+        if (Context.Player.numberOfJumpsUsed >= Context.PlayerMovementStats.numberOfJumpsAllowed){
+            return PlayerStateManager.PLAYER_STATES.FALLING;
+        }
+
+        if (InputManager.jumpWasReleased){
+            Context.playerIsFastFalling = true;
+            return PlayerStateManager.PLAYER_STATES.FALLING;
+        }
+
+        if (isPastApexThreshold && timePastApexThreshold > Context.PlayerMovementStats.apexHangTime){
+            return PlayerStateManager.PLAYER_STATES.FALLING;
+        }
+
+        return StateKey;
     }
-
-
-    public override void OnHurt()
-    {
-        base.OnHurt();
-    }
-
-    public override void OnExit(){
-        base.OnExit();
-        playerRef.numberOfJumpsUsed += 1;
-
-        isPastApexThreshold = false;
-
-        playerRef.animator.SetBool("isJumping", false);
-
-    }
+    public override void OnTriggerEnter(Collider collider){}
+    public override void OnTriggerStay(Collider collider){}
+    public override void OnTriggerExit(Collider collider){}
 
 }

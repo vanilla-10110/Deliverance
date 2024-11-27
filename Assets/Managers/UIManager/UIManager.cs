@@ -18,7 +18,7 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] private GameObject StartMenu;
 
-    [SerializeField] private GameObject PauseOverlay;
+    [SerializeField] private GameObject PauseMenu;
 
     //Health
     [SerializeField] private GameObject HealthBar;
@@ -45,6 +45,17 @@ public class UIManager : MonoBehaviour
     private void Start(){
         // ShowMainUI();
         ConnectSignals();
+    }
+
+    private void Update(){
+                // to change
+        if (PauseMenu.activeInHierarchy != true && InputManager.pauseWasPressed){
+            PauseMenu.SetActive(true);
+        }
+        else if (PauseMenu.activeInHierarchy == true && InputManager.pauseWasPressed){
+            PauseMenu.SetActive(false);
+        }
+
     }
 
     public void ShowGameOverScreen(){
@@ -118,8 +129,8 @@ public class UIManager : MonoBehaviour
         DrawHearts(newHealth, maxHealth);
     }
 
-    public void ShowPauseOverlay(){
-        PauseOverlay.SetActive(true);
-        MainUI.SetActive(false);
-    }
+    // public void ShowPauseOverlay(){
+    //     PauseMenu.SetActive(true);
+    //     MainUI.SetActive(false);
+    // }
 }
