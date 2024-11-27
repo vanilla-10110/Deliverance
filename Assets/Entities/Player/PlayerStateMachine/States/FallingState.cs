@@ -3,48 +3,55 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FallingState : BasePlayerState
+public class PlayerFallingState : BasePlayerState<PlayerStateManager.PLAYER_STATES>
 {
     // this is for when the player trys to jump right before they hit the ground
     protected float jumpBufferTimeLeft = 0f;
-
-    protected bool isFastFalling = false;
     protected bool isSlowFalling = false;
     protected float timeSinceFallModifierStart = 0f;
 
-    private void Awake(){
-        stateEnum = EnumBus.PLAYER_STATES.FALLING;
+    public PlayerFallingState(PlayerStateContext context, PlayerStateManager.PLAYER_STATES stateKey, PlayerStateManager _psm) : base(context, stateKey, _psm){
+        Context = context;
+        psm = _psm;
     }
-    public override void OnEnter()
-    {
-        base.OnEnter();
 
+    public override void EnterState(){
         timeSinceFallModifierStart = 0f;
 
         jumpBufferTimeLeft = 0f;
 
-        if (ParentStateMachine.prevState == EnumBus.PLAYER_STATES.JUMPING){
-            if ((ParentStateMachine.GetState(ParentStateMachine.prevState) as JumpingState).isFastFalling){
-                isFastFalling = true;
-                playerRef.velocity.y = -5f;
+        if (Context.PrevState == PlayerStateManager.PLAYER_STATES.JUMPING){
+            if (Context.playerIsFastFalling){
+                Context.playerIsFastFalling = true;
+                Context.Player.velocity.y = -5f;
             }
         }
-        if (ParentStateMachine.prevState == EnumBus.PLAYER_STATES.DASHING){
-            isFastFalling = true;
+        if (Context.PrevState == PlayerStateManager.PLAYER_STATES.DASHING){
+            Context.playerIsFastFalling = true;
         }
-        
+
+    }   
+    public override void ExitState(){
+
+        Context.playerIsFastFalling = false;
+        isSlowFalling = false;
+
+        if (jumpBufferTimeLeft != 0f){
+            jumpBufferTimeLeft = 0f;
+        }
+
+        Context.SetPrevState(StateKey);
     }
 
-    public override void OnUpdate(){
-        base.OnUpdate();
+    public override void UpdateState(){
 
         // fast fall related
-        if (isFastFalling){
+        if (Context.playerIsFastFalling){
             timeSinceFallModifierStart += Time.deltaTime;
         }
         
-        if (isFastFalling && timeSinceFallModifierStart > moveStatsRef.timeForUpwardsCancel){
-            isFastFalling = false;
+        if (Context.playerIsFastFalling && timeSinceFallModifierStart > Context.PlayerMovementStats.timeForUpwardsCancel){
+            Context.playerIsFastFalling = false;
         }
 
         // slow falling related
@@ -52,7 +59,7 @@ public class FallingState : BasePlayerState
             timeSinceFallModifierStart += Time.deltaTime;
         }
 
-        if (isSlowFalling && timeSinceFallModifierStart > moveStatsRef.afterDashFallingDuration){
+        if (isSlowFalling && timeSinceFallModifierStart > Context.PlayerMovementStats.afterDashFallingDuration){
             isSlowFalling = false;
         }
 
@@ -61,91 +68,79 @@ public class FallingState : BasePlayerState
             jumpBufferTimeLeft -= Time.deltaTime;
         }
 
-        if (InputManager.jumpWasPressed && playerRef.numberOfJumpsUsed >= moveStatsRef.numberOfJumpsAllowed ){
-            jumpBufferTimeLeft = moveStatsRef.jumpBufferTime;
-        }
-        else if (InputManager.jumpWasPressed && playerRef.numberOfJumpsUsed < moveStatsRef.numberOfJumpsAllowed){
-            playerRef.animator.SetTrigger("doubleJumpTrigger");
-            ParentStateMachine.TransitionStates(EnumBus.PLAYER_STATES.JUMPING);
-        }
-        
-        // for state transitions
-        if (InputManager.dashWasPressed && playerRef.numberOfDashesUsed <= moveStatsRef.numberOfDashesAllowed)
-        {
-            ParentStateMachine.TransitionStates(EnumBus.PLAYER_STATES.DASHING);
-        }
-
-        if (InputManager.climbWasPressed && playerRef.isClimbable)
-        {
-            ParentStateMachine.TransitionStates(EnumBus.PLAYER_STATES.CLIMBING);
-        }
-
-        if (playerRef.isGrounded && jumpBufferTimeLeft > 0f){
-            playerRef.numberOfJumpsUsed = 0;
-            ParentStateMachine.TransitionStates(EnumBus.PLAYER_STATES.JUMPING);
-        }
-
-        else if (playerRef.isGrounded){
-            ParentStateMachine.TransitionStates(EnumBus.PLAYER_STATES.IDLE);
+        if (InputManager.jumpWasPressed && Context.Player.numberOfJumpsUsed >= Context.PlayerMovementStats.numberOfJumpsAllowed ){
+            jumpBufferTimeLeft = Context.PlayerMovementStats.jumpBufferTime;
         }
     }
 
-    public override void OnFixedUpdate()
+    public override void FixedUpdateState()
     {
-        base.OnFixedUpdate();
-
-        // for vertical movement
-
         // for when player cuts the jump short
-        if (isFastFalling){
-            playerRef.velocity.y = Mathf.Lerp(playerRef.velocity.y, 0f, timeSinceFallModifierStart / moveStatsRef.timeForUpwardsCancel);
+        if (Context.playerIsFastFalling){
+            Context.Player.velocity.y = Mathf.Lerp(Context.Player.velocity.y, 0f, timeSinceFallModifierStart / Context.PlayerMovementStats.timeForUpwardsCancel);
         }
         
         // mainly for when faslling after dashing - to give more of a floaty feel at first
         else if (isSlowFalling){
-            playerRef.velocity.y += moveStatsRef.gravity * moveStatsRef.afterDashFallingSpeedMultiplier * Time.fixedDeltaTime;
+            Context.Player.velocity.y += Context.PlayerMovementStats.gravity * Context.PlayerMovementStats.afterDashFallingSpeedMultiplier * Time.fixedDeltaTime;
         }
 
         // this is the normal falling accel
-        else if (!isFastFalling && !isSlowFalling){
-            playerRef.velocity.y += moveStatsRef.gravity * Time.fixedDeltaTime;
+        else if (!Context.playerIsFastFalling && !isSlowFalling){
+            Context.Player.velocity.y += Context.PlayerMovementStats.gravity * Time.fixedDeltaTime;
         }
-        playerRef.velocity.y = Math.Clamp(playerRef.velocity.y, -moveStatsRef.fallingMaxSpeed, 50f); // 50f just to avoid having 0f, but we shouldnt be falling up in the falling state
+        Context.Player.velocity.y = Math.Clamp(Context.Player.velocity.y, -Context.PlayerMovementStats.fallingMaxSpeed, 50f); // 50f just to avoid having 0f, but we shouldnt be falling up in the falling state
 
         // for horizontal movement
         // if turning other direction
         if (
-            (InputManager.movement.x < 0 && playerRef.velocity.x > 0) ||
-            (InputManager.movement.x > 0 && playerRef.velocity.x < 0)
+            (InputManager.movement.x < 0 && Context.Player.velocity.x > 0) ||
+            (InputManager.movement.x > 0 && Context.Player.velocity.x < 0)
         ){
-            playerRef.velocity.x = InputManager.movement.x * Mathf.Pow(moveStatsRef.airAcceleration, moveStatsRef.airDecceleration) * Time.fixedDeltaTime;
+            Context.Player.velocity.x = InputManager.movement.x * Mathf.Pow(Context.PlayerMovementStats.airAcceleration, Context.PlayerMovementStats.airDecceleration) * Time.fixedDeltaTime;
         }
         // else normal accel
         else if (InputManager.movement.x != 0) {
-            playerRef.velocity.x += (InputManager.movement.x * moveStatsRef.airAcceleration) * Time.fixedDeltaTime;
+            Context.Player.velocity.x += (InputManager.movement.x * Context.PlayerMovementStats.airAcceleration) * Time.fixedDeltaTime;
         }
         else {
-            playerRef.velocity.x = Mathf.Lerp(playerRef.velocity.x, 0f, moveStatsRef.airDecceleration *  Time.fixedDeltaTime);
+            Context.Player.velocity.x = Mathf.Lerp(Context.Player.velocity.x, 0f, Context.PlayerMovementStats.airDecceleration *  Time.fixedDeltaTime);
         }
 
-        playerRef.velocity.x = Mathf.Clamp(playerRef.velocity.x, -moveStatsRef.maxAirHorizontalSpeed, moveStatsRef.maxAirHorizontalSpeed);
-
+        Context.Player.velocity.x = Mathf.Clamp(Context.Player.velocity.x, -Context.PlayerMovementStats.maxAirHorizontalSpeed, Context.PlayerMovementStats.maxAirHorizontalSpeed);
     }
 
+    public override PlayerStateManager.PLAYER_STATES GetNextState(){
 
-    public override void OnHurt()
-    {
-        base.OnHurt();
-    }
-
-    public override void OnExit(){
-        base.OnExit();
-        isFastFalling = false;
-        isSlowFalling = false;
-
-        if (jumpBufferTimeLeft != 0f){
-            jumpBufferTimeLeft = 0f;
+        if (InputManager.jumpWasPressed && Context.Player.numberOfJumpsUsed < Context.PlayerMovementStats.numberOfJumpsAllowed){
+            Context.Player.animator.SetTrigger("doubleJumpTrigger");
+            return PlayerStateManager.PLAYER_STATES.JUMPING;
         }
+        
+        // for state transitions
+        if (InputManager.dashWasPressed && Context.Player.numberOfDashesUsed <= Context.PlayerMovementStats.numberOfDashesAllowed)
+        {
+            return PlayerStateManager.PLAYER_STATES.DASHING;
+        }
+
+        if (InputManager.climbWasPressed && Context.Player.isClimbable)
+        {
+            return PlayerStateManager.PLAYER_STATES.CLIMBING;
+        }
+
+        if (Context.Player.isGrounded && jumpBufferTimeLeft > 0f){
+            Context.Player.numberOfJumpsUsed = 0;
+            return PlayerStateManager.PLAYER_STATES.JUMPING;
+        }
+
+        else if (Context.Player.isGrounded){
+            return PlayerStateManager.PLAYER_STATES.IDLE;
+        }
+
+        return StateKey;
     }
+    public override void OnTriggerEnter(Collider collider){}
+    public override void OnTriggerStay(Collider collider){}
+    public override void OnTriggerExit(Collider collider){}
 
 }

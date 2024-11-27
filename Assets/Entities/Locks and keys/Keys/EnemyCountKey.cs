@@ -7,7 +7,6 @@ public class EnemyCountKey : BaseKeyObject
     [SerializeField] private List<BaseEnemy> _enemiesArray;
 
     private void Update(){
-
         foreach (BaseEnemy enemy in _enemiesArray){
             if (enemy == null){
                 _enemiesArray.Remove(enemy);

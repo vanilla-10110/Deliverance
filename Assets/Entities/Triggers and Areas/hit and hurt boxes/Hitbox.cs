@@ -22,11 +22,14 @@ public class Hitbox : MonoBehaviour
 
     private Collider2D _coll;
 
+    private ParticleSystem hitParticleTrigger;
+
     [Header("Debug")]
     [SerializeField] private bool drawDebugBoxes = true;
 
     private void Start(){
         _coll = GetComponent<Collider2D>();
+        hitParticleTrigger = GetComponent<ParticleSystem>();
     }
 
     private void Update(){
@@ -47,6 +50,8 @@ public class Hitbox : MonoBehaviour
             // Debug.Log("hurtbox entered hitbox: " + collider.gameObject.GetComponent<Hurtbox>().damageValue + " damage");
 
             HitDetected.Invoke(collider.gameObject.GetComponent<Hurtbox>().damageValue);
+
+            hitParticleTrigger.Play();
         }
     }
 
