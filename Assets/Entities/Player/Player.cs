@@ -39,21 +39,21 @@ public class Player : MonoBehaviour
 
     // dash vars
     [NonSerialized] public int numberOfDashesUsed = 0;
-    
 
-
-
-    public PSM psm;
+    private PlayerStateManager psm;
 
     private void Awake(){
         isFacingRight = true;
         _rb = GetComponent<Rigidbody2D>();
         PlayerTrail = GetComponent<TrailRenderer>();
         animator = GetComponent<Animator>();
+        psm = GetComponent<PlayerStateManager>();
     }
 
     private void Start(){
         SignalBus.newSceneLoaded.AddListener(ChangePosition);
+        
+        psm.Init(this);
 
         if (GameObject.Find("Player")){
             Destroy(this.gameObject);
@@ -63,13 +63,9 @@ public class Player : MonoBehaviour
             _hitbox.HitDetected.AddListener((int damageValue) => {GameManager.Instance.playerStats.DecreaseHealth(damageValue);});
         }
 
-        
-
         PlayerTrail.emitting = false;
 
         GameManager.Instance.playerRef = this;
-
-        psm.OnAwake(this);
     }
 
     private void OnDestroy(){
@@ -81,10 +77,9 @@ public class Player : MonoBehaviour
     }
 
     private void Update(){
-        psm.OnUpdate();
-
+        
         IsGrounded();
-        IsHeadBumped(); 
+        IsHeadBumped();
 
         TurnCheck(InputManager.movement);
 
@@ -98,9 +93,6 @@ public class Player : MonoBehaviour
     }
     
     private void FixedUpdate(){
-
-        psm.OnFixedUpdate();
-
         _rb.velocity = velocity;
     }
 
@@ -267,7 +259,9 @@ public class Player : MonoBehaviour
 
     private void ActivateAttackArea(ATTACK_DIRECTION dir){
         if (canAttack){
-            animator.SetTrigger("isAttacking");
+            // animator.SetTrigger("isAttacking");
+            animator.StopPlayback();
+            animator.Play("AttackState");
             GetAttackArea(dir).ActivateHurtBox(0.1f, 1);
             SignalBus.AbilityUsedEvent.Invoke(EnumBus.PLAYER_ABILITIES.LIGHT_ATTACK.ToString());
         }

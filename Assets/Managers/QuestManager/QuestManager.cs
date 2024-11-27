@@ -7,9 +7,9 @@ using UnityEngine.Events;
 
 public class QuestManager : MonoBehaviour
 {
-    // [NonSerialized] public UnityEvent CollectedSoulEvent = new();
-    // [NonSerialized] public UnityEvent AbilityUsedEvent = new();
-    // [NonSerialized] public UnityEvent DestroyedEntityEvent = new();
+    public QuestGiverUI QuestGiverUI;
+    
+    [SerializeField] private QuestGiverUI PauseMenuTAskUI;
 
     [SerializeField] private List<Quest> activeQuests = new();
     [SerializeField] private List<Quest> completedQuests = new();
@@ -26,11 +26,6 @@ public class QuestManager : MonoBehaviour
         }
     }
 
-    void Start(){
-
-    }
-
-
     // to be called by the quest giver to add a new quest to the list
     public void AddActiveQuest(Quest newQuest){
         Debug.Log("quest received, adding to active list : Manager : " + newQuest.title );
@@ -39,8 +34,13 @@ public class QuestManager : MonoBehaviour
 
         activeQuests.Add(quest);
 
+        PauseMenuTAskUI.UpdateQuests(activeQuests);
+
+
         ConnectQuestEvents(quest);
-        quest.questCompleted.AddListener(() => {SetQuestAsComplete(quest);});
+        quest.questCompleted.AddListener(() => {
+            SetQuestAsComplete(quest); 
+        });
     }
 
     private void SetQuestAsComplete(Quest quest){
@@ -48,13 +48,9 @@ public class QuestManager : MonoBehaviour
         DisconnectQuestEvents(quest);
         activeQuests.Remove(quest);
         completedQuests.Add(quest);
+
+        PauseMenuTAskUI.UpdateQuests(activeQuests);
     }
-
-    public struct eventType {
-
-    }
-
-
 
     private void ConnectQuestEvents(Quest quest) {
         switch (quest.type){

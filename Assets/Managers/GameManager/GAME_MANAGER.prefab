@@ -109,6 +109,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6635412669266125333, guid: 101bd1117286efe468fa3d9f20493577, type: 3}
+      propertyPath: PauseMenuTAskUI
+      value: 
+      objectReference: {fileID: 3704503225528271994}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -335,6 +339,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6042159719918850989, guid: 0a7dbe032bd85054894b1da7caed6504, type: 3}
   m_PrefabInstance: {fileID: 4978954322497796047}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3704503225528271994 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8534821149870568373, guid: 0a7dbe032bd85054894b1da7caed6504, type: 3}
+  m_PrefabInstance: {fileID: 4978954322497796047}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2414a2933166abf428767028487419f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &8547533577656206352 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3712720995795891167, guid: 0a7dbe032bd85054894b1da7caed6504, type: 3}

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour
@@ -24,6 +25,9 @@ public class InputManager : MonoBehaviour
     public static bool interactIsPressed;
     public static bool interactWasReleased;
 
+    [Header("UI")]
+    public static bool pauseWasPressed;
+
 
     private InputAction _moveAction;
     private InputAction _jumpAction;
@@ -31,6 +35,7 @@ public class InputManager : MonoBehaviour
     private InputAction _climbAction;
     private InputAction _attackAction;
     private InputAction _interactAction;
+    private InputAction _pauseAction;
 
     private void Awake(){
         playerInput = GetComponent<PlayerInput>();
@@ -41,7 +46,9 @@ public class InputManager : MonoBehaviour
         _climbAction = playerInput.actions["Climb"];
         _attackAction = playerInput.actions["MainAttack"];
         _interactAction = playerInput.actions["Interact"];
+        _pauseAction = playerInput.actions["Pause"];
     }
+
 
     private void Update()
     {
@@ -63,5 +70,8 @@ public class InputManager : MonoBehaviour
         interactWasPressed = _interactAction.WasPressedThisFrame();
         interactIsPressed = _interactAction.IsPressed();
         interactWasReleased = _interactAction.WasReleasedThisFrame();
+
+        pauseWasPressed = _pauseAction.WasPressedThisFrame();
+
     }
 }
