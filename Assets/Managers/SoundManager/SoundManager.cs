@@ -25,6 +25,7 @@ public class SoundManager : MonoBehaviour
 
     void Start()
     {
+
         audioSource = GetComponent<AudioSource>();
 
         if (placeholderMusic){
@@ -33,5 +34,8 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-
+    void Update()
+    {
+        
+    }
 }

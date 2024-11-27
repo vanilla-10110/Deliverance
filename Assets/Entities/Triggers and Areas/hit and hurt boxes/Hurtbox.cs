@@ -12,7 +12,6 @@ public class Hurtbox : MonoBehaviour
 
     [NonSerialized] public UnityEvent HitboxDetected = new();
     [NonSerialized] public UnityEvent AttackTimeFinished = new();
-    [SerializeField] public string ownerTag;
 
     private Collider2D _coll;
 

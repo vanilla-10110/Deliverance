@@ -27,8 +27,8 @@ public class ScenesManager : MonoBehaviour
     private GameObject gameObjectHeld = null;
 
     private void Awake(){
-        if (Instance != null){
-            Destroy(this.gameObject);
+        if (Instance != null && Instance != this){
+            Destroy(this);
         }
         else {
             Instance = this;
@@ -48,7 +48,7 @@ public class ScenesManager : MonoBehaviour
         }
         if (currentState == STATE.loading && loadSceneTask.isDone){
             currentState = STATE.finishedLoading;
-            SignalBus.newSceneLoaded.Invoke();
+            SignalBus.newSceneLoaded.Emit();
         }
 
         if (gameObjectHeld != null){
@@ -65,7 +65,6 @@ public class ScenesManager : MonoBehaviour
     
     public void SetSpawnpoint(int spawnPointID){
         currentSpawnPointId = spawnPointID;
-        SignalBus.spawnPointUpdated.Invoke();
     }
 
     public void AddSpawnpointToList(SpawnpointTrigger spawnPoint){
