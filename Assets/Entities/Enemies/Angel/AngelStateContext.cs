@@ -12,7 +12,8 @@ public class AngelStateContext {
     private Collider2D _rightSmiteAttackArea;
 
 
-
+    public Bounds leftSmiteBounds;
+    public Bounds rightSmiteBounds;
     public bool isFacingRight;
     public bool playerDetected;
     public int lastPlayerDirection;
@@ -27,6 +28,9 @@ public class AngelStateContext {
         _leftSmiteAttackArea = leftSmite;
         _rightSmiteAttackArea = rightSmite;
 
+
+        leftSmiteBounds = leftSmite.bounds;
+        rightSmiteBounds = rightSmite.bounds;
 
         isFacingRight = false;
         playerDetected = false;

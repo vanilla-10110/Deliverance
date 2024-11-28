@@ -14,7 +14,7 @@ public class AngelPatrollingState : BaseAngelState<AngelEnemyStateManager.ANGEL_
         // anything this state should do as it initially gets called
         ChangeToIdleTimer = PatrolWait(Random.Range(2f, 5f));
         Context.AngelRef._animator.SetBool("isWalking", true);
-
+        
     }
 
     public override async void UpdateState(){
@@ -49,8 +49,6 @@ public class AngelPatrollingState : BaseAngelState<AngelEnemyStateManager.ANGEL_
     }
 
     public override AngelEnemyStateManager.ANGEL_STATES GetNextState(){
-
-        Debug.Log(StateKey);
 
         if (Context.playerDetected){
             return AngelEnemyStateManager.ANGEL_STATES.CHASING;

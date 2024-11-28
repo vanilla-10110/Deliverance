@@ -39,8 +39,6 @@ public class AngelIdleState : BaseAngelState<AngelEnemyStateManager.ANGEL_STATES
     }
 
     public override AngelEnemyStateManager.ANGEL_STATES GetNextState(){
-        Debug.Log(StateKey);
-
         if (Context.playerDetected){
             return AngelEnemyStateManager.ANGEL_STATES.CHASING;
         }

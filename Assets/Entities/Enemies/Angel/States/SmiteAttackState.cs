@@ -11,11 +11,27 @@ public class AngelSmiteAttackState : BaseAngelState<AngelEnemyStateManager.ANGEL
         // anything this state should do as it initially gets called
         Context.AngelRef._animator.SetTrigger("TriggerSmite");
         Context.RigidBody.velocity = Vector2.zero;
+
+
     }
 
 
     public override void UpdateState(){
         // should mainly be used for checking the condition for when to change to another state
+        if (Context.AngelRef._animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.4){
+            return;
+        }
+
+        if (Context.lastPlayerDirection == 1){
+            Debug.Log("player in right smite area");
+            Context.RightSmiteArea.gameObject.SetActive(true);
+            Context.LeftSmiteArea.gameObject.SetActive(false);
+        }
+        else {
+            Debug.Log("player in left smite area");
+            Context.RightSmiteArea.gameObject.SetActive(false);
+            Context.LeftSmiteArea.gameObject.SetActive(true);
+        }
     }
 
 
@@ -26,16 +42,17 @@ public class AngelSmiteAttackState : BaseAngelState<AngelEnemyStateManager.ANGEL
 
     public override void ExitState(){
         // anything this states should do before the state machine switches to another state
+        Context.RightSmiteArea.gameObject.SetActive(false);
+        Context.LeftSmiteArea.gameObject.SetActive(false);
     }
 
     public override AngelEnemyStateManager.ANGEL_STATES GetNextState(){
         Debug.Log(StateKey);
         if (
-            Context.AngelRef._animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1 ||
-            !Context.AngelRef._animator.GetCurrentAnimatorStateInfo(0).IsName("AngelSmite")
-        
+
+            !(Context.AngelRef._animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1)
         ){
-            return AngelEnemyStateManager.ANGEL_STATES.CHASING;
+            return AngelEnemyStateManager.ANGEL_STATES.PATROLLING;
         }
 
         return StateKey;
