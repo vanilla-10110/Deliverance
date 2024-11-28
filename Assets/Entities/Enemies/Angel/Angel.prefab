@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1727983580875217809}
   - component: {fileID: 8338354900435342179}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -652,6 +652,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5802926836126765131, guid: 83f25248a2f57624a948c37e4d52e0e6, type: 3}
+      propertyPath: _hitParticleSystem
+      value: 
+      objectReference: {fileID: 353022744385877673}
     - target: {fileID: 7063762721588655948, guid: 83f25248a2f57624a948c37e4d52e0e6, type: 3}
       propertyPath: looping
       value: 0
@@ -929,6 +933,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 83f25248a2f57624a948c37e4d52e0e6, type: 3}
+--- !u!198 &353022744385877673 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 4544558018467621627, guid: 83f25248a2f57624a948c37e4d52e0e6, type: 3}
+  m_PrefabInstance: {fileID: 4321119318632471634}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2607613293033689402 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2289985135962393960, guid: 83f25248a2f57624a948c37e4d52e0e6, type: 3}
