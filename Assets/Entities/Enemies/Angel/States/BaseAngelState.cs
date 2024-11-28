@@ -30,8 +30,6 @@ public abstract class BaseAngelState<EState> : BaseState<AngelEnemyStateManager.
         
         collider.GetContacts(playerDetectColliderContacts);
 
-
-
         if (playerDetectColliderContacts.Count > 0){
             if (playerDetectColliderContacts.Exists(c => c.gameObject.CompareTag("Player"))){
                 Context.playerDetected = true;

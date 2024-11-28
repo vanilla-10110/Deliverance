@@ -7,7 +7,7 @@ public class BaseEnemy : MonoBehaviour
     public int StartingHealth;
 
     public EntityStatsScriptableObject enemyStats;
-    [SerializeField] private Hitbox _hitbox;
+    public Hitbox _hitbox;
     public SpriteRenderer _spriteRenderer;
     public Animator _animator;
 

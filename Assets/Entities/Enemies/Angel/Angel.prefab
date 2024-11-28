@@ -263,8 +263,8 @@ MonoBehaviour:
   angelRef: {fileID: 2561586827359977819}
   _leftPlayerDetectionArea: {fileID: 1022301215583074916}
   _rightPlayerDetectionArea: {fileID: 4256661628478312109}
-  _leftSmiteArea: {fileID: 1022301215583074916}
-  _rightSmiteArea: {fileID: 4256661628478312109}
+  _leftSmiteArea: {fileID: 3955607439055577183}
+  _rightSmiteArea: {fileID: 8981845671992359263}
 --- !u!95 &1522276518915266802
 Animator:
   serializedVersion: 5
@@ -581,6 +581,11 @@ PrefabInstance:
 --- !u!4 &1633893059866881546 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4599554741380352197, guid: 8691b2f1d82bd854a88c051cf8921dd1, type: 3}
+  m_PrefabInstance: {fileID: 2988182050808784591}
+  m_PrefabAsset: {fileID: 0}
+--- !u!61 &8981845671992359263 stripped
+BoxCollider2D:
+  m_CorrespondingSourceObject: {fileID: 6187324334245945232, guid: 8691b2f1d82bd854a88c051cf8921dd1, type: 3}
   m_PrefabInstance: {fileID: 2988182050808784591}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4321119318632471634
@@ -907,6 +912,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hitbox
       objectReference: {fileID: 0}
+    - target: {fileID: 8361895141913843242, guid: 83f25248a2f57624a948c37e4d52e0e6, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8833877354698555116, guid: 83f25248a2f57624a948c37e4d52e0e6, type: 3}
       propertyPath: m_SortingOrder
       value: 1
@@ -1009,6 +1018,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8691b2f1d82bd854a88c051cf8921dd1, type: 3}
+--- !u!61 &3955607439055577183 stripped
+BoxCollider2D:
+  m_CorrespondingSourceObject: {fileID: 6187324334245945232, guid: 8691b2f1d82bd854a88c051cf8921dd1, type: 3}
+  m_PrefabInstance: {fileID: 7149726853216927695}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6695735661739144970 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4599554741380352197, guid: 8691b2f1d82bd854a88c051cf8921dd1, type: 3}

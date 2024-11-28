@@ -6,14 +6,21 @@ public class AngelChasingState : BaseAngelState<AngelEnemyStateManager.ANGEL_STA
 
     // private Task<AngelEnemyStateManager.ANGEL_STATES> ChangeToIdleTimer;
 
-    private List<Collider2D> _collidersInAttackArea = new(); 
+    // private List<Collider2D> _collidersInAttackArea = new();
+
+    private RaycastHit2D _playerInRangeOfLeft;
+    private RaycastHit2D _playerInRangeOfRight;
 
     public AngelChasingState(AngelStateContext context, AngelEnemyStateManager.ANGEL_STATES stateKey, AngelEnemyStateManager esm) : base(context, stateKey, esm) {}
 
     public override void EnterState(){
         TurnAngel(Context.lastPlayerDirection);
         Context.AngelRef._animator.SetBool("isWalking", true);
-        
+
+
+        IsPlayerInAttackRange(Context.lastPlayerDirection);
+
+        Debug.Log(Context.rightSmiteBounds + "" + Context.leftSmiteBounds);
     }
 
     public override void UpdateState(){
@@ -21,8 +28,24 @@ public class AngelChasingState : BaseAngelState<AngelEnemyStateManager.ANGEL_STA
         CheckColliderForPlayer(Context.LeftPlayerDetectionArea, -1);
         if (!Context.playerDetected) CheckColliderForPlayer(Context.RightPlayerDetectionArea, 1);
 
+        IsPlayerInAttackRange(Context.lastPlayerDirection);
+    }
 
-        
+    private void IsPlayerInAttackRange(int direction){
+        // Debug.Log(direction);
+
+        Bounds collider = direction == 1 ? Context.rightSmiteBounds : Context.leftSmiteBounds;
+        Bounds hitbox = Context.AngelRef._hitbox.gameObject.GetComponent<Collider2D>().bounds;
+
+        Vector2 boxCastOrigin = new Vector2(hitbox.center.x, hitbox.center.y);
+
+        if (direction == -1){
+            _playerInRangeOfLeft = Physics2D.Raycast(new(boxCastOrigin.x, boxCastOrigin.y), Vector2.left, collider.size.x * 2, LayerMask.GetMask("Player"));
+        }
+        else {
+            _playerInRangeOfRight = Physics2D.Raycast(new(boxCastOrigin.x, boxCastOrigin.y),Vector2.right, collider.size.x * 2, LayerMask.GetMask("Player"));
+        }
+
     }
 
     public override void FixedUpdateState(){
@@ -32,12 +55,11 @@ public class AngelChasingState : BaseAngelState<AngelEnemyStateManager.ANGEL_STA
 
     public override void ExitState(){
         // anything this states should do before the state machine switches to another state
+        // Context.playerDetected = false;
     }
 
     public override AngelEnemyStateManager.ANGEL_STATES GetNextState(){
-        Debug.Log(StateKey);
-        
-        if(IsPlayerInSmite(Context.lastPlayerDirection == -1 ? Context.LeftSmiteArea : Context.RightSmiteArea)){
+        if(_playerInRangeOfLeft.collider != null || _playerInRangeOfRight.collider != null){
             return AngelEnemyStateManager.ANGEL_STATES.SMITE_ATTACK;
         }
 
@@ -47,20 +69,6 @@ public class AngelChasingState : BaseAngelState<AngelEnemyStateManager.ANGEL_STA
 
         return StateKey;
     }
-
-    private bool IsPlayerInSmite(Collider2D collider){
-        
-        collider.GetContacts(_collidersInAttackArea);
-
-        if (_collidersInAttackArea.Count > 0){
-            if (_collidersInAttackArea.Exists(c => c.gameObject.CompareTag("Player"))){
-                return true;
-            }
-        }
-
-        return false;
-    }
-
 
     public override void OnTriggerEnter(Collider collider){
         

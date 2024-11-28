@@ -193,8 +193,8 @@ MonoBehaviour:
   ScoreLabel: {fileID: 7018421387467222724}
   StartMenu: {fileID: 405417238737868660}
   PauseMenu: {fileID: 258928565043164545}
-  HealthBar: {fileID: 5988835336676688540}
-  heartPrefab: {fileID: 0}
+  HealthBar: {fileID: 5933331784866130746}
+  heartPrefab: {fileID: 323344274823450995, guid: 554dcb287e964de459c3b81a52657977, type: 3}
 --- !u!1001 &2795227926362126656
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -538,9 +538,9 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6850819287648851496, guid: 87f1d3fe9c4905740ba2d6c6de5f2876, type: 3}
   m_PrefabInstance: {fileID: 5533773763020380980}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &5988835336676688540 stripped
+--- !u!1 &5933331784866130746 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 2294434378733787560, guid: 87f1d3fe9c4905740ba2d6c6de5f2876, type: 3}
+  m_CorrespondingSourceObject: {fileID: 2205783299720097806, guid: 87f1d3fe9c4905740ba2d6c6de5f2876, type: 3}
   m_PrefabInstance: {fileID: 5533773763020380980}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &7018421387467222724 stripped
