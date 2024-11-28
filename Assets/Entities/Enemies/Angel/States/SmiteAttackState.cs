@@ -48,6 +48,9 @@ public class AngelSmiteAttackState : BaseAngelState<AngelEnemyStateManager.ANGEL
 
     public override AngelEnemyStateManager.ANGEL_STATES GetNextState(){
         Debug.Log(StateKey);
+        if (Context.AngelRef.enemyStats.health <= 0 ){
+            return AngelEnemyStateManager.ANGEL_STATES.DEAD;
+        }
         if (
 
             !(Context.AngelRef._animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1)

@@ -39,6 +39,10 @@ public class AngelIdleState : BaseAngelState<AngelEnemyStateManager.ANGEL_STATES
     }
 
     public override AngelEnemyStateManager.ANGEL_STATES GetNextState(){
+        if (Context.AngelRef.enemyStats.health <= 0 ){
+            return AngelEnemyStateManager.ANGEL_STATES.DEAD;
+        }
+
         if (Context.playerDetected){
             return AngelEnemyStateManager.ANGEL_STATES.CHASING;
         }

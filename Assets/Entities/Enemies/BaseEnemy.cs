@@ -14,7 +14,7 @@ public class BaseEnemy : MonoBehaviour
     [SerializeField] protected List<Collider2D> playerDetectionAreas;
 
     [SerializeField] private bool destroyEntityOnDead = true;
-    private void Awake() {
+    protected void Awake() {
         enemyStats = new()
         {
             health = StartingHealth
@@ -22,11 +22,7 @@ public class BaseEnemy : MonoBehaviour
     }
 
 
-    private void Start(){
-        // _ESM = GetComponent<EnemyStateMachine>();
-        // _ESM.animatorRef = GetComponent<Animator>();
-        // _ESM.enemyRef = this;
-
+    protected void Start(){
         if (_hitbox){
             _hitbox.HitDetected.AddListener(OnHitDetected);
         }

@@ -241,13 +241,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ff35ca27e5f5a9448fcf871f7ca8b5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartingHealth: 0
+  StartingHealth: 10
   enemyStats: {fileID: 11400000, guid: 811a9fee7f543634f9493c28913a887b, type: 2}
   _hitbox: {fileID: 7746068308662701081}
   _spriteRenderer: {fileID: 3601806709737813259}
   _animator: {fileID: 1522276518915266802}
   playerDetectionAreas: []
-  destroyEntityOnDead: 1
+  destroyEntityOnDead: 0
 --- !u!114 &4529998930923619670
 MonoBehaviour:
   m_ObjectHideFlags: 0

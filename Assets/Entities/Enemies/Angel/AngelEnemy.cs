@@ -5,23 +5,15 @@ using UnityEngine;
 public class AngelEnemy : BaseEnemy
 {
     private AngelEnemyStateManager _esm;
-    
  
-    private void Awake(){
+    private new void Awake(){
+        base.Awake();
         _esm = GetComponent<AngelEnemyStateManager>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    private void Start(){
+    private new void Start() {
+        base.Start();
         _esm.Init(this);
     }
-
-    private void Update(){
-
-    }
-
-    private void FixedUpdate(){
-    }
-
-
 }
