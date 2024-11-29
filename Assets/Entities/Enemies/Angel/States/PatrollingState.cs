@@ -6,7 +6,6 @@ public class AngelPatrollingState : BaseAngelState<AngelEnemyStateManager.ANGEL_
 
     private Task<AngelEnemyStateManager.ANGEL_STATES> ChangeToIdleTimer;
 
-    // private List<Collider2D> ColliderContacts = new(); 
 
     public AngelPatrollingState(AngelStateContext context, AngelEnemyStateManager.ANGEL_STATES stateKey, AngelEnemyStateManager esm) : base(context, stateKey, esm) {}
 
@@ -25,15 +24,7 @@ public class AngelPatrollingState : BaseAngelState<AngelEnemyStateManager.ANGEL_
 
 
         await ChangeToIdleTimer;
-        // Context.LeftPlayerDetectionArea.GetContacts(playerDetectColliderContacts);
 
-        // if (playerDetectColliderContacts.Count > 0){
-        //     foreach (var contact in playerDetectColliderContacts){
-        //         if (contact.gameObject.CompareTag("Player")){
-        //             Context.playerDetected = true;
-        //         }
-        //     }
-        // }
     }
     
 
@@ -49,7 +40,10 @@ public class AngelPatrollingState : BaseAngelState<AngelEnemyStateManager.ANGEL_
     }
 
     public override AngelEnemyStateManager.ANGEL_STATES GetNextState(){
-
+        if (Context.AngelRef.enemyStats.health <= 0 ){
+            return AngelEnemyStateManager.ANGEL_STATES.DEAD;
+        }
+        
         if (Context.playerDetected){
             return AngelEnemyStateManager.ANGEL_STATES.CHASING;
         }
@@ -62,6 +56,8 @@ public class AngelPatrollingState : BaseAngelState<AngelEnemyStateManager.ANGEL_
     }
 
     private async Task<AngelEnemyStateManager.ANGEL_STATES> PatrolWait(float SecondsToTransition){
+
+
         await Task.Delay((int)(SecondsToTransition * 1000));
 
         return AngelEnemyStateManager.ANGEL_STATES.IDLE;

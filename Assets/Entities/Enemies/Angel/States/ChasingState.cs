@@ -59,6 +59,10 @@ public class AngelChasingState : BaseAngelState<AngelEnemyStateManager.ANGEL_STA
     }
 
     public override AngelEnemyStateManager.ANGEL_STATES GetNextState(){
+        if (Context.AngelRef.enemyStats.health <= 0 ){
+            return AngelEnemyStateManager.ANGEL_STATES.DEAD;
+        }
+
         if(_playerInRangeOfLeft.collider != null || _playerInRangeOfRight.collider != null){
             return AngelEnemyStateManager.ANGEL_STATES.SMITE_ATTACK;
         }

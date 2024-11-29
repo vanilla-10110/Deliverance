@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1727983580875217809}
   - component: {fileID: 8338354900435342179}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -241,13 +241,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ff35ca27e5f5a9448fcf871f7ca8b5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartingHealth: 0
+  StartingHealth: 10
   enemyStats: {fileID: 11400000, guid: 811a9fee7f543634f9493c28913a887b, type: 2}
   _hitbox: {fileID: 7746068308662701081}
   _spriteRenderer: {fileID: 3601806709737813259}
   _animator: {fileID: 1522276518915266802}
   playerDetectionAreas: []
-  destroyEntityOnDead: 1
+  destroyEntityOnDead: 0
 --- !u!114 &4529998930923619670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -652,6 +652,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5802926836126765131, guid: 83f25248a2f57624a948c37e4d52e0e6, type: 3}
+      propertyPath: _hitParticleSystem
+      value: 
+      objectReference: {fileID: 353022744385877673}
     - target: {fileID: 7063762721588655948, guid: 83f25248a2f57624a948c37e4d52e0e6, type: 3}
       propertyPath: looping
       value: 0
@@ -929,6 +933,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 83f25248a2f57624a948c37e4d52e0e6, type: 3}
+--- !u!198 &353022744385877673 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 4544558018467621627, guid: 83f25248a2f57624a948c37e4d52e0e6, type: 3}
+  m_PrefabInstance: {fileID: 4321119318632471634}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2607613293033689402 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2289985135962393960, guid: 83f25248a2f57624a948c37e4d52e0e6, type: 3}

@@ -11,7 +11,7 @@ public class Hitbox : MonoBehaviour
 
     // add any hurtboxes you want this hitbox to ignore into the editor, since some might overlap on the same entity
     public Hurtbox[] ignoredHurtboxes;
-
+    [SerializeField] private ParticleSystem _hitParticleSystem;
     /* 
     from another script all you gotta do is add a listener to this event and 
     do whatever with it - ie. decrease health / play an animation
@@ -22,14 +22,14 @@ public class Hitbox : MonoBehaviour
 
     private Collider2D _coll;
 
-    private ParticleSystem hitParticleTrigger;
+    // private ParticleSystem hitParticleTrigger;
 
     [Header("Debug")]
     [SerializeField] private bool drawDebugBoxes = true;
 
     private void Start(){
         _coll = GetComponent<Collider2D>();
-        hitParticleTrigger = GetComponent<ParticleSystem>();
+        // _hitParticleSystem = GetComponent<ParticleSystem>();
     }
 
     private void Update(){
@@ -51,7 +51,9 @@ public class Hitbox : MonoBehaviour
 
             HitDetected.Invoke(collider.gameObject.GetComponent<Hurtbox>().damageValue);
 
-            hitParticleTrigger.Play();
+            _hitParticleSystem.Play();
+
+
         }
     }
 
