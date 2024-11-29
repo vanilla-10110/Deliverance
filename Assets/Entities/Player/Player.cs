@@ -61,6 +61,11 @@ public class Player : MonoBehaviour
 
         if (_hitbox){
             _hitbox.HitDetected.AddListener((int damageValue) => {GameManager.Instance.playerStats.DecreaseHealth(damageValue);});
+            _hitbox.HitboxIntersecting.AddListener((float angle) => {
+                Debug.Log("hitbox intersected from: " + angle);
+                Vector3 v = (Vector3.forward*angle) * 100;
+                gameObject.transform.position += new Vector3(v.x, v.y);
+            });
         }
 
         PlayerTrail.emitting = false;

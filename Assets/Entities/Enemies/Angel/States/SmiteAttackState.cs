@@ -23,12 +23,12 @@ public class AngelSmiteAttackState : BaseAngelState<AngelEnemyStateManager.ANGEL
         }
 
         if (Context.lastPlayerDirection == 1){
-            Debug.Log("player in right smite area");
+            // Debug.Log("player in right smite area");
             Context.RightSmiteArea.gameObject.SetActive(true);
             Context.LeftSmiteArea.gameObject.SetActive(false);
         }
         else {
-            Debug.Log("player in left smite area");
+            // Debug.Log("player in left smite area");
             Context.RightSmiteArea.gameObject.SetActive(false);
             Context.LeftSmiteArea.gameObject.SetActive(true);
         }
@@ -47,7 +47,7 @@ public class AngelSmiteAttackState : BaseAngelState<AngelEnemyStateManager.ANGEL
     }
 
     public override AngelEnemyStateManager.ANGEL_STATES GetNextState(){
-        Debug.Log(StateKey);
+        // Debug.Log(StateKey);
         if (Context.AngelRef.enemyStats.health <= 0 ){
             return AngelEnemyStateManager.ANGEL_STATES.DEAD;
         }

@@ -19,6 +19,7 @@ public class Hitbox : MonoBehaviour
     it passes a int paramater which is meant to be the damage it has recieved
     */
     [NonSerialized] public UnityEvent<int> HitDetected = new();
+    [NonSerialized] public UnityEvent<float> HitboxIntersecting = new();
 
     private Collider2D _coll;
 
@@ -48,12 +49,20 @@ public class Hitbox : MonoBehaviour
 
         if (collider.gameObject.CompareTag("Hurtbox")){
             // Debug.Log("hurtbox entered hitbox: " + collider.gameObject.GetComponent<Hurtbox>().damageValue + " damage");
-
+            if (LayerMask.LayerToName(gameObject.layer) == collider.gameObject.GetComponent<Hurtbox>().ownerTag){
+                return;
+            }
             HitDetected.Invoke(collider.gameObject.GetComponent<Hurtbox>().damageValue);
 
             _hitParticleSystem.Play();
 
 
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collider){
+        if (collider.gameObject.CompareTag("Hitbox")){
+            HitboxIntersecting.Invoke(Vector3.Angle(gameObject.transform.position, collider.transform.position));
         }
     }
 

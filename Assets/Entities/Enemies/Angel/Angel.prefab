@@ -516,6 +516,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 56180192565530463}
     m_Modifications:
+    - target: {fileID: 1838237469780723886, guid: 8691b2f1d82bd854a88c051cf8921dd1, type: 3}
+      propertyPath: ownerTag
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 2462841760048196640, guid: 8691b2f1d82bd854a88c051cf8921dd1, type: 3}
       propertyPath: m_Name
       value: RightHurtbox
@@ -661,7 +665,7 @@ PrefabInstance:
       objectReference: {fileID: 353022744385877673}
     - target: {fileID: 5867828272318612505, guid: 83f25248a2f57624a948c37e4d52e0e6, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7063762721588655948, guid: 83f25248a2f57624a948c37e4d52e0e6, type: 3}
       propertyPath: looping
@@ -925,7 +929,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8361895141913843242, guid: 83f25248a2f57624a948c37e4d52e0e6, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8833877354698555116, guid: 83f25248a2f57624a948c37e4d52e0e6, type: 3}
       propertyPath: m_SortingOrder
@@ -969,6 +973,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 56180192565530463}
     m_Modifications:
+    - target: {fileID: 1838237469780723886, guid: 8691b2f1d82bd854a88c051cf8921dd1, type: 3}
+      propertyPath: ownerTag
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 2462841760048196640, guid: 8691b2f1d82bd854a88c051cf8921dd1, type: 3}
       propertyPath: m_Name
       value: LeftHurtbox
