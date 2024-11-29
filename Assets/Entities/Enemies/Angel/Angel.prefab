@@ -47,7 +47,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 1088
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -246,6 +246,9 @@ MonoBehaviour:
   _hitbox: {fileID: 7746068308662701081}
   _spriteRenderer: {fileID: 3601806709737813259}
   _animator: {fileID: 1522276518915266802}
+  EnemyDefeated:
+    m_PersistentCalls:
+      m_Calls: []
   playerDetectionAreas: []
   destroyEntityOnDead: 0
 --- !u!114 &4529998930923619670

@@ -326,7 +326,7 @@
                 {
                     "name": "",
                     "id": "75da2422-9de7-42b6-8ea4-d00ab9834c72",
-                    "path": "<Gamepad>/buttonWest",
+                    "path": "<Gamepad>/buttonEast",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -358,6 +358,17 @@
                 },
                 {
                     "name": "",
+                    "id": "ea73a6ba-db89-401f-9f81-b6810227ffe9",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MainAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "5a906b17-1417-4a75-ae75-b65ff79b1d06",
                     "path": "<Keyboard>/e",
                     "interactions": "",
@@ -369,8 +380,30 @@
                 },
                 {
                     "name": "",
+                    "id": "2594b253-65d3-4ae8-a623-11f4bd9aa2a1",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "d5fb73da-ee6e-41d6-8d87-cf6def282fd7",
                     "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8f362dee-7fb1-47c1-8b35-7ff1ab084fbf",
+                    "path": "<Gamepad>/start",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

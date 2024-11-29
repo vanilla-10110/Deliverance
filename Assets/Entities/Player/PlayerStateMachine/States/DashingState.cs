@@ -67,6 +67,7 @@ public class PlayerDashingState : BasePlayerState<PlayerStateManager.PLAYER_STAT
         }
 
         if (timeSinceDashStart >= Context.PlayerMovementStats.dashDuration && !Context.Player.isGrounded){
+            Context.playerIsFastFalling = true;
             return PlayerStateManager.PLAYER_STATES.FALLING;
         }
 
