@@ -341,7 +341,7 @@ CapsuleCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1024
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -476,7 +476,7 @@ CapsuleCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1024
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -725,6 +725,18 @@ PrefabInstance:
     - target: {fileID: 2289985135962393960, guid: 83f25248a2f57624a948c37e4d52e0e6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4544558018467621627, guid: 83f25248a2f57624a948c37e4d52e0e6, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4544558018467621627, guid: 83f25248a2f57624a948c37e4d52e0e6, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.8201744
+      objectReference: {fileID: 0}
+    - target: {fileID: 4544558018467621627, guid: 83f25248a2f57624a948c37e4d52e0e6, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0.2688679
       objectReference: {fileID: 0}
     - target: {fileID: 5802926836126765131, guid: 83f25248a2f57624a948c37e4d52e0e6, type: 3}
       propertyPath: ignoredHurtboxes.Array.size

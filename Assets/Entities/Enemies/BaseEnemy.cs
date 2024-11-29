@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class BaseEnemy : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class BaseEnemy : MonoBehaviour
     public Hitbox _hitbox;
     public SpriteRenderer _spriteRenderer;
     public Animator _animator;
+
+    public UnityEvent<BaseEnemy> EnemyDefeated = new();
 
     [SerializeField] protected List<Collider2D> playerDetectionAreas;
 
@@ -37,6 +40,8 @@ public class BaseEnemy : MonoBehaviour
 
     void OnHealthDepletedActions(){
         SignalBus.DestroyedEntityEvent.Invoke();
+        EnemyDefeated.Invoke(this);
+        _hitbox.gameObject.SetActive(false);
         
         if (destroyEntityOnDead){
             Destroy(gameObject);

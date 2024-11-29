@@ -40,10 +40,10 @@ public class AngelChasingState : BaseAngelState<AngelEnemyStateManager.ANGEL_STA
         Vector2 boxCastOrigin = new Vector2(hitbox.center.x, hitbox.center.y);
 
         if (direction == -1){
-            _playerInRangeOfLeft = Physics2D.Raycast(new(boxCastOrigin.x, boxCastOrigin.y), Vector2.left, collider.size.x * 2, LayerMask.GetMask("Player"));
+            _playerInRangeOfLeft = Physics2D.Raycast(new(boxCastOrigin.x, boxCastOrigin.y), Vector2.left, collider.size.x, LayerMask.GetMask("Player"));
         }
         else {
-            _playerInRangeOfRight = Physics2D.Raycast(new(boxCastOrigin.x, boxCastOrigin.y),Vector2.right, collider.size.x * 2, LayerMask.GetMask("Player"));
+            _playerInRangeOfRight = Physics2D.Raycast(new(boxCastOrigin.x, boxCastOrigin.y),Vector2.right, collider.size.x, LayerMask.GetMask("Player"));
         }
 
     }

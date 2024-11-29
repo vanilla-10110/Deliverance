@@ -6,12 +6,20 @@ public class EnemyCountKey : BaseKeyObject
 {
     [SerializeField] private List<BaseEnemy> _enemiesArray;
 
-    private void Update(){
+    private void Start(){
         foreach (BaseEnemy enemy in _enemiesArray){
-            if (enemy == null){
+            enemy.EnemyDefeated.AddListener((BaseEnemy enemy) => {
                 _enemiesArray.Remove(enemy);
-            }
+            });
         }
+    }
+
+    private void Update(){
+        // foreach (BaseEnemy enemy in _enemiesArray){
+        //     if (enemy == null){
+                
+        //     }
+        // }
         
         if (_currentState == KEY_STATE.LOCKED && _enemiesArray.Count <= 0){
             SetKeyState(KEY_STATE.UNLOCKED);

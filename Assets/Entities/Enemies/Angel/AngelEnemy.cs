@@ -15,5 +15,6 @@ public class AngelEnemy : BaseEnemy
     private new void Start() {
         base.Start();
         _esm.Init(this);
+        
     }
 }
