@@ -17,18 +17,15 @@ public class AngelSmiteAttackState : BaseAngelState<AngelEnemyStateManager.ANGEL
 
 
     public override void UpdateState(){
-        // should mainly be used for checking the condition for when to change to another state
-        if (Context.AngelRef._animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.4){
+        if (Context.AngelRef._animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.6){
             return;
         }
 
         if (Context.lastPlayerDirection == 1){
-            // Debug.Log("player in right smite area");
             Context.RightSmiteArea.gameObject.SetActive(true);
             Context.LeftSmiteArea.gameObject.SetActive(false);
         }
         else {
-            // Debug.Log("player in left smite area");
             Context.RightSmiteArea.gameObject.SetActive(false);
             Context.LeftSmiteArea.gameObject.SetActive(true);
         }

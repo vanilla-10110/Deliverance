@@ -739,6 +739,10 @@ PrefabInstance:
       value: 0.2688679
       objectReference: {fileID: 0}
     - target: {fileID: 5802926836126765131, guid: 83f25248a2f57624a948c37e4d52e0e6, type: 3}
+      propertyPath: _hitboxRepulsionForce
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 5802926836126765131, guid: 83f25248a2f57624a948c37e4d52e0e6, type: 3}
       propertyPath: ignoredHurtboxes.Array.size
       value: 4
       objectReference: {fileID: 0}

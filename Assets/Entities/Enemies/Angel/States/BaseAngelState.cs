@@ -31,7 +31,11 @@ public abstract class BaseAngelState<EState> : BaseState<AngelEnemyStateManager.
         collider.GetContacts(playerDetectColliderContacts);
 
         if (playerDetectColliderContacts.Count > 0){
-            if (playerDetectColliderContacts.Exists(c => c.gameObject.CompareTag("Player"))){
+
+            if (playerDetectColliderContacts.Exists(c => 
+                c.gameObject.CompareTag("Hitbox") &&
+                LayerMask.LayerToName(c.gameObject.layer) == "Player"
+            )){
                 Context.playerDetected = true;
                 Context.lastPlayerDirection = colliderDirection; 
             }

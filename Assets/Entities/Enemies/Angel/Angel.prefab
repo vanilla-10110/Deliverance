@@ -86,7 +86,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3665018148677313050}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: PlayerDetectionAreas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124,7 +124,7 @@ GameObject:
   - component: {fileID: 2561586827359977819}
   - component: {fileID: 4529998930923619670}
   - component: {fileID: 1522276518915266802}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Angel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -299,7 +299,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8934991461421784079}
   - component: {fileID: 1022301215583074916}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: LeftDetect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -375,7 +375,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 56180192565530463}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: AttackAreas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -409,7 +409,7 @@ GameObject:
   m_Component:
   - component: {fileID: 207103394772488748}
   - component: {fileID: 4256661628478312109}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: RightDetect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -485,7 +485,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4874419262181216475}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Colliders
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -523,6 +523,10 @@ PrefabInstance:
     - target: {fileID: 2462841760048196640, guid: 8691b2f1d82bd854a88c051cf8921dd1, type: 3}
       propertyPath: m_Name
       value: RightHurtbox
+      objectReference: {fileID: 0}
+    - target: {fileID: 2462841760048196640, guid: 8691b2f1d82bd854a88c051cf8921dd1, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4599554741380352197, guid: 8691b2f1d82bd854a88c051cf8921dd1, type: 3}
       propertyPath: m_LocalPosition.x
@@ -663,6 +667,10 @@ PrefabInstance:
       propertyPath: _hitParticleSystem
       value: 
       objectReference: {fileID: 353022744385877673}
+    - target: {fileID: 5802926836126765131, guid: 83f25248a2f57624a948c37e4d52e0e6, type: 3}
+      propertyPath: _hitboxRepulsionForce
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 5867828272318612505, guid: 83f25248a2f57624a948c37e4d52e0e6, type: 3}
       propertyPath: m_Layer
       value: 10
@@ -980,6 +988,10 @@ PrefabInstance:
     - target: {fileID: 2462841760048196640, guid: 8691b2f1d82bd854a88c051cf8921dd1, type: 3}
       propertyPath: m_Name
       value: LeftHurtbox
+      objectReference: {fileID: 0}
+    - target: {fileID: 2462841760048196640, guid: 8691b2f1d82bd854a88c051cf8921dd1, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4599554741380352197, guid: 8691b2f1d82bd854a88c051cf8921dd1, type: 3}
       propertyPath: m_LocalPosition.x

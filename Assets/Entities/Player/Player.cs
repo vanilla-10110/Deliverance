@@ -20,6 +20,8 @@ public class Player : MonoBehaviour
     public TrailRenderer PlayerTrail {get; private set;}
 
     [NonSerialized] public Vector2 velocity = Vector2.zero;
+    private Vector2 _environmentalVelocity = Vector2.zero;
+
     [NonSerialized] public bool isFacingRight;
 
     //collision check vars
@@ -61,10 +63,8 @@ public class Player : MonoBehaviour
 
         if (_hitbox){
             _hitbox.HitDetected.AddListener((int damageValue) => {GameManager.Instance.playerStats.DecreaseHealth(damageValue);});
-            _hitbox.HitboxIntersecting.AddListener((float angle) => {
-                Debug.Log("hitbox intersected from: " + angle);
-                Vector3 v = (Vector3.forward*angle) * 100;
-                gameObject.transform.position += new Vector3(v.x, v.y);
+            _hitbox.HitboxIntersectingForce.AddListener((Vector2 RepulsionForce) => {
+                _environmentalVelocity = new Vector2(RepulsionForce.x, 0); // adds a opposing force if inside another hitbox
             });
         }
 
@@ -99,6 +99,8 @@ public class Player : MonoBehaviour
     
     private void FixedUpdate(){
         _rb.velocity = velocity;
+        _rb.velocity += _environmentalVelocity * Time.fixedDeltaTime;
+        _environmentalVelocity = Vector2.zero;
     }
 
     #region horizontal movement

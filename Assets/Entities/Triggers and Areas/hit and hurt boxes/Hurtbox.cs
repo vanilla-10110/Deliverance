@@ -51,7 +51,6 @@ public class Hurtbox : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collider){
         // do nothing if collider is meant to be ignored
         if (collider.gameObject.CompareTag("Hitbox")){
-            // Debug.Log("hitbox dected in hurtbox");
             HitboxDetected.Invoke();
         }
     } 
