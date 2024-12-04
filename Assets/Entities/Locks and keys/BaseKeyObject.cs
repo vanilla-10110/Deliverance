@@ -35,7 +35,7 @@ public abstract class BaseKeyObject : MonoBehaviour
         }
     }
 
-    protected void PlayRandonUnlockSound(){
-        SoundManager.Instance.PlaySoundFX(unlockedClips.GetRandom());
+    protected void PlayRandomUnlockSound(){
+        SoundManager.Instance.PlaySoundFX(unlockedClips.GetRandom(), 1.0f);
     }
 }

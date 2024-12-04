@@ -17,6 +17,10 @@ public class PlayerDashingState : BasePlayerState<PlayerStateManager.PLAYER_STAT
     }
     
     public override void EnterState(){
+        if (Context.Player.dashUnlocked == false){
+            return;
+        }
+
         Context.Player.canAttack = false;
 
         // Player trail renderer

@@ -48,13 +48,15 @@ public class SoundManager : MonoBehaviour
 
     }
 
-    public void PlaySoundFX(AudioClip clip){
+    public void PlaySoundFX(AudioClip clip, float volume = 0.5f){
         foreach (AudioSource source in _audioSources){
             if (!source.isPlaying){
-                Debug.Log(clip);
+
+                source.volume = volume;
+
                 source.clip = clip;
                 source.Play();
-                break;
+                return;
             }
         }
     }

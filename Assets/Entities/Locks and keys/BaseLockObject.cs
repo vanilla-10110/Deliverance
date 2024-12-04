@@ -8,7 +8,7 @@ public abstract class BaseLockObject : MonoBehaviour
 {
     protected UnityEvent<LOCK_STATE> LockStateChanged = new();
     [SerializeField] private BaseKeyObject[] _lockKeys;
-    // [SerializeField] private int _keysNeededToUnlock = 0;
+    [SerializeField] protected AudioClip _unlockSound;
 
     protected enum LOCK_STATE {
         LOCKED, UNLOCKED
@@ -26,10 +26,11 @@ public abstract class BaseLockObject : MonoBehaviour
     }
 
     protected virtual void Update(){
-        if (KeysToUnlock() <= 0){
+        if (KeysToUnlock() <= 0 && CurrentState == LOCK_STATE.LOCKED){
             CurrentState = LOCK_STATE.UNLOCKED;
+            SoundManager.Instance.PlaySoundFX(_unlockSound, 0.7f);
         }
-        else if (CurrentState == LOCK_STATE.UNLOCKED) {
+        else if (KeysToUnlock() > 0 && CurrentState == LOCK_STATE.UNLOCKED) {
             CurrentState = LOCK_STATE.LOCKED;
         }
     }

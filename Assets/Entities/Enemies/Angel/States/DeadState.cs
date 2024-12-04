@@ -11,6 +11,10 @@ public class AngelDeadState : BaseAngelState<AngelEnemyStateManager.ANGEL_STATES
     public override void EnterState(){
         // anything this state should do as it initially gets called
         Context.AngelRef._animator.SetTrigger("TriggerDeath");
+
+        if (Context.AngelRef._light){
+            Context.AngelRef._light.intensity = 0.4f;
+        }
     }
 
 

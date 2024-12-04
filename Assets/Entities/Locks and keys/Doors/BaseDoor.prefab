@@ -99,6 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lockKeys: []
+  _unlockSound: {fileID: 8300000, guid: 2c1b524957f318d44b7e0ace9a64af14, type: 3}
   _currentState: 0
   debugColor:
     _serializedList:

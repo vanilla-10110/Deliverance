@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7500765511304074935}
   - component: {fileID: 5763590108922460937}
   - component: {fileID: 8747205052903211859}
+  - component: {fileID: 2268240459269417282}
   m_Layer: 0
   m_Name: DashUnlock
   m_TagString: Untagged
@@ -145,3 +146,17 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &2268240459269417282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8889406231224058451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd680089ebad4a8459f20382975c0492, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _flickerIntensity: 1
+  _flickerFrequency: 1

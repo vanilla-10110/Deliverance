@@ -16,7 +16,6 @@ public class BaseDoor : BaseLockObject
         
         targetLockedPosition = transform.position;
 
-        // LockStateChanged.AddListener(UpdateDoorPosition);
     }
 
     protected override void Update(){

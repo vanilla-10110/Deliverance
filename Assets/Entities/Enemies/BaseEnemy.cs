@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Rendering.Universal;
 
 public class BaseEnemy : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class BaseEnemy : MonoBehaviour
     [NonSerialized] private Rigidbody2D _rb; 
     public SpriteRenderer _spriteRenderer;
     public Animator _animator;
+    public Light2D _light;
 
     public UnityEvent<BaseEnemy> EnemyDefeated = new();
 
@@ -79,6 +81,8 @@ public class BaseEnemy : MonoBehaviour
         SignalBus.DestroyedEntityEvent.Invoke();
         EnemyDefeated.Invoke(this);
         _hitbox.gameObject.SetActive(false);
+
+
         
         if (destroyEntityOnDead){
             Destroy(gameObject);
