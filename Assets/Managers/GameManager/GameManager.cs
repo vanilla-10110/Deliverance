@@ -100,7 +100,7 @@ public class GameManager : MonoBehaviour
 
     private void UpdateUI(){
         uiManager.UpdateUITitle(gameStats.currentSceneName);
-        uiManager.SetScore(gameStats.wealth);
+        //uiManager.SetScore(gameStats.wealth);
     }
 
     public void ExitGame(){

@@ -14,7 +14,7 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] private GameObject MainUI;
     [SerializeField] private GameObject GameOverScreen;
-    [SerializeField] private GameObject ScoreLabel;
+    //[SerializeField] private GameObject ScoreLabel;
 
     [SerializeField] private GameObject StartMenu;
 
@@ -79,9 +79,9 @@ public class UIManager : MonoBehaviour
         MainUI.transform.Find("LevelLabel").GetComponent<TMPro.TextMeshProUGUI>().text = title;
     }
 
-    public void SetScore(int newScore){
-        ScoreLabel.GetComponent<TMPro.TextMeshProUGUI>().text = newScore.ToString(); 
-    }
+    //public void SetScore(int newScore){
+    //    ScoreLabel.GetComponent<TMPro.TextMeshProUGUI>().text = newScore.ToString(); 
+    //}
 
 
     //Hearts
