@@ -356,6 +356,17 @@
                 },
                 {
                     "name": "",
+                    "id": "ff162802-3ab2-479b-a982-6366f0792a03",
+                    "path": "<Gamepad>/leftStick/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Climb",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "5b08c807-1d24-4ced-8e64-a0e49b93046e",
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
@@ -390,7 +401,7 @@
                 {
                     "name": "",
                     "id": "2594b253-65d3-4ae8-a623-11f4bd9aa2a1",
-                    "path": "<Gamepad>/buttonNorth",
+                    "path": "<Gamepad>/rightShoulder",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

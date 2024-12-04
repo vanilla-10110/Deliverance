@@ -98,6 +98,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 205f2f79b5f8b034bbfd93feda059428, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unlockedClips:
+  - {fileID: 8300000, guid: 89eb4cc29421dc04b89b46746fa459e2, type: 3}
+  - {fileID: 8300000, guid: 1b55aeecc4a8056478b6e48fb82e3d62, type: 3}
+  - {fileID: 8300000, guid: 632ac86de687ca84b9e98b32823dbdb7, type: 3}
+  - {fileID: 8300000, guid: af23283e1c3654742946b779ed2a3e11, type: 3}
+  _currentState: 0
+  debugColor:
+    _serializedList:
+    - Key: 0
+      Value: {r: 1, g: 0, b: 0, a: 1}
+    - Key: 1
+      Value: {r: 0, g: 1, b: 0, a: 1}
+  debugGizmo: 0
 --- !u!61 &6743898827229076937
 BoxCollider2D:
   m_ObjectHideFlags: 0

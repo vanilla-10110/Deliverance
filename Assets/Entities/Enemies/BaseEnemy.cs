@@ -21,6 +21,14 @@ public class BaseEnemy : MonoBehaviour
     [SerializeField] protected List<Collider2D> playerDetectionAreas;
 
     [SerializeField] private bool destroyEntityOnDead = true;
+
+    [Header("Shaders")]
+    public Material entityHitMaterial;
+
+    [Header("Sound FXs")]
+    public AudioClip damagedSound;
+    public AudioClip mainAttackSound;
+
     protected void Awake() {
         _rb = GetComponent<Rigidbody2D>();
         enemyStats = new()
@@ -39,11 +47,32 @@ public class BaseEnemy : MonoBehaviour
         _hitbox.HitboxIntersectingForce.AddListener((Vector2 force) =>{
             _environmentalVelocity = new Vector2(force.x, 0); // adds a opposing force if inside another hitbox
         });
+
+        _hitbox.EffectAppliedToEntity.AddListener((UnityAction<Rigidbody2D> action) => {
+            action.Invoke(_rb);
+        });
     }
 
     public void OnHitDetected(int damageValue){
         enemyStats.DecreaseHealth(damageValue);
+        SoundManager.Instance.PlaySoundFX(damagedSound);
+
+        StartCoroutine(FlashSprite(_spriteRenderer, _spriteRenderer.material));
+        // _spriteRenderer.color = Color.white;
+
         Debug.Log("i am damaged, health is now " + enemyStats.health);
+    }
+
+    private IEnumerator FlashSprite(SpriteRenderer sprite, Material OGMaterial){
+        
+        // sprite.material = entityHitMaterial;
+        sprite.material.SetColor("_EmissionColor", Color.white);
+
+        Debug.Log("setting color to white");
+        yield return new WaitForSeconds(0.1f);
+        sprite.material = OGMaterial;
+        Debug.Log("setting color to normal");
+
     }
 
     void OnHealthDepletedActions(){
@@ -64,4 +93,5 @@ public class BaseEnemy : MonoBehaviour
     void OnDestroy(){
         SignalBus.DestroyedEntityEvent.Invoke();
     }
+
 }

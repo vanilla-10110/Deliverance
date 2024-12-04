@@ -12,7 +12,7 @@ public class AngelSmiteAttackState : BaseAngelState<AngelEnemyStateManager.ANGEL
         Context.AngelRef._animator.SetTrigger("TriggerSmite");
         Context.RigidBody.velocity = Vector2.zero;
 
-
+        SoundManager.Instance.PlaySoundFX(Context.AngelRef.mainAttackSound);
     }
 
 

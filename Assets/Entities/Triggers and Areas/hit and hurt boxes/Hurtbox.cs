@@ -8,7 +8,7 @@ public class Hurtbox : MonoBehaviour
 {
     // these are the area doing the hitting. it'll invoke an event if it detects a hitbox.
     private float activeDuration = 0f;
-    [NonSerialized] public int damageValue = 0;
+    [NonSerialized] public int damageValue = 1;
 
     [NonSerialized] public UnityEvent HitboxDetected = new();
     [NonSerialized] public UnityEvent AttackTimeFinished = new();
@@ -16,8 +16,10 @@ public class Hurtbox : MonoBehaviour
 
     private Collider2D _coll;
 
+    UnityAction<Rigidbody2D> effectToApply; 
+
     [Header("Debug")]
-    [SerializeField] private bool drawDebugBoxes = false; 
+    [SerializeField] private bool drawDebugBoxes = false;
 
     void Start(){
         _coll = GetComponent<Collider2D>();
@@ -48,10 +50,21 @@ public class Hurtbox : MonoBehaviour
         gameObject.SetActive(true);
     }
 
+    public void ActivateHurtBox(float Duration, int damage, UnityAction<Rigidbody2D> effect){
+        activeDuration = Duration;
+        damageValue = damage;
+        gameObject.SetActive(true);
+        effectToApply = effect;
+    }
+
     void OnTriggerEnter2D(Collider2D collider){
         // do nothing if collider is meant to be ignored
         if (collider.gameObject.CompareTag("Hitbox")){
             HitboxDetected.Invoke();
+            if (effectToApply != null){
+                collider.gameObject.GetComponent<Hitbox>().ApplyEffectOnGameObject(effectToApply);
+                effectToApply = null;
+            }
         }
     } 
 

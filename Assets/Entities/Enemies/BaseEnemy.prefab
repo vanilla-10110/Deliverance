@@ -144,8 +144,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b47b35b78953f6747b78b4fbe3fdef14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  StartingHealth: 0
   enemyStats: {fileID: 0}
   _hitbox: {fileID: 3522002286388824513}
+  _spriteRenderer: {fileID: 0}
+  _animator: {fileID: 0}
+  EnemyDefeated:
+    m_PersistentCalls:
+      m_Calls: []
+  playerDetectionAreas: []
+  destroyEntityOnDead: 1
+  damagedSound: {fileID: 0}
 --- !u!1001 &6946953458259532170
 PrefabInstance:
   m_ObjectHideFlags: 0

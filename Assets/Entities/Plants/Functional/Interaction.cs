@@ -14,7 +14,7 @@ public class Interaction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E) && Growable == true)
+        if (InputManager.interactWasPressed && Growable == true)
         {
             Grow.SetBool("Grow", true);
             Grown = true;

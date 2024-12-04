@@ -5,6 +5,7 @@ using UnityEngine;
 public class AngelEnemy : BaseEnemy
 {
     private AngelEnemyStateManager _esm;
+
  
     private new void Awake(){
         base.Awake();

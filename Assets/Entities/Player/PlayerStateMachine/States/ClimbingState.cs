@@ -17,6 +17,7 @@ public class PlayerClimbingState : BasePlayerState<PlayerStateManager.PLAYER_STA
     public override void EnterState(){
         Context.Player.numberOfJumpsUsed = 0;
         Context.Player.numberOfDashesUsed = 0;
+        isClimbing = true;
     }
 
     public override void ExitState(){
@@ -57,8 +58,14 @@ public class PlayerClimbingState : BasePlayerState<PlayerStateManager.PLAYER_STA
         return StateKey;
     }
     public override void OnTriggerEnter(Collider collider){}
-    public override void OnTriggerStay(Collider collider){}
-    public override void OnTriggerExit(Collider collider){}
+    public override void OnTriggerStay(Collider collider){
+
+    }
+    public override void OnTriggerExit(Collider collider){
+        if (collider.gameObject.GetComponent<Interaction>() != null){
+            isClimbing = false;
+        }
+    }
 
     // public  void OnUpdate(){
 

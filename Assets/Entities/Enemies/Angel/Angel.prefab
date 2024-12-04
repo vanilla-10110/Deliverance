@@ -214,10 +214,10 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.2
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0.8
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -251,6 +251,9 @@ MonoBehaviour:
       m_Calls: []
   playerDetectionAreas: []
   destroyEntityOnDead: 0
+  entityHitMaterial: {fileID: 2100000, guid: 8c3f26c91cc46a349b99d9e77c5d00dc, type: 2}
+  damagedSound: {fileID: 8300000, guid: fe1b916f60687c04297a1a0fdc8a3ba0, type: 3}
+  mainAttackSound: {fileID: 8300000, guid: 2f0bce9f437886841acf58a6a9593261, type: 3}
 --- !u!114 &4529998930923619670
 MonoBehaviour:
   m_ObjectHideFlags: 0
