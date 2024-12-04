@@ -89,6 +89,7 @@ public class Player : MonoBehaviour
         TurnCheck(InputManager.movement);
 
         UpdateAttackArea();
+        ActivateSecondaryAttack();
 
         if (InputManager.attackWasPressed){
             ActivateAttackArea(currentAttackDirection);
@@ -257,6 +258,12 @@ public class Player : MonoBehaviour
             case false:
                 currentAttackDirection = ATTACK_DIRECTION.LEFT;
                 return;
+        }
+    }
+
+    private void ActivateSecondaryAttack(){
+        if (InputManager.secondaryAttackWasPressed){
+            animator.SetTrigger("TriggerUppies");
         }
     }
 

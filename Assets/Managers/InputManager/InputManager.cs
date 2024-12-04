@@ -20,6 +20,10 @@ public class InputManager : MonoBehaviour
     public static bool attackIsPressed;
     public static bool attackWasReleased;
 
+    public static bool secondaryAttackWasPressed;
+    public static bool secondaryAttackIsPressed;
+    public static bool secondaryAttackWasReleased;
+    
     [Header("Interact")]
     public static bool interactWasPressed;
     public static bool interactIsPressed;
@@ -34,6 +38,7 @@ public class InputManager : MonoBehaviour
     private InputAction _dashAction;
     private InputAction _climbAction;
     private InputAction _attackAction;
+    private InputAction _secondaryAttackAction;
     private InputAction _interactAction;
     private InputAction _pauseAction;
 
@@ -47,6 +52,7 @@ public class InputManager : MonoBehaviour
         _attackAction = playerInput.actions["MainAttack"];
         _interactAction = playerInput.actions["Interact"];
         _pauseAction = playerInput.actions["Pause"];
+        _secondaryAttackAction = playerInput.actions["SecondaryAttack"];
     }
 
 
@@ -72,6 +78,10 @@ public class InputManager : MonoBehaviour
         interactWasReleased = _interactAction.WasReleasedThisFrame();
 
         pauseWasPressed = _pauseAction.WasPressedThisFrame();
+
+        secondaryAttackIsPressed = _secondaryAttackAction.IsPressed();
+        secondaryAttackWasPressed = _secondaryAttackAction.WasPressedThisFrame();
+        secondaryAttackWasReleased = _secondaryAttackAction.WasReleasedThisFrame();
 
     }
 }
