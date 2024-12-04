@@ -23,6 +23,8 @@ public class PlayerJumpingState : BasePlayerState<PlayerStateManager.PLAYER_STAT
         Context.Player.animator.SetBool("isJumping", true);
 
         SignalBus.AbilityUsedEvent.Invoke(EnumBus.PLAYER_ABILITIES.JUMP.ToString());
+
+        SoundManager.Instance.PlaySoundFX(Context.Player.jumpSoundFX);
     }   
     public override void ExitState(){
         Context.Player.numberOfJumpsUsed += 1;

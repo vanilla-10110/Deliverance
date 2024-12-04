@@ -20,7 +20,7 @@ public class AngelChasingState : BaseAngelState<AngelEnemyStateManager.ANGEL_STA
 
         IsPlayerInAttackRange(Context.lastPlayerDirection);
 
-        Debug.Log(Context.rightSmiteBounds + "" + Context.leftSmiteBounds);
+        // Debug.Log(Context.rightSmiteBounds + "" + Context.leftSmiteBounds);
     }
 
     public override void UpdateState(){
@@ -34,16 +34,17 @@ public class AngelChasingState : BaseAngelState<AngelEnemyStateManager.ANGEL_STA
     private void IsPlayerInAttackRange(int direction){
         // Debug.Log(direction);
 
+
         Bounds collider = direction == 1 ? Context.rightSmiteBounds : Context.leftSmiteBounds;
         Bounds hitbox = Context.AngelRef._hitbox.gameObject.GetComponent<Collider2D>().bounds;
 
         Vector2 boxCastOrigin = new Vector2(hitbox.center.x, hitbox.center.y);
 
         if (direction == -1){
-            _playerInRangeOfLeft = Physics2D.Raycast(new(boxCastOrigin.x, boxCastOrigin.y), Vector2.left, collider.size.x, LayerMask.GetMask("Player"));
+            _playerInRangeOfLeft = Physics2D.Raycast(new(boxCastOrigin.x, boxCastOrigin.y), Vector2.left, collider.size.x + 5, LayerMask.GetMask("Player"));
         }
         else {
-            _playerInRangeOfRight = Physics2D.Raycast(new(boxCastOrigin.x, boxCastOrigin.y),Vector2.right, collider.size.x, LayerMask.GetMask("Player"));
+            _playerInRangeOfRight = Physics2D.Raycast(new(boxCastOrigin.x, boxCastOrigin.y),Vector2.right, collider.size.x + 5, LayerMask.GetMask("Player"));
         }
 
     }
@@ -63,8 +64,12 @@ public class AngelChasingState : BaseAngelState<AngelEnemyStateManager.ANGEL_STA
             return AngelEnemyStateManager.ANGEL_STATES.DEAD;
         }
 
-        if(_playerInRangeOfLeft.collider != null || _playerInRangeOfRight.collider != null){
-            return AngelEnemyStateManager.ANGEL_STATES.SMITE_ATTACK;
+        if(_playerInRangeOfLeft.collider != null){
+            if (_playerInRangeOfLeft.collider.gameObject.CompareTag("Hitbox")) return AngelEnemyStateManager.ANGEL_STATES.SMITE_ATTACK;
+        } 
+        
+        if(_playerInRangeOfRight.collider != null){
+            if (_playerInRangeOfRight.collider.gameObject.CompareTag("Hitbox")) return AngelEnemyStateManager.ANGEL_STATES.SMITE_ATTACK;
         }
 
         if (!Context.playerDetected){

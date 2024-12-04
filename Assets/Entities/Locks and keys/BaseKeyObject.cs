@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using AYellowpaper.SerializedCollections;
+using MyBox;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -11,6 +12,7 @@ public abstract class BaseKeyObject : MonoBehaviour
     public enum KEY_STATE {
         LOCKED, UNLOCKED
     }
+    [SerializeField] public AudioClip[] unlockedClips;
 
     [SerializeField] public KEY_STATE _currentState = KEY_STATE.LOCKED;
 
@@ -31,5 +33,9 @@ public abstract class BaseKeyObject : MonoBehaviour
             Gizmos.color = debugColor[_currentState];
             Gizmos.DrawCube(transform.position,new(0.2f,0.2f));
         }
+    }
+
+    protected void PlayRandonUnlockSound(){
+        SoundManager.Instance.PlaySoundFX(unlockedClips.GetRandom());
     }
 }

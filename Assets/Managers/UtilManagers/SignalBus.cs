@@ -16,6 +16,9 @@ public class SignalBus : MonoBehaviour
     [NonSerialized] public static UnityEvent DestroyedEntityEvent = new();
 
 
+    // player events
+    [NonSerialized] public static UnityEvent<EnumBus.PLAYER_ABILITIES> AbilityUnlockedEvent = new();
+
     // public static SignalBus Instance {get; private set;}
 
     // private void Awake(){

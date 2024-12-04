@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class BaseDoor : BaseLockObject
 {
-    [SerializeField] private Vector3 targetUnlockedPosition;
+    [SerializeField] private Vector3 targetUnlockedPositionOffset;
     private Vector3 targetLockedPosition;
 
     private bool isMoving = false;
@@ -43,18 +43,18 @@ public class BaseDoor : BaseLockObject
                 }
                 return;
             case LOCK_STATE.UNLOCKED:
-                if (!isMoving && transform.position != targetUnlockedPosition){
+                if (!isMoving && transform.position != targetUnlockedPositionOffset){
                     t = 0f;
                     isMoving = true;
                 }
 
-                else if (isMoving && transform.position == targetUnlockedPosition){
+                else if (isMoving && transform.position == targetUnlockedPositionOffset){
                     isMoving = false;
                 }
                 
                 if (isMoving){
                     t += Time.deltaTime * _doorSpeed;
-                    transform.position = Vector3.Lerp(transform.position, targetUnlockedPosition, t);
+                    transform.position = Vector3.Lerp(transform.position, targetLockedPosition + targetUnlockedPositionOffset, t);
                 }
                 return;
         }

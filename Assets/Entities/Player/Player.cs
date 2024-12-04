@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using AYellowpaper.SerializedCollections;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Player : MonoBehaviour
 {
@@ -42,9 +43,28 @@ public class Player : MonoBehaviour
     public bool logStateMessages = false;
 
     // dash vars
+    [NonSerialized] public bool dashUnlocked = false;
     [NonSerialized] public int numberOfDashesUsed = 0;
 
     private PlayerStateManager psm;
+
+    [Header("Attack Refs")]
+    [NonSerialized] public bool canAttack = true;
+    [Serializable] public enum ATTACK_DIRECTION {RIGHT, LEFT, BOTTOM, TOP};
+
+    [SerializedDictionary("AttackAreaEnum","Hurtbox")]
+
+    [SerializeField] private Hurtbox _leftUppiesHurtbox;
+    [SerializeField] private Hurtbox _rightUppiesHurtbox;
+
+    [Header("soundFX")]
+    public AudioClip dashSoundFX;
+    public AudioClip deathSoundFX;
+    public AudioClip jumpSoundFX;
+    public AudioClip uppiesSoundFX;
+    public AudioClip scytheSoundFX;
+
+
 
     private void Awake(){
         isFacingRight = true;
@@ -56,6 +76,15 @@ public class Player : MonoBehaviour
 
     private void Start(){
         SignalBus.newSceneLoaded.AddListener(ChangePosition);
+
+        SignalBus.AbilityUnlockedEvent.AddListener((EnumBus.PLAYER_ABILITIES ability) => {
+            if (ability == EnumBus.PLAYER_ABILITIES.DASH) dashUnlocked = true;
+        });
+
+        GameManager.Instance.playerStats.HealthDepletedEvent.AddListener(() => {
+            animator.SetTrigger("TriggerDeath");
+            SoundManager.Instance.PlaySoundFX(deathSoundFX);
+        });
         
         psm.Init(this);
 
@@ -233,10 +262,8 @@ public class Player : MonoBehaviour
 
 
     #region Attack Related
-    [NonSerialized] public bool canAttack = true;
-    [Serializable] public enum ATTACK_DIRECTION {RIGHT, LEFT, BOTTOM, TOP};
 
-    [SerializedDictionary("AttackAreaEnum","Hurtbox")]
+
     public SerializedDictionary<ATTACK_DIRECTION, Hurtbox> attackHurtboxes;
 
     private ATTACK_DIRECTION currentAttackDirection = ATTACK_DIRECTION.RIGHT;
@@ -267,8 +294,20 @@ public class Player : MonoBehaviour
     private void ActivateSecondaryAttack(){
         if (InputManager.secondaryAttackWasPressed){
             animator.SetTrigger("TriggerUppies");
+            SoundManager.Instance.PlaySoundFX(uppiesSoundFX);
+
+            if (isFacingRight){
+                _rightUppiesHurtbox.ActivateHurtBox(0.1f, 1, UppiesAttackEffect);
+            }
+            else if (!isFacingRight){
+                _leftUppiesHurtbox.ActivateHurtBox(0.1f, 1, UppiesAttackEffect);
+            }
         }
     }
+
+    UnityAction<Rigidbody2D> UppiesAttackEffect = (Rigidbody2D obj) => {
+        obj.AddForce(new Vector3(0, 1000, 0));
+    };
 
     private Hurtbox GetAttackArea(ATTACK_DIRECTION dir){
         return attackHurtboxes[dir];
@@ -276,11 +315,11 @@ public class Player : MonoBehaviour
 
     private void ActivateAttackArea(ATTACK_DIRECTION dir){
         if (canAttack){
-            // animator.SetTrigger("isAttacking");
             animator.StopPlayback();
-            animator.Play("AttackState");
+            animator.SetTrigger("isAttacking");
             GetAttackArea(dir).ActivateHurtBox(0.1f, 1);
             SignalBus.AbilityUsedEvent.Invoke(EnumBus.PLAYER_ABILITIES.LIGHT_ATTACK.ToString());
+            SoundManager.Instance.PlaySoundFX(scytheSoundFX);
         }
     }
     #endregion

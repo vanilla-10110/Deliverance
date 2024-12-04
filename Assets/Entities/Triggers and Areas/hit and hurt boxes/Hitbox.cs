@@ -20,6 +20,7 @@ public class Hitbox : MonoBehaviour
     */
     [NonSerialized] public UnityEvent<int> HitDetected = new();
     [NonSerialized] public UnityEvent<Vector2> HitboxIntersectingForce = new();
+    [NonSerialized] public UnityEvent<UnityAction<Rigidbody2D>> EffectAppliedToEntity = new();
     [SerializeField] private int _hitboxRepulsionForce = 40;
 
     private Collider2D _coll;
@@ -56,9 +57,11 @@ public class Hitbox : MonoBehaviour
             HitDetected.Invoke(collider.gameObject.GetComponent<Hurtbox>().damageValue);
 
             _hitParticleSystem.Play();
-
-
         }
+    }
+
+    public void ApplyEffectOnGameObject(UnityAction<Rigidbody2D> action){
+        EffectAppliedToEntity.Invoke(action);
     }
 
     private void OnTriggerStay2D(Collider2D collider){

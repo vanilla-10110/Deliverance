@@ -10,6 +10,8 @@ public class EnemyCountKey : BaseKeyObject
         foreach (BaseEnemy enemy in _enemiesArray){
             enemy.EnemyDefeated.AddListener((BaseEnemy enemy) => {
                 _enemiesArray.Remove(enemy);
+                PlayRandonUnlockSound();
+
             });
         }
     }

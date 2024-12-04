@@ -1,15 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
-public class BaseCollectable : MonoBehaviour
-{
+public class BaseCollectable : MonoBehaviour {
 
-    protected virtual Collision2D CollectionArea {get; set;}
+    [SerializeField] protected AudioClip _pickupSound;
+    protected UnityEvent CollectedEvent = new();
 
-
-    void TriggerCollected(){}
-
-
+    
 
 }

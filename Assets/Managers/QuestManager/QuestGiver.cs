@@ -6,11 +6,15 @@ public class QuestGiver : MonoBehaviour
 {
     private static QuestManager questManager;
 
+    [SerializeField] private GameObject _popup;
+
     [SerializeField] public List<Quest> availableQuests;
     private bool Interactable = false;
 
     void Start(){
         questManager = QuestManager.Instance;
+        _popup.SetActive(false);
+
     }
 
     void Update(){
@@ -34,6 +38,7 @@ public class QuestGiver : MonoBehaviour
             Debug.Log("Player walked in");
 
             Interactable = true;
+            _popup.SetActive(true);
         }
     }
 
@@ -42,6 +47,8 @@ public class QuestGiver : MonoBehaviour
             Debug.Log("Player exited");
 
             Interactable = false;
+            _popup.SetActive(false);
+
         }
     }
 

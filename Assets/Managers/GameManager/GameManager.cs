@@ -54,6 +54,7 @@ public class GameManager : MonoBehaviour
         uiManager.InitialiseHealth(playerStats);
 
         UpdateUI();
+
     }
 
     public void MovePlayerToSpawnpoint(){

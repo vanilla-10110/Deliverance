@@ -6,8 +6,7 @@ using UnityEngine;
 public class PlayerDashingState : BasePlayerState<PlayerStateManager.PLAYER_STATES>
 {
 
-    // [Range(0.05f, 1f)][SerializeField] private float dashDuration = 0.2f;
-    // [Range(1f, 100f)] [SerializeField] private float dashSpeed = 100f;
+    // private AudioClip _soundFX;
     private float timeSinceDashStart = 0f;
     public Vector2 lastDashDirection;
     private Vector2 dashDirection = Vector2.zero;
@@ -33,6 +32,8 @@ public class PlayerDashingState : BasePlayerState<PlayerStateManager.PLAYER_STAT
             dashDirection = InputManager.movement;
             }
         
+        SoundManager.Instance.PlaySoundFX(Context.Player.dashSoundFX);
+        
         SignalBus.AbilityUsedEvent.Invoke(EnumBus.PLAYER_ABILITIES.DASH.ToString());
     }
     public override void ExitState(){
@@ -54,6 +55,11 @@ public class PlayerDashingState : BasePlayerState<PlayerStateManager.PLAYER_STAT
         timeSinceDashStart += Time.deltaTime;
     }
     public override PlayerStateManager.PLAYER_STATES GetNextState(){
+
+        if (Context.Player.dashUnlocked == false){
+            return Context.PrevState;
+        }
+
         if (Context.Player.numberOfDashesUsed >= Context.PlayerMovementStats.numberOfDashesAllowed) {
             if (Context.Player.isGrounded) {
                 return PlayerStateManager.PLAYER_STATES.IDLE;

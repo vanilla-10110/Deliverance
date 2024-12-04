@@ -32,7 +32,7 @@ MonoBehaviour:
   jumpHeight: 2
   jumpHeightCompensationFactor: 1.0756
   timeTillJumpApex: 0.3
-  numberOfJumpsAllowed: 1
+  numberOfJumpsAllowed: 2
   timeForUpwardsCancel: 0.034
   apexThreshold: 0.872
   apexHangTime: 0.05

@@ -6,14 +6,19 @@ using UnityEngine.Audio;
 public class SoundManager : MonoBehaviour
 {
 
-    public AudioClip placeholderMusic;
+    public AudioClip backgroundTrack;
 
-    private AudioSource audioSource;
+    [SerializeField] private AudioMixer _mainMixer;
+    [SerializeField] private AudioMixerGroup _soundFXGroup;
+    [SerializeField] private AudioMixerGroup _musicGroup;
+
+    private AudioSource _musicSource;
+
+    [SerializeField] private int _maxSoundFXs = 10;
+    private List<AudioSource> _audioSources = new();
     public static SoundManager Instance {get; private set;} 
 
     private void Awake(){
-        // base.OnAwake();
-        // DontDestroyOnLoad(gameObject);
 
         if (Instance != null && Instance != this){
             Destroy(this);
@@ -25,12 +30,40 @@ public class SoundManager : MonoBehaviour
 
     void Start()
     {
-        audioSource = GetComponent<AudioSource>();
-
-        if (placeholderMusic){
-            
-            audioSource.playOnAwake = placeholderMusic;
+        for (int i = 0; i < _maxSoundFXs; i++){
+            AudioSource source = gameObject.AddComponent<AudioSource>();
+            source.name = "SoundFXSource " + i;
+            source.outputAudioMixerGroup = _soundFXGroup;
+            _audioSources.Add(source);
         }
+
+        AudioSource musicSource = gameObject.GetComponent<AudioSource>();
+        musicSource.name = "MusicSource";
+        _musicSource = musicSource;
+
+        _musicSource.outputAudioMixerGroup = _musicGroup;
+        _musicSource.clip = backgroundTrack;
+        _musicSource.loop = true;
+        _musicSource.Play();
+
+    }
+
+    public void PlaySoundFX(AudioClip clip){
+        foreach (AudioSource source in _audioSources){
+            if (!source.isPlaying){
+                Debug.Log(clip);
+                source.clip = clip;
+                source.Play();
+                break;
+            }
+        }
+    }
+
+
+    public void PlayBackgroundTrack(AudioClip clip){
+        _musicSource.Stop();
+        _musicSource.clip = clip;
+        _musicSource.Play();
     }
 
 

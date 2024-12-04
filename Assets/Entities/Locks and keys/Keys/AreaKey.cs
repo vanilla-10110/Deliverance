@@ -8,7 +8,10 @@ public class AreaKey : BaseKeyObject
 {
     private void OnTriggerEnter2D(Collider2D collider){
         if (collider.gameObject.CompareTag("Player")){
+            if (_currentState == KEY_STATE.LOCKED){PlayRandonUnlockSound();}
+            
             SetKeyState(KEY_STATE.UNLOCKED);
+            
         }
     }
 }

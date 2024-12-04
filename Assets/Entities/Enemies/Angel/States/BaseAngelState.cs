@@ -7,7 +7,6 @@ public abstract class BaseAngelState<EState> : BaseState<AngelEnemyStateManager.
 
     protected AngelStateContext Context;
     protected AngelEnemyStateManager Esm;
-
     protected List<Collider2D> playerDetectColliderContacts = new();
 
     public BaseAngelState(AngelStateContext context, AngelEnemyStateManager.ANGEL_STATES stateKey, AngelEnemyStateManager esm) : base(stateKey) {

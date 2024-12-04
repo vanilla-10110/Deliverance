@@ -107,7 +107,7 @@ MonoBehaviour:
     - Key: 1
       Value: {r: 0, g: 1, b: 0, a: 1}
   debugGizmo: 1
-  targetUnlockedPosition: {x: 0, y: 0, z: 0}
+  targetUnlockedPositionOffset: {x: 0, y: 0, z: 0}
   _doorSpeed: 1
 --- !u!61 &6216330369559831292
 BoxCollider2D:
