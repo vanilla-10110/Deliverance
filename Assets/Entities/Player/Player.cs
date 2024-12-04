@@ -14,7 +14,9 @@ public class Player : MonoBehaviour
     [SerializeField] private Collider2D _bodyColl;
 
     [SerializeField] private Hitbox _hitbox;
-    
+
+    [SerializeField] private GameObject Light;
+
     public Animator animator;
     private Rigidbody2D _rb;
     public TrailRenderer PlayerTrail {get; private set;}
@@ -118,12 +120,13 @@ public class Player : MonoBehaviour
         if (turnRight){
             isFacingRight = true;
             GetComponent<SpriteRenderer>().flipX = false;
+            Light.transform.localPosition = new Vector2((float)0.57, (float)1.17);
         }
 
         else {
             isFacingRight = false;
             GetComponent<SpriteRenderer>().flipX = true;
-
+            Light.transform.localPosition = new Vector2((float)-0.57, (float)1.17);
         }
     }
 
