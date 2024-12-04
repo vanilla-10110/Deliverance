@@ -46,6 +46,9 @@ public class Player : MonoBehaviour
     [NonSerialized] public bool dashUnlocked = false;
     [NonSerialized] public int numberOfDashesUsed = 0;
 
+    // climb vars
+    [NonSerialized] public bool climbingUnlocked = false;
+
     private PlayerStateManager psm;
 
     [Header("Attack Refs")]
@@ -79,9 +82,11 @@ public class Player : MonoBehaviour
 
         SignalBus.AbilityUnlockedEvent.AddListener((EnumBus.PLAYER_ABILITIES ability) => {
             if (ability == EnumBus.PLAYER_ABILITIES.DASH) dashUnlocked = true;
+            else if (ability == EnumBus.PLAYER_ABILITIES.PLANT_DADDY) climbingUnlocked = true;
         });
 
         GameManager.Instance.playerStats.HealthDepletedEvent.AddListener(() => {
+            GameManager.Instance.GameOverActions();
             animator.SetTrigger("TriggerDeath");
             SoundManager.Instance.PlaySoundFX(deathSoundFX);
         });
@@ -112,7 +117,15 @@ public class Player : MonoBehaviour
         GameManager.Instance.MovePlayerToSpawnpoint();
     }
 
+    public void ResetPlayerState(){
+        animator.SetTrigger("TriggerRespawn");
+    }
+
     private void Update(){
+
+        if (GameManager.Instance.gameState == EnumBus.GAME_STATE.DEAD || GameManager.Instance.gameState == EnumBus.GAME_STATE.WIN){
+            return;
+        }
         
         IsGrounded();
         IsHeadBumped();
@@ -130,6 +143,9 @@ public class Player : MonoBehaviour
     }
     
     private void FixedUpdate(){
+        if (GameManager.Instance.gameState == EnumBus.GAME_STATE.DEAD || GameManager.Instance.gameState == EnumBus.GAME_STATE.WIN){
+            return;
+        }
         _rb.velocity = velocity;
         _rb.velocity += _environmentalVelocity * Time.fixedDeltaTime;
         _environmentalVelocity = Vector2.zero;

@@ -6,7 +6,7 @@ public class EnemyCountKey : BaseKeyObject
 {
     [SerializeField] private List<BaseEnemy> _enemiesArray;
 
-    private void Start(){
+    protected void Start(){
         foreach (BaseEnemy enemy in _enemiesArray){
             enemy.EnemyDefeated.AddListener((BaseEnemy enemy) => {
                 _enemiesArray.Remove(enemy);

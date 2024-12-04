@@ -7,7 +7,7 @@ using UnityEngine.Rendering.Universal;
 
 public class BaseEnemy : MonoBehaviour
 {
-    public int StartingHealth;
+    // public int StartingHealth;
 
     public EntityStatsScriptableObject enemyStats;
     public Hitbox _hitbox;
@@ -33,10 +33,10 @@ public class BaseEnemy : MonoBehaviour
 
     protected void Awake() {
         _rb = GetComponent<Rigidbody2D>();
-        enemyStats = new()
-        {
-            health = StartingHealth
-        };
+        // enemyStats = new()
+        // {
+        //     health = StartingHealth
+        // };
     }
 
 
@@ -90,6 +90,9 @@ public class BaseEnemy : MonoBehaviour
     }
 
     protected void FixedUpdate(){
+        if (_rb == null){
+            return;
+        }
         _rb.velocity += _environmentalVelocity * Time.fixedDeltaTime;
         _environmentalVelocity = Vector2.zero;
     }

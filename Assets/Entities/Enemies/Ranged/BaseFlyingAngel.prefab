@@ -238,16 +238,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b47b35b78953f6747b78b4fbe3fdef14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartingHealth: 7
-  enemyStats: {fileID: 0}
+  enemyStats: {fileID: 11400000, guid: 8052ecc70fa1e2a4a94002635093e3ef, type: 2}
   _hitbox: {fileID: 2189092421154745845}
   _spriteRenderer: {fileID: 0}
   _animator: {fileID: 0}
+  _light: {fileID: 0}
   EnemyDefeated:
     m_PersistentCalls:
       m_Calls: []
   playerDetectionAreas: []
   destroyEntityOnDead: 1
+  entityHitMaterial: {fileID: 0}
+  damagedSound: {fileID: 8300000, guid: fe1b916f60687c04297a1a0fdc8a3ba0, type: 3}
+  mainAttackSound: {fileID: 8300000, guid: 2acff3f44c4a26044a41a86ad4bd81bb, type: 3}
 --- !u!114 &281549435756109197
 MonoBehaviour:
   m_ObjectHideFlags: 0

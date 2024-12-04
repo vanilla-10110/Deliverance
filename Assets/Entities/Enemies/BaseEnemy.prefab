@@ -144,17 +144,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b47b35b78953f6747b78b4fbe3fdef14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartingHealth: 0
-  enemyStats: {fileID: 0}
+  enemyStats: {fileID: 11400000, guid: 811a9fee7f543634f9493c28913a887b, type: 2}
   _hitbox: {fileID: 3522002286388824513}
-  _spriteRenderer: {fileID: 0}
+  _spriteRenderer: {fileID: 1417975837704152769}
   _animator: {fileID: 0}
+  _light: {fileID: 0}
   EnemyDefeated:
     m_PersistentCalls:
       m_Calls: []
   playerDetectionAreas: []
   destroyEntityOnDead: 1
-  damagedSound: {fileID: 0}
+  entityHitMaterial: {fileID: 0}
+  damagedSound: {fileID: 8300000, guid: fe1b916f60687c04297a1a0fdc8a3ba0, type: 3}
+  mainAttackSound: {fileID: 0}
 --- !u!1001 &6946953458259532170
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -203,9 +205,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5867828272318612505, guid: 83f25248a2f57624a948c37e4d52e0e6, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 8361895141913843242, guid: 83f25248a2f57624a948c37e4d52e0e6, type: 3}
       propertyPath: m_Name
       value: Hitbox
+      objectReference: {fileID: 0}
+    - target: {fileID: 8361895141913843242, guid: 83f25248a2f57624a948c37e4d52e0e6, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

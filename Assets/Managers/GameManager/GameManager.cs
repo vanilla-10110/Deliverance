@@ -12,13 +12,20 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+
+    [NonSerialized] public EnumBus.GAME_STATE gameState = EnumBus.GAME_STATE.DUNGEON;
+
     [Header("References")]
     [SerializeField] private UIManager uiManager;
     [SerializeField] private SoundManager soundManager;
     [SerializeField] private ScenesManager sceneManager;
     public  GameStats gameStats;
     public  EntityStatsScriptableObject playerStats;
-    
+
+    [SerializeField] private AudioClip _startMenuSong;
+    [SerializeField] private AudioClip _hubSong;
+
+
     public Player playerRef = null;
 
     [Header("Toggables")]
@@ -67,9 +74,13 @@ public class GameManager : MonoBehaviour
         Debug.Log("start menu triggered");
         gameStats.currentGameState = EnumBus.GAME_STATE.HUB;
         uiManager.ShowStartMenu();
+        SoundManager.Instance.PlayBackgroundTrack(_startMenuSong);
     }
 
     public void LoadLevelFromName(string sceneName){
+        if (sceneName == "Hub"){
+            SoundManager.Instance.PlayBackgroundTrack(_hubSong);
+        }
 
         sceneManager.RemoveAllSpawnpoints();
         sceneManager.LoadScene(sceneName);
@@ -78,6 +89,8 @@ public class GameManager : MonoBehaviour
         UpdateUI();
         uiManager.ShowMainUI();
     }
+
+
 
     public void LoadLevelFromNameWithTarget(string sceneName, int targetSpawnID){
         sceneManager.RemoveAllSpawnpoints();
@@ -90,7 +103,27 @@ public class GameManager : MonoBehaviour
     }
 
     public void GameOverActions(){
+        gameState = EnumBus.GAME_STATE.DEAD;
         uiManager.ShowGameOverScreen();
+    }
+
+    public void WinGameActions(){
+        gameState = EnumBus.GAME_STATE.WIN;
+        uiManager.ShowWinScreen();
+        StartCoroutine(SendBackToStart());
+    }
+
+    private IEnumerator SendBackToStart(){
+        yield return new WaitForSeconds(35);
+        // LoadLevelFromName("MainScene");
+        ExitGame();
+    }
+
+    public void RestartFromSpawnpoint(){
+        MovePlayerToSpawnpoint();
+        uiManager.ShowMainUI();
+        playerRef.ResetPlayerState();
+        playerStats.IncreaseHealth(10);
     }
 
     public void ChangeWealth(int value){

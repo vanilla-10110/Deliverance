@@ -16,7 +16,7 @@ public class EntityStatsScriptableObject : ScriptableObject {
     public UnityEvent HealthDepletedEvent;
 
     private void OnEnable() {
-        health = maxHealth;
+        // health = maxHealth;
         if (HealthChangedEvent == null){
             HealthChangedEvent = new UnityEvent<int, int>();
         }

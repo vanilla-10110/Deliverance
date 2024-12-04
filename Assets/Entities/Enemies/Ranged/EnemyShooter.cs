@@ -40,6 +40,7 @@ public class EnemyShooter : MonoBehaviour
 
     void shoot()
     {
+        SoundManager.Instance.PlaySoundFX(gameObject.GetComponent<BaseEnemy>().mainAttackSound);
         Instantiate(projectile, projectilePos.position, Quaternion.identity);
     }
 

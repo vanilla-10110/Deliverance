@@ -15,6 +15,10 @@ public class PlayerClimbingState : BasePlayerState<PlayerStateManager.PLAYER_STA
     }
 
     public override void EnterState(){
+        if (Context.Player.climbingUnlocked == false){
+            return;
+        }
+
         Context.Player.numberOfJumpsUsed = 0;
         Context.Player.numberOfDashesUsed = 0;
         isClimbing = true;
@@ -42,6 +46,8 @@ public class PlayerClimbingState : BasePlayerState<PlayerStateManager.PLAYER_STA
     }
 
     public override PlayerStateManager.PLAYER_STATES GetNextState(){
+        if (Context.Player.climbingUnlocked == false){ return Context.PrevState;}
+
         if (!isClimbing){
             if (Context.Player.isGrounded) {
                 return PlayerStateManager.PLAYER_STATES.IDLE;

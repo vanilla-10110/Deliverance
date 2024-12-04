@@ -19,7 +19,7 @@ MonoBehaviour:
   airAcceleration: 10
   airDecceleration: 31
   dashDuration: 0.101
-  dashSpeed: 14.5
+  dashSpeed: 20.6
   afterDashFallingSpeedMultiplier: 0.49
   afterDashFallingDuration: 0.476
   numberOfDashesAllowed: 1

@@ -34,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -43,12 +43,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -72,7 +72,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -95,7 +95,406 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Vine TALL_0
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 248
+        width: 14
+        height: 5
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9bdfb3f7865034d459cf1653b8a81a3d
+      internalID: 1716805511
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Vine TALL_1
+      rect:
+        serializedVersion: 2
+        x: 93
+        y: 248
+        width: 13
+        height: 8
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 08e50312206a21c42a744343bd01bea4
+      internalID: -444136957
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Vine TALL_2
+      rect:
+        serializedVersion: 2
+        x: 159
+        y: 248
+        width: 12
+        height: 17
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 50e53578446aec44dbc8ec58379776d9
+      internalID: -723977537
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Vine TALL_3
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 248
+        width: 9
+        height: 26
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 362955fb317c8f64cafa2c7460960e20
+      internalID: -1781705458
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Vine TALL_4
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 248
+        width: 10
+        height: 41
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 99a8ca75765caea4ba2cf526cbcc7599
+      internalID: 1197757153
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Vine TALL_5
+      rect:
+        serializedVersion: 2
+        x: 353
+        y: 247
+        width: 8
+        height: 50
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7bbddbb4282a4384e996e516bfed9876
+      internalID: 1753683924
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Vine TALL_6
+      rect:
+        serializedVersion: 2
+        x: 416
+        y: 247
+        width: 10
+        height: 78
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1fa2126886a326e428973f08bb33558f
+      internalID: -1833428340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Vine TALL_7
+      rect:
+        serializedVersion: 2
+        x: 479
+        y: 248
+        width: 12
+        height: 88
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af755fca4c714d54697e05e646dbe1d8
+      internalID: -504655828
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Vine TALL_8
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 128
+        width: 10
+        height: 97
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4561a7e7d04e0a747a48eb7145b04c06
+      internalID: -1758837698
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Vine TALL_9
+      rect:
+        serializedVersion: 2
+        x: 95
+        y: 128
+        width: 11
+        height: 101
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 56420c04ab9dd604cb59d71b31e50c0a
+      internalID: -1582590316
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Vine TALL_10
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 127
+        width: 9
+        height: 109
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3fe45e022503ae74c912bdd1558faf71
+      internalID: 1373962220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Vine TALL_11
+      rect:
+        serializedVersion: 2
+        x: 223
+        y: 128
+        width: 12
+        height: 112
+      alignment: 9
+      pivot: {x: 0.45918784, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6196224c51dff1c488ce9bf4766b7e9e
+      internalID: 2142204476
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Vine TALL_12
+      rect:
+        serializedVersion: 2
+        x: 287
+        y: 128
+        width: 15
+        height: 109
+      alignment: 9
+      pivot: {x: 0.35307616, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f3b5a872cd36ca499ad60153ec2e79f
+      internalID: -1691171116
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Vine TALL_13
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 128
+        width: 18
+        height: 111
+      alignment: 9
+      pivot: {x: 0.25512695, y: 0.0044122646}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ce6c99118fd11148baf76f9698c86c9
+      internalID: 503951327
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Vine TALL_14
+      rect:
+        serializedVersion: 2
+        x: 416
+        y: 127
+        width: 24
+        height: 113
+      alignment: 9
+      pivot: {x: 0.17350261, y: 0.004334104}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4c23c44b57fa38b43811108354aa3495
+      internalID: 1836993907
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Vine TALL_15
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 128
+        width: 26
+        height: 109
+      alignment: 9
+      pivot: {x: 0.1891996, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0eed56b6c39871f4f98c7efdc149020f
+      internalID: -686653173
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Vine TALL_16
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 8
+        width: 28
+        height: 111
+      alignment: 9
+      pivot: {x: 0.26387173, y: 0.000000017183321}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 55fd0179527e1944bb1cac8c2ba84f62
+      internalID: 1102683489
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Vine TALL_17
+      rect:
+        serializedVersion: 2
+        x: 95
+        y: 7
+        width: 28
+        height: 111
+      alignment: 9
+      pivot: {x: 0.18516241, y: 0.004412153}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 57c24bea62b0bfb40bcf393dfd7da05a
+      internalID: 1307727552
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Vine TALL_18
+      rect:
+        serializedVersion: 2
+        x: 158
+        y: 6
+        width: 32
+        height: 110
+      alignment: 9
+      pivot: {x: 0.17860365, y: -0.0022261098}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e17385164a7068042b1d8ebf234d0401
+      internalID: 761696090
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -106,7 +505,26 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Vine TALL_0: 1716805511
+      Vine TALL_1: -444136957
+      Vine TALL_10: 1373962220
+      Vine TALL_11: 2142204476
+      Vine TALL_12: -1691171116
+      Vine TALL_13: 503951327
+      Vine TALL_14: 1836993907
+      Vine TALL_15: -686653173
+      Vine TALL_16: 1102683489
+      Vine TALL_17: 1307727552
+      Vine TALL_18: 761696090
+      Vine TALL_2: -723977537
+      Vine TALL_3: -1781705458
+      Vine TALL_4: 1197757153
+      Vine TALL_5: 1753683924
+      Vine TALL_6: -1833428340
+      Vine TALL_7: -504655828
+      Vine TALL_8: -1758837698
+      Vine TALL_9: -1582590316
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

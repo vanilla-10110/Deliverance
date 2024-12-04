@@ -19,6 +19,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject StartMenu;
 
     [SerializeField] private GameObject PauseMenu;
+    [SerializeField] private GameObject WinScreen;
 
     //Health
     [SerializeField] private GameObject HealthBar;
@@ -55,24 +56,36 @@ public class UIManager : MonoBehaviour
         else if (PauseMenu.activeInHierarchy == true && InputManager.pauseWasPressed){
             PauseMenu.SetActive(false);
         }
-
     }
 
     public void ShowGameOverScreen(){
         MainUI.SetActive(false);
         GameOverScreen.SetActive(true);
+        WinScreen.SetActive(false);
+
     }
 
     public void ShowStartMenu(){
         MainUI.SetActive(false);
         GameOverScreen.SetActive(false);
         StartMenu.SetActive(true);
+        WinScreen.SetActive(false);
+
     }
 
     public void ShowMainUI(){
         MainUI.SetActive(true);
         GameOverScreen.SetActive(false);
         StartMenu.SetActive(false);
+        WinScreen.SetActive(false);
+
+    }
+
+    public void ShowWinScreen(){
+        MainUI.SetActive(false);
+        GameOverScreen.SetActive(false);
+        StartMenu.SetActive(false);
+        WinScreen.SetActive(true);
     }
 
     public void UpdateUITitle(string title){
